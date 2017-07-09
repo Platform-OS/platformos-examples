@@ -1,0 +1,3 @@
+name: client
+admin_approval: false
+create_company_on_sign_up: true

@@ -1,0 +1,35 @@
+---
+name: developer_sign_up
+base_form: UserForm
+return_to: '/'
+configuration:
+  first_name:
+    validation:
+      presence: true
+  profiles:
+    developer:
+      enabled:
+        property_options:
+          default: true
+          readonly: true
+      validation:
+        presence: true
+    validation:
+      presence: true
+---
+{% form_for form, url: '/api/users', method: post %}
+  <input value="{{ form_configuration.id }}" type="hidden" name="form_configuration_id" />
+  <input value="{{ page.id }}" type="hidden" name="page_id" />
+
+  {% input first_name %}
+  {% input email %}
+  {% input password, as: password %}
+
+  {% fields_for profiles %}
+    {% fields_for developer, form: profiles %}
+      {% input enabled, as: hidden, form: developer %}
+    {% endfields_for %}
+  {% endfields_for %}
+
+  {% submit Create %}
+{% endform_for %}
