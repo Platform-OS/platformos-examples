@@ -6,6 +6,12 @@ configuration:
   first_name:
     validation:
       presence: true
+  mobile_number:
+    validation:
+      presence: true
+  password:
+    validation:
+      presence: true
   profiles:
     developer:
       enabled:
@@ -16,6 +22,12 @@ configuration:
         presence: true
     validation:
       presence: true
+email_notifications:
+  - welcome_user
+sms_notifications:
+  - welcome_user
+api_call_notifications:
+  - ping_example_com_on_user_sign_up
 ---
 {% form_for form, url: '/api/users', method: post %}
   <input value="{{ form_configuration.id }}" type="hidden" name="form_configuration_id" />
@@ -24,6 +36,7 @@ configuration:
   {% input first_name %}
   {% input email %}
   {% input password, as: password %}
+  {% input mobile_number, placeholder: 'Please include country code' %}
 
   {% fields_for profiles %}
     {% fields_for developer, form: profiles %}

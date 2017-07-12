@@ -1,0 +1,14 @@
+{
+  current_user{
+    id
+    slug
+    first_name
+    email
+    developer_profile: profile(profile_type: "developer") {
+      id
+    }
+    client_profile: profile(profile_type: "client") {
+      id
+    }
+  }
+}

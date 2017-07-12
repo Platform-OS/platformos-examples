@@ -1,0 +1,9 @@
+<h1>Sign in</h1>
+
+{% form_for user, url: '/users/sign_in', method: post %}
+  {% input email, required: true %}
+  {% input password, required: true %}
+  <p>Forgot password? <a href="/users/password/new">Reset your password</a></p>
+  {% submit 'Log In' %}
+  <p>New user? Create <a href="/developer/sign-up"> new developer account</a> or <a href="/client/sign-up">new client account</a></p>
+{% endform_for %}
