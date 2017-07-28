@@ -1,1 +1,19 @@
-<h1>Welcome</h1>
+{% query_graph 'current_user', result_name: g %}
+<h1>Welcome{% if g.current_user%}, {{ g.current_user.first_name }}{% endif %}</h1>
+
+{% if g.current_user.client_profile %}
+  <a href="/client/projects/new">Create project</a>
+
+  {% query_graph 'client_projects', result_name: client_projects, creator_id: g.current_user.id %}
+
+  {% if client_projects.projects.total_entries > 0 %}
+    <ul>
+      {% for project in client_projects.projects.results %}
+        <li>{{ project.name }} ({{ project.state }}) - <a href="/client/projects/edit/{{project.slug}}">edit</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>You have not created any projects yet.</p>
+  {% endif %}
+{% endif %}
+

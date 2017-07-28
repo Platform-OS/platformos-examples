@@ -1,0 +1,9 @@
+---
+slug: client/projects/new
+format: html
+layout_name: application
+name: Add a Project
+---
+<h1>Create Project</h1>
+
+{% render_form project, object_class: Transactable, object_id: 'new', parent_object_class: 'TransactableType', parent_object_id: 'project', return_to: @params.return_to %}

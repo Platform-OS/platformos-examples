@@ -1,0 +1,21 @@
+---
+name: Project
+action_types:
+- type: TransactableType::OfferAction
+  enabled: true
+  pricings:
+  - order_class_name: Offer
+    allow_free_booking: true
+    allow_nil_price_cents: true
+    number_of_units: 1
+    unit: item
+custom_attributes:
+- name: workplace_onsite
+  attribute_type: boolean
+- name: workplace_online
+  attribute_type: boolean
+- name: deadline
+  attribute_type: date
+- name: budget
+  attribute_type: float
+---

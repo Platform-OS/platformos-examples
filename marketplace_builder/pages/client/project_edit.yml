@@ -1,0 +1,8 @@
+---
+slug: client/projects/edit
+format: html
+layout_name: application
+name: Edit a Project
+---
+<h1>Edit Project</h1>
+{% render_form project, object_class: Transactable, object_id: @params.slugs, parent_object_class: 'TransactableType', parent_object_id: 'project' %}
