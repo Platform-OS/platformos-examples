@@ -8,7 +8,7 @@ query client_projects(
     page: $page,
     sort:[
       {
-        key: "created_at",
+        name: "created_at",
         order: "desc"
       }
     ],
