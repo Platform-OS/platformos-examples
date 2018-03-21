@@ -1,15 +1,14 @@
 ---
 name: developer_sign_up
-base_form: UserForm
-return_to: '/'
+resource: User
+return_to: '/sign-in'
 configuration:
+  email:
+  password:
   first_name:
     validation:
       presence: true
   mobile_number:
-    validation:
-      presence: true
-  password:
     validation:
       presence: true
   profiles:
@@ -29,10 +28,7 @@ sms_notifications:
 api_call_notifications:
   - ping_example_com_on_user_sign_up
 ---
-{% form_for form, url: '/api/users', method: post %}
-  <input value="{{ form_configuration.id }}" type="hidden" name="form_configuration_id" />
-  <input value="{{ page.id }}" type="hidden" name="page_id" />
-
+{% form %}
   {% input first_name %}
   {% input email %}
   {% input password, as: password %}
@@ -45,4 +41,4 @@ api_call_notifications:
   {% endfields_for %}
 
   {% submit Create %}
-{% endform_for %}
+{% endform %}

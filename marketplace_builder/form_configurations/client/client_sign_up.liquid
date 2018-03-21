@@ -1,12 +1,11 @@
 ---
 name: client_sign_up
-base_form: UserForm
-return_to: '/'
+resource: User
+return_to: '/sign-in'
 configuration:
-  first_name:
-    validation:
-      presence: true
+  email:
   password:
+  first_name:
     validation:
       presence: true
   profiles:
@@ -20,10 +19,7 @@ configuration:
     validation:
       presence: true
 ---
-{% form_for form, url: '/api/users', method: post %}
-  <input value="{{ form_configuration.id }}" type="hidden" name="form_configuration_id" />
-  <input value="{{ page.id }}" type="hidden" name="page_id" />
-
+{% form %}
   {% input first_name %}
   {% input email %}
   {% input password, as: password %}
@@ -35,4 +31,4 @@ configuration:
   {% endfields_for %}
 
   {% submit Create %}
-{% endform_for %}
+{% endform %}

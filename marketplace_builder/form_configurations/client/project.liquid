@@ -1,6 +1,6 @@
 ---
 name: project
-base_form: TransactableForm
+resource: Transactable
 configuration:
   name:
     validation: { presence: true }
@@ -18,29 +18,8 @@ configuration:
     budget:
       validation:
         presence: true
-  offer_action:
-    pricings:
-      enabled: {}
-      validation:
-        length:
-          minimum: 1
-        if: :enabled?
-    validation:
-      presence: true
 ---
-{% assign form_url = "/api/user/transactables/" | append: form.id %}
-{% if form.id == blank %}
-  {% assign http_method = 'post' %}
-{% else %}
-  {% assign http_method = 'put' %}
-{% endif %}
-
-{% form_for form, url: @form_url, as: form, method: @http_method %}
-  <input value="{{ form_configuration.id }}" type="hidden" name="form_configuration_id" />
-  <input value="{{ page.id }}" type="hidden" name="page_id" />
-  <input value="{{ form.model.transactable_type.id }}" type="hidden" name="transactable_type_id" />
-  <input value="/" type="hidden" name="return_to" />
-
+{% form  %}
   {% input name %}
   {% input description, as: text %}
 
@@ -61,4 +40,4 @@ configuration:
   {% endfields_for %}
 
   {% submit Save %}
-{% endform_for %}
+{% endform %}
