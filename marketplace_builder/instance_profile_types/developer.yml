@@ -1,6 +1,4 @@
 name: developer
-admin_approval: false
-create_company_on_sign_up: true
 custom_attributes:
 - name: bio
   attribute_type: string
