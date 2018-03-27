@@ -19,7 +19,7 @@ configuration:
       validation:
         presence: true
 ---
-{% form  %}
+{% form %}
   {% input name %}
   {% input description, as: text %}
 
@@ -29,15 +29,5 @@ configuration:
     {% input budget, form: properties %}
     {% input deadline, form: properties, placeholder: 'YYYY-mm-dd' %}
   {% endfields_for %}
-
-  {% fields_for offer_action %}
-    {% input_field enabled, as: hidden, value: 1, form: offer_action %}
-    {% fields_for pricings, form: offer_action %}
-      {% input_field enabled, as: hidden, value: 1, form: pricings %}
-      {% input_field transactable_type_pricing_id, as: hidden, form: pricings %}
-      {% input_field price, as: hidden, form: pricings %}
-    {% endfields_for %}
-  {% endfields_for %}
-
   {% submit Save %}
 {% endform %}

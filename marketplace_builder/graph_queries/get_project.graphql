@@ -1,0 +1,14 @@
+query client_projects(
+  $creator_id: ID!
+  $slug: String!
+)
+{
+  project: transactable(
+    creator_id: $creator_id
+    slug: $slug
+  ) {
+    id
+    name
+    slug
+  }
+}
