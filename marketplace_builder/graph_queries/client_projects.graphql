@@ -20,6 +20,8 @@ query client_projects(
     total_entries
     has_next_page
     has_previous_page
+    current_page
+    total_pages
 
     results {
       id

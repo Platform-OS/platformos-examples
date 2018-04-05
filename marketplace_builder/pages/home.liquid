@@ -16,16 +16,26 @@ Not you? {% render_form log_out %}
 {% endif %}
 
 {% if g.current_user.client_profile %}
+  {% assign page = params.page | default: 1 | plus: 0 %}
   <a href="/client/projects/new">Create project</a>
 
-  {% query_graph 'client_projects', result_name: client_projects, creator_id: g.current_user.id %}
+  {% query_graph 'client_projects', result_name: g, creator_id: g.current_user.id, per_page: 20, page: page %}
 
-  {% if client_projects.projects.total_entries > 0 %}
+  {% if g.projects.total_entries > 0 %}
     <ul>
-      {% for project in client_projects.projects.results %}
+      {% for project in g.projects.results %}
         <li>{{ project.name }} ({{ project.state }}) - <a href="/client/projects/edit/{{project.slug}}">edit</a> {% render_form destroy_project, resource_id: @project.id %}</li>
       {% endfor %}
     </ul>
+    {% assign pages = g.projects.total_pages %}
+    {% assign current_page = g.projects.current_page %}
+    {% if pages > 1 %}
+      <div class="pager">
+        {% for page in (1..pages) %}
+          <a href="{{ current_path }}?page={{ page }}">{{ page }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
   {% else %}
     <p>You have not created any projects yet.</p>
   {% endif %}
