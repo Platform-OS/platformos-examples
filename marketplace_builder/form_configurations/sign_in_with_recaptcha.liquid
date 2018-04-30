@@ -1,0 +1,11 @@
+---
+name: sign_in_with_recaptcha
+resource: Session
+spam_protection: recaptcha
+---
+{% form %}
+  {% input email %}
+  {% input password %}
+  {% submit 'Log In' %}
+  {% spam_protection %}
+{% endform %}
