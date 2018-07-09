@@ -5,14 +5,14 @@ layout_name: application
 ---
 {% query_graph 'current_user', result_name: g %}
 <h1>Welcome
-  {% if g.current_user%}
+  {% if g.current_user %}
     , {{ g.current_user.first_name }}
   {% else %}
     ! <a href="/sign-up">Please sign up</a> or <a href="/sign-in">Sign In</a>
   {% endif %}
 </h1>
 {% if g.current_user %}
-Not you? {% render_form log_out %}
+Not you? {% render_form log_out_form %}
 {% endif %}
 
 {% if g.current_user.client_profile %}

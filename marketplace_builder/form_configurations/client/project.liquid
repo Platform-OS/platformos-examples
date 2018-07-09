@@ -20,14 +20,60 @@ configuration:
         presence: true
 ---
 {% form %}
-  {% input name %}
-  {% input description, as: text %}
 
-  {% fields_for properties %}
-    {% input workplace_online, as: boolean, form: properties %}
-    {% input workplace_onsite, as: boolean, form: properties %}
-    {% input budget, form: properties %}
-    {% input deadline, form: properties, placeholder: 'YYYY-mm-dd' %}
-  {% endfields_for %}
+  <div>
+    <label for="form_name"><abbr title="required">*</abbr> Name</label>
+    <div>
+      <input class="string required" name="{{ form_builder.fields.name.name }}" value="{{ form_builder.fields.name.value }}" id="form_name" type="text">
+      {% if form_builder.errors.name %}
+        <p>{{ form_builder.errors.name }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div>  
+    <label for="form_description"><abbr title="required">*</abbr> Description</label>
+    <div>
+      <textarea class="text required" name="{{ form_builder.fields.description.name }}" id="form_description">{{ form_builder.fields.description.value }}</textarea>
+      {% if form_builder.errors.description %}
+        <p>{{ form_builder.errors.description }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div>
+    <label for="form_properties_attributes_workplace_online">Workplace online</label>
+    <div>
+      <input value="0" name="{{ form_builder.fields.properties.workplace_online.name }}" type="hidden">
+      <input class="boolean optional" value="1" name="{{ form_builder.fields.properties.workplace_online.name }}" id="form_properties_attributes_workplace_online" type="checkbox" {% if form_builder.fields.properties.workplace_online.value %}checked{% endif %}>
+    </div>
+  </div>
+
+  <div>
+    <label for="form_properties_attributes_workplace_onsite">Workplace onsite</label>
+    <div>
+      <input value="0" name="{{ form_builder.fields.properties.workplace_onsite.name }}" type="hidden">
+      <input class="boolean optional" value="1" name="{{ form_builder.fields.properties.workplace_onsite.name }}" id="form_properties_attributes_workplace_onsite" type="checkbox" {% if form_builder.fields.properties.workplace_onsite.value %}checked{% endif %}>
+    </div>
+  </div>
+
+  <div>
+    <label for="form_properties_attributes_budget"><abbr title="required">*</abbr> Budget</label>
+    <div>
+      <input class="string required" name="{{ form_builder.fields.properties.budget.name }}" value="{{ form_builder.fields.properties.budget.value }}" id="form_properties_attributes_budget" type="text">
+    </div>
+  </div>
+
+  <div>
+    <label for="form_properties_attributes_deadline"><abbr title="required">*</abbr> Deadline</label>
+    <div>
+      <input class="string required" placeholder="YYYY-mm-dd" name="{{ form_builder.fields.properties.deadline.name }}" value="{{ form_builder.fields.properties.deadline.value }}" id="form_properties_attributes_deadline" type="text">
+      {% if form_builder.errors['properties.deadline'] %}
+        <p>{{ form_builder.errors['properties.deadline'] }}</p>
+      {% endif %}
+    </div>
+  </div>
+  
   {% submit Save %}
+
 {% endform %}

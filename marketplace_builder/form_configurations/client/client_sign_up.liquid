@@ -20,15 +20,39 @@ configuration:
       presence: true
 ---
 {% form %}
-  {% input first_name %}
-  {% input email %}
-  {% input password, as: password %}
 
-  {% fields_for profiles %}
-    {% fields_for client, form: profiles %}
-      {% input enabled, as: hidden, form: client %}
-    {% endfields_for %}
-  {% endfields_for %}
+  <div>
+    <label for="form_first_name"><abbr title="required">*</abbr> First name</label>
+    <div>
+      <input class="string required" name="{{ form_builder.fields.first_name.name }}" value="{{ form_builder.fields.first_name.value }}" id="form_first_name" type="text">
+      {% if form_builder.errors.first_name %}
+        <p>{{ form_builder.errors.first_name }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div>
+    <label for="form_email"><abbr title="required">*</abbr> Email</label>
+    <div>
+      <input class="string email required" name="{{ form_builder.fields.email.name }}" value="{{ form_builder.fields.email.value }}" id="form_email" type="email">
+      {% if form_builder.errors.email %}
+        <p>{{ form_builder.errors.email }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div>
+    <label for="form_password">Password</label>
+    <div>
+      <input class="password optional" name="{{ form_builder.fields.password.name }}" id="form_password" type="password">
+      {% if form_builder.errors.password %}
+        <p>{{ form_builder.errors.password }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <input class="hidden" value="{{ form_builder.fields.profiles.client.enabled.value }}" name="{{ form_builder.fields.profiles.client.enabled.name }}" id="form_profiles_attributes_client_attributes_enabled" type="hidden">
 
   {% submit Create %}
+
 {% endform %}

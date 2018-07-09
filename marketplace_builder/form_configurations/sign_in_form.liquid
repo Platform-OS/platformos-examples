@@ -1,7 +1,6 @@
 ---
-name: sign_in_with_recaptcha
+name: sign_in_form
 resource: Session
-spam_protection: recaptcha
 configuration:
   email:
   password:
@@ -23,5 +22,4 @@ configuration:
     <p>Enter a valid email and password</p>
   {% endif %}
   {% submit 'Log In' %}
-  {% spam_protection %}
 {% endform %}
