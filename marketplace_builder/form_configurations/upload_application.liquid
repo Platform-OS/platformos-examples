@@ -1,0 +1,32 @@
+---
+name: upload_application
+resource: User
+flash_notice: Congratulations, your application has been saved.
+configuration:
+  profiles:
+    developer:
+      customizations:
+        application_files:
+          property_options:
+            prepopulate: 1
+          custom_attachments:
+            application_file:
+              file:
+---
+
+
+{% assign customizations = form_builder.fields.profiles.developer.customizations %}
+
+{% form html-multipart: true %}
+  <h4>Additional Supporting Documents</h4>
+
+  <div data-multiple-files>
+    {% for attachment in customizations.application_files.data %}
+      {% include 'inputs/file', field: attachment.custom_attachments.application_file, label: 'Choose file' %}
+    {% endfor %}
+
+    <button type="button" data-multiple-files-button="add" class="btn btn-secondary btn-sm">Add next</button>
+  </div>
+
+  <button class="btn btn-primary mt-5">Save</button>
+{% endform %}

@@ -1,0 +1,6 @@
+name: application_files
+instance_profile_types:
+  - developer
+custom_attributes:
+  - name: application_file
+    attribute_type: file

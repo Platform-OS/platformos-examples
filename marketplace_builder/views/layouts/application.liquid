@@ -1,18 +1,24 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="{{ 'app.css' | asset_url }}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
 </head>
 
 <body>
-  <header>here usually come header, navbar etc..</header>
+  <div class="container">
+    <header class="my-3 py-3 border-bottom border-secondary">Platform-OS Examples</header>
 
-  <main>
-    {{ content_for_layout }}
-  </main>
+    <main>
+      {{ content_for_layout }}
+    </main>
 
-  <footer>
-    here usually come footer, js etc.
-  </footer>
+    <footer class="my-3 py-3 border-top border-secondary">
+      Read more on examples included on this page at <a href="https://documentation.platform-os.com" target="_blank">https://documentation.platform-os.com</a>
+      <br>
+      Source code can be found at: <a href="https://github.com/mdyd-dev/marketplace-nearme-example" target="_blank">https://github.com/mdyd-dev/marketplace-nearme-example</a>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  </div>
 </body>
 </html>
