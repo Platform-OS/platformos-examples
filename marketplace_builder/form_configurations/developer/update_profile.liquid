@@ -1,0 +1,35 @@
+---
+name: update_profile
+resource: User
+flash_notice: Congratulations, your profile has been updated.
+redirect_to: /update_profile
+configuration:
+  profiles:
+    developer:
+      custom_images:
+        avatar:
+          image:
+      custom_attachments:
+        cv:
+          file:
+---
+{% assign profile = form_builder.fields.profiles.developer %}
+{% assign image_s3_upload = form_builder.fields.profiles.developer.custom_images.avatar.image.s3_upload %}
+
+<form
+  action="{{ image_s3_upload.direct_upload_url }}"
+  enctype="multipart/form-data"
+  accept-charset="UTF-8" method="post"
+>
+  {% for input in image_s3_upload.form_data %}
+    <input type="hidden" name="{{ input[0] }}" value="{{ input[1] }}">
+  {% endfor %}
+  <input type="hidden" name="x-amz-meta-width" value="100">
+  <input type="hidden" name="x-amz-meta-height" value="100">
+
+  <h4>Upload your image</h4>
+  {% include 'inputs/direct_upload', type: 'image', field: profile.custom_images.avatar %}
+
+  <button class="btn btn-primary">Submit image</button>
+</form>
+

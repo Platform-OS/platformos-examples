@@ -6,3 +6,7 @@ custom_attributes:
   attribute_type: integer
 - name: hourly_rate
   attribute_type: float
+- name: avatar
+  attribute_type: image
+- name: cv
+  attribute_type: custom_attachment

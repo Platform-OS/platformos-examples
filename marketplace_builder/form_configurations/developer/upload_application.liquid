@@ -2,6 +2,7 @@
 name: upload_application
 resource: User
 flash_notice: Congratulations, your application has been saved.
+redirect_to: /upload_application
 configuration:
   profiles:
     developer:
@@ -14,10 +15,9 @@ configuration:
               file:
 ---
 
-
 {% assign customizations = form_builder.fields.profiles.developer.customizations %}
 
-{% form html-multipart: true %}
+{% form %}
   <h4>Additional Supporting Documents</h4>
 
   <div data-multiple-files>
@@ -30,3 +30,6 @@ configuration:
 
   <button class="btn btn-primary mt-5">Save</button>
 {% endform %}
+
+<hr>
+{{ context.current_user }}
