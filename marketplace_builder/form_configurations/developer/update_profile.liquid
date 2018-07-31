@@ -24,12 +24,18 @@ configuration:
   {% for input in image_s3_upload.form_data %}
     <input type="hidden" name="{{ input[0] }}" value="{{ input[1] }}">
   {% endfor %}
-  <input type="hidden" name="x-amz-meta-width" value="100">
-  <input type="hidden" name="x-amz-meta-height" value="100">
+  <input type="hidden" name="x-amz-meta-metadata" value="{}">
 
   <h4>Upload your image</h4>
   {% include 'inputs/direct_upload', type: 'image', field: profile.custom_images.avatar %}
 
   <button class="btn btn-primary">Submit image</button>
+  {%- capture options -%}
+  {
+    "user_id": "1337"
+  }
+  {%- endcapture -%}
+
+  <input type="hidden" name="x-amz-metadata" value='{{ options | to_hash | json }}' />
 </form>
 
