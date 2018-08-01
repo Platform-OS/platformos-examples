@@ -1,0 +1,15 @@
+{%- capture debug_info -%}
+  {% if type == 'image' %}{{ field.image.s3_upload | json }}
+  {% elsif type == 'file' %}{{ field.file.s3_upload | json }}
+  {% endif %}
+{%- endcapture -%}
+
+<div class="card">
+  <div class="card-header">
+    Debug information coming from <code>s3_upload</code> key
+  </div>
+  <div class="card-body">
+    <pre><code>{{ debug_info }}</code></pre>
+  </div>
+</div>
+
