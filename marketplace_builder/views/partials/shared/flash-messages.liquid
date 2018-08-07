@@ -1,0 +1,21 @@
+{% assign keys = "alert,notice,info,warning,error" | split: ',' %}
+
+{% for key in keys %}
+  {% if flash[key] != blank %}
+
+    {% assign bootstrap_key_class = key %}
+    {% if key == 'notice' %}
+      {% assign bootstrap_key_class = 'success' %}
+    {% elsif key == 'error' %}
+      {% assign bootstrap_key_class = 'danger' %}
+    {% elsif key == 'alert' %}
+      {% assign bootstrap_key_class = 'danger' %}
+    {% endif %}
+
+    <div class="container flash-messages w-100 px-0">
+      <div class="alert alert-{{ bootstrap_key_class }}">
+        {{ flash[key] }}
+      </div>
+    </div>
+  {% endif %}
+{% endfor %}
