@@ -6,7 +6,7 @@
   const $previewContainer = $form.find('[data-s3-direct-upload-field="preview"]');
   const $fileField = q('[data-s3-direct-upload-field="file"]');
   const $presignFields = qa('[data-s3-direct-upload-field="presign"]');
-  const $progress = $form.find('[data-direct-upload-ajax="progress"]');
+  const $progress = $form.find('[data-s3-direct-upload="progress"]');
 
   const getXMLText = (data, key) => $(data).find(key).text() || '';
   const getFileName = () => $form.find('[name="file"]').val().split("/").pop().split("\\").pop();
@@ -31,16 +31,18 @@
     $previewContainer.append(previewHtml);
   };
 
+  const disableFileInput = () => $fileField.setAttribute('disabled', 'disabled');
+
   const updateFileUrl = data => {
     const fileUrl = getXMLText(data, "Location");
     q('[data-s3-direct-upload-field="file-url"]').value = fileUrl;
   }
 
-  const getFormData = form => {
+  const getFormData = () => {
     const formdata = new FormData();
 
     $presignFields.forEach(field => {
-      console.log('Adding to formdata: ', `${field.name} : ${field.value}`);
+      // console.log('Adding to formdata: ', `${field.name} : ${field.value}`);
       formdata.append(field.name, field.value);
     });
 
@@ -61,15 +63,16 @@
   };
 
   const onFileChange = () => {
-    const formData = getFormData($form[0]);
+    const formData = getFormData();
 
     sendForm(formData)
       .done(updateFileUrl)
       .done(updatePreview)
+      .done(disableFileInput)
+      .always(progressBar.hide);
   };
 
   const initialize = () => {
-    console.log('Update profile with direct upload initializing.');
     $form.find('[name="file"]').on("change", onFileChange);
   }
 
