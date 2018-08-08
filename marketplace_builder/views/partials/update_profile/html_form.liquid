@@ -1,0 +1,22 @@
+<h2 id="#direct-upload-using-html-form">Direct upload using HTML form</h2>
+<form action="{{ image_s3_upload.direct_upload_url }}" enctype="multipart/form-data" accept-charset="UTF-8" method="post">
+  {% for input in image_s3_upload.form_data %}
+    <input type="hidden" name="{{ input[0] }}" value="{{ input[1] }}">
+  {% endfor %}
+  <input type="hidden" name="x-amz-meta-metadata" value="{}">
+
+  <div class="row">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">Choose your image</div>
+        <div class="card-body">
+          <input type="file" name="file" id="{{ avatar.image.name }}">
+          <button class="btn btn-primary mt-3">Submit form</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-8">
+      {% include 'inputs/s3_debug_info', type: 'image', field: avatar %}
+    </div>
+  </div>
+</form>

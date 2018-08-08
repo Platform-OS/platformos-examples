@@ -1,6 +1,11 @@
-(() => {
-  const PREVIEW_SELECTOR = '[data-direct-upload-ajax="preview"]';
-  const $form = $('[data-direct-upload-ajax="form"]');
+(function() {
+  const qa = s => [...document.querySelectorAll(s)];
+  const q = s => document.querySelector(s);
+
+  const $form = $('[data-s3-direct-upload="form"]');
+  const $previewContainer = $form.find('[data-s3-direct-upload-field="preview"]');
+  const $fileField = q('[data-s3-direct-upload-field="file"]');
+  const $presignFields = qa('[data-s3-direct-upload-field="presign"]');
   const $progress = $form.find('[data-direct-upload-ajax="progress"]');
 
   const getXMLText = (data, key) => $(data).find(key).text() || '';
@@ -10,13 +15,6 @@
     show: () => $progress.removeClass('invisible'),
     hide: () => $progress.addClass('invisible')
   }
-
-  const logError = data => {
-    const code = getXMLText(data, "Code");
-    const message = getXMLText(data, "Message");
-
-    console.error(`[${code}] ${message}`);
-  };
 
   const updatePreview = data => {
     const imageUrl = getXMLText(data, "Location");
@@ -30,13 +28,31 @@
       </figure>
     `;
 
-    $(PREVIEW_SELECTOR).append(previewHtml);
+    $previewContainer.append(previewHtml);
   };
+
+  const updateFileUrl = data => {
+    const fileUrl = getXMLText(data, "Location");
+    q('[data-s3-direct-upload-field="file-url"]').value = fileUrl;
+  }
+
+  const getFormData = form => {
+    const formdata = new FormData();
+
+    $presignFields.forEach(field => {
+      console.log('Adding to formdata: ', `${field.name} : ${field.value}`);
+      formdata.append(field.name, field.value);
+    });
+
+    formdata.append($fileField.name, $fileField.files[0], getFileName($fileField.value));
+
+    return formdata;
+  }
 
   const sendForm = data => {
     return $.ajax({
       type: "post",
-      url: $form.attr("action"),
+      url: $form.find('[name="action"]').val(),
       contentType: false,
       processData: false,
       beforeSend: progressBar.show,
@@ -45,22 +61,17 @@
   };
 
   const onFileChange = () => {
-    const formData = new FormData($form[0]); // create FormData object and populate it with form element passed into constructor
-
-    // Do not try to upload file if no file was selected (prevents broken preview and unnecessary http requests)
-    if (getFileName().length === 0) {
-      return console.log('File not selected.');
-    }
+    const formData = getFormData($form[0]);
 
     sendForm(formData)
+      .done(updateFileUrl)
       .done(updatePreview)
-      .fail(logError)
-      .always(progressBar.hide);
   };
 
   const initialize = () => {
+    console.log('Update profile with direct upload initializing.');
     $form.find('[name="file"]').on("change", onFileChange);
-  };
+  }
 
   initialize();
 })();

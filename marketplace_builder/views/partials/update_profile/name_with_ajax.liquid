@@ -1,0 +1,51 @@
+<script src="{{ 'UpdateProfileWithDirectUpload.js' | asset_url }}" defer></script>
+
+<h2 id="#update-profile-with-direct-upload">Update profile with direct upload (in progress)</h2>
+
+{% form html-data-s3-direct-upload: 'form' %}
+  {% for input in image_s3_upload.form_data %}
+    <input type="hidden" name="{{ input[0] }}" value="{{ input[1] }}" data-s3-direct-upload-field="presign" disabled>
+  {% endfor %}
+  <input type="hidden" name="x-amz-meta-metadata" value="{}" data-s3-direct-upload-field="presign" disabled>
+  <input type="hidden" name="action" value="{{ image_s3_upload.direct_upload_url }}" disabled>
+
+  <div class="row">
+    <div class="col-4">
+
+      <div class="card">
+        <div class="card-header">Profile text field</div>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="{{ bio_field.name }}">My bio</label>
+            <textarea name="{{ bio_field.name }}" class="form-control" id="{{ bio_field.name }}">{{ bio_field.value }}</textarea>
+          </div>
+
+          <hr>
+
+          <label for="{{ avatar.image.name }}">Avatar</label>
+          <input type="file" name="file" id="{{ avatar.image.name }}" data-s3-direct-upload-field="file">
+          <input type="hidden" name="{{ avatar.image.name }}" data-s3-direct-upload-field="file-url">
+
+
+          <div class="progress invisible mt-3" data-s3-direct-upload="progress">
+            <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" style="width: 100%"></div>
+          </div>
+
+          <button class="btn btn-primary">Update profile</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-8">
+      <div class="card">
+        <div class="card-header">Preview</div>
+        <div class="card-body" data-s3-direct-upload-field="preview"></div>
+        <div class="card-body">
+          <code>
+            {{ form_builder }}
+          </code>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endform %}
