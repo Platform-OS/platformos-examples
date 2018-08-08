@@ -5,23 +5,19 @@ configuration:
   email:
   password:
 ---
-{% form %}
-  <div>
-    <label for="form_email"><abbr title="required">*</abbr> Email</label>
-    <div>
-      <input class="string email required" name="{{ form_builder.fields.email.name }}" value="{{ form_builder.fields.email.value}}" id="form_email" type="email">
-    </div>
+{% form html-class: "w-50" %}
+  <div class="form-group">
+    <label for="form_email">Email</label>
+    <input class="form-control" name="{{ form_builder.fields.email.name }}" value="{{ form_builder.fields.email.value }}" id="form_email" type="email">
   </div>
 
-  <div>
-    <label for="form_password"><abbr title="required">*</abbr> Password</label>
-    <div>
-      <input class="password required" name="{{ form_builder.fields.password.name }}" id="form_password" type="password">
-      {% if form_builder.errors.password %}
-        <p>{{ form_builder.errors.password }}</p>
-      {% endif %}
-    </div>
+  <div class="form-group">
+    <label for="form_password">Password</label>
+    <input class="form-control" name="{{ form_builder.fields.password.name }}" id="form_password" type="password">
+    {% if form_builder.errors.password %}
+      <p>{{ form_builder.errors.password }}</p>
+    {% endif %}
   </div>
 
-  {% submit 'Log In' %}
+  <button class="btn btn-primary">Log in</button>
 {% endform %}

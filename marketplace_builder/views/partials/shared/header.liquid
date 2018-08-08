@@ -1,0 +1,17 @@
+<header class="my-3 py-3 border-bottom border-secondary">
+  <div class="row">
+    <div class="col">
+      <a href="/" title="Go to home page">🏠</a> Platform-OS Examples
+    </div>
+    <div class="col text-right">
+      {% if context.current_user.id %}
+        {% query_graph 'current_user', result_name: g %}
+        {{ g.current_user.email }}
+      {% else %}
+        <a href="/sign-up">Sign up</a>
+        |
+        <a href="/sign-in">Log in</a>
+      {% endif %}
+    </div>
+  </div>
+</header>
