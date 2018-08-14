@@ -7,6 +7,6 @@ custom_attributes:
 - name: hourly_rate
   attribute_type: float
 - name: avatar
-  attribute_type: image
+  attribute_type: photo
 - name: cv
   attribute_type: custom_attachment

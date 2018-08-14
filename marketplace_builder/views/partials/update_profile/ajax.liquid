@@ -1,0 +1,29 @@
+<script src="{{ 'DirectUpload.js' | asset_url }}" defer></script>
+
+<h2 id="#direct-upload-using-ajax">Direct upload using AJAX</h2>
+<form action="{{ image_s3_upload.direct_upload_url }}" data-direct-upload-ajax="form">
+  {% for input in image_s3_upload.form_data %}
+    <input type="hidden" name="{{ input[0] }}" value="{{ input[1] }}">
+  {% endfor %}
+  <input type="hidden" name="x-amz-meta-metadata" value="{}">
+
+  <div class="row">
+    <div class="col-4">
+      <div class="card">
+        <div class="card-header">Choose your image</div>
+        <div class="card-body">
+          <input type="file" name="file" id="{{ avatar.image.name }}" data-direct-upload-ajax="file">
+          <div class="progress invisible mt-3" data-direct-upload-ajax="progress">
+            <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" style="width: 100%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="card">
+        <div class="card-header">Preview</div>
+        <div class="card-body" data-direct-upload-ajax="preview"></div>
+      </div>
+    </div>
+  </div>
+</form>

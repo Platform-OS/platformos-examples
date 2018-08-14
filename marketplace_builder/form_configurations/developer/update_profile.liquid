@@ -6,71 +6,23 @@ redirect_to: /update_profile
 configuration:
   profiles:
     developer:
+      properties:
+        bio:
       custom_images:
         avatar:
           image:
-      custom_attachments:
-        cv:
-          file:
 ---
 {% assign profile = form_builder.fields.profiles.developer %}
 {% assign avatar = profile.custom_images.avatar %}
 {% assign image_s3_upload = avatar.image.s3_upload %}
+{% assign bio_field = form_builder.fields.profiles.developer.properties.bio %}
 
-<h2 id="#direct-upload-using-html-form">Direct upload using HTML form</h2>
-<form action="{{ image_s3_upload.direct_upload_url }}" enctype="multipart/form-data" accept-charset="UTF-8" method="post">
-  {% for input in image_s3_upload.form_data %}
-    <input type="hidden" name="{{ input[0] }}" value="{{ input[1] }}">
-  {% endfor %}
-  <input type="hidden" name="x-amz-meta-metadata" value="{}">
-
-  <div class="row">
-    <div class="col-4">
-      <div class="card">
-        <div class="card-header">Choose your image</div>
-        <div class="card-body">
-          <input type="file" name="file" id="{{ avatar.image.name }}">
-          <button class="btn btn-primary mt-3">Submit form</button>
-        </div>
-      </div>
-    </div>
-    <div class="col-8">
-      {% include 'inputs/s3_debug_info', type: 'image', field: avatar %}
-    </div>
-  </div>
-</form>
+{% include 'update_profile/html_form' %}
 
 <hr>
 
-<script src="{{ 'DirectUpload.js' | asset_url }}" defer></script>
+{% include 'update_profile/ajax' %}
 
-<h2 id="#direct-upload-using-ajax">Direct upload using AJAX</h2>
-<form action="{{ image_s3_upload.direct_upload_url }}"
-  data-direct-upload-ajax="form">
+<hr>
 
-  {% for input in image_s3_upload.form_data %}
-    <input type="hidden" name="{{ input[0] }}" value="{{ input[1] }}">
-  {% endfor %}
-  <input type="hidden" name="x-amz-meta-metadata" value="{}">
-
-  <div class="row">
-    <div class="col-4">
-      <div class="card">
-        <div class="card-header">Choose your image</div>
-        <div class="card-body">
-          <input type="file" name="file" id="{{ avatar.image.name }}" data-direct-upload-ajax="file">
-          <div class="progress invisible mt-3" data-direct-upload-ajax="progress">
-            <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" style="width: 100%"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-8">
-      <div class="card">
-        <div class="card-header">Preview</div>
-        <div class="card-body" data-direct-upload-ajax="preview"></div>
-      </div>
-    </div>
-  </div>
-
-</form>
+{% include 'update_profile/name_with_ajax' %}
