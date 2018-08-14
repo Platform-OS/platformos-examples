@@ -38,11 +38,23 @@
     <div class="col-8">
       <div class="card">
         <div class="card-header">Preview</div>
-        <div class="card-body" data-s3-direct-upload-field="preview"></div>
-        <div class="card-body">
-          <code>
-            {{ form_builder }}
-          </code>
+        <div class="card-body" data-s3-direct-upload-field="preview">
+          {% if avatar.image.value %}
+            <figure class="figure mr-3 w-25 mw-25 pr-3 border-right">
+              <a href="{{ avatar.image.value }}" target="_blank">
+                <img src="{{ avatar.image.value }}" width="200" class="figure-img img-fluid rounded">
+              </a>
+              <figcaption class="figure-caption">Your saved image</figcaption>
+            </figure>
+          {% endif %}
+        </div>
+
+        <div class="card-body border-top pt-3">
+          Additional info about image from the server:
+          <ul>
+            <li>Field name: <code>{{ avatar.image.name }}</code></li>
+            <li>Field value: <code>{{ avatar.image.value }}</code></li>
+          </ul>
         </div>
       </div>
     </div>
