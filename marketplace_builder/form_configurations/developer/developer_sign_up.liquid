@@ -1,7 +1,7 @@
 ---
 name: developer_sign_up
 resource: User
-return_to: '/sign-in'
+return_to: /sign-in
 configuration:
   email:
   password:
@@ -28,50 +28,41 @@ sms_notifications:
 api_call_notifications:
   - ping_example_com_on_user_sign_up
 ---
-{% form %}
+{% form html-class: 'w-50' %}
 
-  <div>
-    <label for="form_first_name"><abbr title="required">*</abbr> First name</label>
-    <div>
-      <input class="string required" name="{{ form_builder.fields.first_name.name }}" value="{{ form_builder.fields.first_name.value }}" id="form_first_name" type="text">
-      {% if form_builder.errors.first_name %}
-        <p>{{ form_builder.errors.first_name }}</p>
-      {% endif %}
-    </div>
+  <div class="form-group">
+    <label for="form_first_name">First name</label>
+    <input class="form-control" name="{{ form_builder.fields.first_name.name }}" value="{{ form_builder.fields.first_name.value }}" id="form_first_name" type="text">
+    {% if form_builder.errors.first_name %}
+      <p>{{ form_builder.errors.first_name }}</p>
+    {% endif %}
   </div>
 
-  <div>
-    <label for="form_email"><abbr title="required">*</abbr> Email</label>
-    <div>
-      <input class="string email required" name="{{ form_builder.fields.email.name }}" value="{{ form_builder.fields.email.value }}" id="form_email" type="email">
-      {% if form_builder.errors.email %}
-        <p>{{ form_builder.errors.email }}</p>
-      {% endif %}
-    </div>
+  <div class="form-group">
+    <label for="form_email">Email</label>
+    <input class="form-control" name="{{ form_builder.fields.email.name }}" value="{{ form_builder.fields.email.value }}" id="form_email" type="email">
+    {% if form_builder.errors.email %}
+      <p>{{ form_builder.errors.email }}</p>
+    {% endif %}
   </div>
 
-  <div>
+  <div class="form-group">
     <label for="form_password">Password</label>
-    <div>
-      <input class="password optional" name="{{ form_builder.fields.password.name }}" id="form_password" type="password">
-      {% if form_builder.errors.password %}
-        <p>{{ form_builder.errors.password }}</p>
-      {% endif %}
-    </div>
+    <input class="form-control" name="{{ form_builder.fields.password.name }}" id="form_password" type="password">
+    {% if form_builder.errors.password %}
+      <p>{{ form_builder.errors.password }}</p>
+    {% endif %}
   </div>
 
-  <div>
-    <label for="form_mobile_number"><abbr title="required">*</abbr> Mobile number</label>
-    <div>
-      <input class="string required" placeholder="Please include country code" name="{{ form_builder.fields.mobile_number.name }}" value="{{ form_builder.fields.mobile_number.value }}" id="form_mobile_number" type="text">
-      {% if form_builder.errors.mobile_number %}
-        <p>{{ form_builder.errors.mobile_number }}</p>
-      {% endif %}
-    </div>
+  <div class="form-group">
+    <label for="form_mobile_number">Mobile number</label>
+    <input class="form-control" placeholder="Please include country code" name="{{ form_builder.fields.mobile_number.name }}" value="{{ form_builder.fields.mobile_number.value }}" id="form_mobile_number" type="text">
+    {% if form_builder.errors.mobile_number %}
+      <p>{{ form_builder.errors.mobile_number }}</p>
+    {% endif %}
   </div>
 
   <input class="hidden" value="{{ form_builder.fields.profiles.developer.enabled.value }}" name="{{ form_builder.fields.profiles.developer.enabled.name }}" id="form_profiles_attributes_developer_attributes_enabled" type="hidden">
 
-  {% submit Create %}
-
+  <button class="btn btn-primary">Create</button>
 {% endform %}
