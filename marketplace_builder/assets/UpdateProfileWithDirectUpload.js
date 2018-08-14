@@ -34,17 +34,20 @@
   const disableFileInput = () => $fileField.setAttribute('disabled', 'disabled');
 
   const updateFileUrl = data => {
+    // save url where file landed to the database by sending it instead of the file
     const fileUrl = getXMLText(data, "Location");
     q('[data-s3-direct-upload-field="file-url"]').value = fileUrl;
   }
 
   const getFormData = () => {
-    const formdata = new FormData();
+    const formdata = new FormData(); // create empty FormData object
 
+    // append all fields marked by data attribute
     $presignFields.forEach(field => {
       formdata.append(field.name, field.value);
     });
 
+    // and finally, add file as a last field
     formdata.append($fileField.name, $fileField.files[0], getFileName($fileField.value));
 
     return formdata;
@@ -53,7 +56,7 @@
   const sendForm = data => {
     return $.ajax({
       type: "post",
-      url: $form.find('[name="action"]').val(),
+      url: $form.find('[name="action"]').val(), // url to the s3 is saved inside hidden field named action
       contentType: false,
       processData: false,
       beforeSend: progressBar.show,
