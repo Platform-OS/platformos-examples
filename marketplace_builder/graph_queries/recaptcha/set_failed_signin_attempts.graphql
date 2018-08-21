@@ -1,0 +1,8 @@
+mutation set_failed_signin_attempts(
+  $attempts: Any!
+) {
+  session_create_field(
+    name: "failed_attempts",
+    value: $attempts
+  )
+}

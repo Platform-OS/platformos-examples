@@ -1,7 +1,6 @@
 ---
-name: sign_in_with_recaptcha
+name: sign_in_without_recaptcha
 resource: Session
-spam_protection: recaptcha
 configuration:
   email:
   password:
@@ -22,10 +21,10 @@ callback_actions: >
     {% endif %}
   </div>
 
-  <div class="form-group">
-    {{ form_builder.errors.base }}
-    {% spam_protection %}
-  </div>
+  {% if form_builder.errors != empty %}
+    {% assign attempts = context.session.failed_attempts | default: 1 | plus: 1 %}
+    {% execute_query "set_failed_signin_attempts", attempts: attempts %}
+  {% endif %}
 
   <button class="btn btn-primary">Log In</button>
 {% endform %}
