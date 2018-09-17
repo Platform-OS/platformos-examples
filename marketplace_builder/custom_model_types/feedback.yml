@@ -1,0 +1,6 @@
+name: Feedback
+custom_attributes:
+- name: message
+  attribute_type: string
+- name: rate
+  attribute_type: string

@@ -1,0 +1,34 @@
+{% form html-data-form: "update" %}
+  <input type="hidden" name="_method" value="PUT" />
+
+  <div class="card">
+    <div class="card-header">Update existing feedback</div>
+    <div class="card-body">
+
+      <label for="customization_id" class="form-label">Customization ID</label>
+      <input type="text" name='customization_id' value="" required>
+
+      <hr class="hr">
+
+      <div class="row">
+        <label class="col-4">
+          <input type="radio" name='{{ p.rate.name }}' value="Excellent">
+          Excellent
+        </label>
+        <label class="col-4">
+          <input type="radio" name='{{ p.rate.name }}' value="Meh">
+          Meh
+        </label>
+        <label class="col-4">
+          <input type="radio" name='{{ p.rate.name }}' value="Very bad">
+          Very bad
+        </label>
+      </div>
+
+      <label for="update_message">Message</label>
+      <textarea type='text' id="update_message" name='{{ p.message.name }}' class="col-12 form-control"></textarea>
+
+      <button class="btn btn-primary mt-3">Update</button>
+    </div>
+  </div>
+{% endform %}

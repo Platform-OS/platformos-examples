@@ -1,0 +1,15 @@
+{% form html-data-form: "delete" %}
+  <input type="hidden" name="_method" value="DELETE" />
+
+  <div class="card">
+    <div class="card-header">Delete existing feedback</div>
+    <div class="card-body">
+      <label for="customization_id" class="form-label">Customization ID</label>
+      <input type="text" name='customization_id' value="" required>
+
+      <div class="w-100"></div>
+
+      <button class="btn btn-primary mt-3">Delete</button>
+    </div>
+  </div>
+{% endform %}

@@ -1,0 +1,7 @@
+---
+slug: feedback_list
+layout_name: ''
+format: json
+---
+{%- query_graph "feedback", result_name: 'recent', per_page: 10 -%}
+{{ recent.customizations.results | json }}

@@ -1,0 +1,48 @@
+---
+name: feedback_form
+resource: Customization
+resource_owner: anyone
+configuration:
+  properties:
+    rate:
+      validation:
+        presence: true
+    message:
+      validation: { presence: false }
+---
+
+<p>This page is showcasing basic CRUD (Create, Read, Update, Delete) pattern using AJAX and <a href="https://documentation.platform-os.com/reference/custom-model-types/custom-model-types" target="blank">customization</a>.</p>
+<p>Data will be saved/updated/deleted using native <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" target="_blank" rel="noopener">fetch</a>.
+If you need support for legacy browsers, take a look at excellent <a href="http://polyfill.io" target="_blank" rel="noopener">polyfill service</a>.</p>
+<p>Data retrieval will be done using <a href="https://documentation.platform-os.com/get-started/pages/pages" target="_blank">Liquid page</a> (in <a href="https://documentation.platform-os.com/get-started/pages/pages#formats" target="_blank">JSON format</a>), returning results obtained by GraphQL.</p>
+
+<p>Errors are logged using <code>console.log()</code>, so keep your dev tools open. You will find additional debug info in javascript console to make more obvious whats happening in the javascript.</p>
+
+<hr class="hr">
+
+<div class="card">
+  <div class="card-header">Simple console log</div>
+  <div class="card-body" style="max-height: 150px; overflow-y: auto;">
+    <ul id="logger"></ul>
+  </div>
+</div>
+
+<hr class="hr">
+
+<h2 id="read_example">[R]ead example</h2>
+{% include 'feedback/read' %}
+
+<hr class="hr">
+
+<h2 id="create_example">[C]reate example</h2>
+{% include 'feedback/create' %}
+
+<hr class="hr">
+
+<h2 id="update_example">[U]pdate example</h2>
+{% include 'feedback/update' %}
+
+<hr class="hr">
+
+<h2 id="delete_example">[D]elete example</h2>
+{% include 'feedback/delete' %}
