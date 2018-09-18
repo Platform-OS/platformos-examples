@@ -12,25 +12,29 @@ configuration:
 ---
 
 <div class="row">
-  <div class="col-12 col-xl-6">
-    <p>This page is showcasing basic CRUD (Create, Read, Update, Delete) pattern using AJAX and <a href="https://documentation.platform-os.com/reference/custom-model-types/custom-model-types" target="blank">customization</a>.</p>
-    <p>Data will be saved/updated/deleted using native <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" target="_blank" rel="noopener">fetch</a>.
-    If you need support for legacy browsers, take a look at excellent <a href="http://polyfill.io" target="_blank" rel="noopener">polyfill service</a>.</p>
-    <p>Data retrieval will be done using <a href="https://documentation.platform-os.com/get-started/pages/pages" target="_blank">Liquid page</a> (in <a href="https://documentation.platform-os.com/get-started/pages/pages#formats" target="_blank">JSON format</a>), returning results obtained by GraphQL.</p>
+  <div class="col-12 col-lg-4">
+    <div class="card">
+      <div class="card-body">
+        <p>This page is showcasing basic CRUD (Create, Read, Update, Delete) pattern using AJAX and <a href="https://documentation.platform-os.com/reference/custom-model-types/custom-model-types" target="blank">customization</a>.</p>
+        <p>Data will be saved/updated/deleted using native <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" target="_blank" rel="noopener">fetch</a>.
+        If you need support for legacy browsers, take a look at excellent <a href="http://polyfill.io" target="_blank" rel="noopener">polyfill service</a>.</p>
+        <p>Data retrieval will be done using <a href="https://documentation.platform-os.com/get-started/pages/pages" target="_blank">Liquid page</a> (in <a href="https://documentation.platform-os.com/get-started/pages/pages#formats" target="_blank">JSON format</a>), returning results obtained by GraphQL.</p>
 
-    <p>Errors are logged using <code>console.log()</code>, so keep your dev tools open. You will find additional debug info in javascript console to make more obvious whats happening in the javascript.</p>
+        <p>Errors are logged using <code>console.log()</code>, so keep your dev tools open. You will find additional debug info in javascript console to make more obvious whats happening in the javascript.</p>
+      </div>
+    </div>
   </div>
-  <div class="col-12 col-xl-6">
+  <div class="col-12 col-lg-8">
     <div class="card">
       <div class="card-header">Simple console log</div>
-      <div class="card-body" style="max-height: 150px; overflow-y: auto;">
+      <div class="card-body" style="max-height: 175px; overflow-y: auto;">
         <ul id="logger"></ul>
       </div>
     </div>
   </div>
 </div>
 
-<div class="row mt-5">
+<div class="row mt-3">
   <div class="col-12">
     <h2 id="read_example">[R]ead</h2>
     {% include 'feedback/read' %}
