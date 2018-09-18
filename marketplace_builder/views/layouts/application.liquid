@@ -5,7 +5,7 @@
 </head>
 
 <body>
-  <div class="container">
+  <div class="{% if page.metadata.full_width %}container-fluid{% else %}container{% endif %}">
     {% include 'shared/header' %}
 
     <main>

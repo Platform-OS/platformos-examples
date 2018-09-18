@@ -1,4 +1,3 @@
-
 {% form html-data-form: "create" %}
   {% assign p = form_builder.fields.properties %}
   <div class="card">
@@ -19,10 +18,7 @@
         </label>
       </div>
 
-      <div class="w-100"></div>
-
-      <label for="create_message">Message</label>
-      <textarea type='text' id="create_message" name='{{ p.message.name }}' class="col-12 form-control"></textarea>
+      <textarea type='text' id="create_message" name='{{ p.message.name }}' class="col-12 form-control mt-3" placeholder="Message"></textarea>
 
       <button class="btn btn-primary mt-3">Create</button>
     </div>

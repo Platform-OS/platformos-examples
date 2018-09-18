@@ -1,0 +1,14 @@
+{
+  "name": "marketplace-example",
+  "version": "1.0.0",
+  "description": "Examples repository for features described at https://documentation.platform-os.com",
+  "scripts": {
+    "deploy": "marketplace-kit deploy -f"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdyd-dev/marketplace-nearme-example.git"
+  },
+  "license": "ISC",
+  "homepage": "https://documentation.platform-os.com"
+}

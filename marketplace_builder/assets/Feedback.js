@@ -53,7 +53,7 @@ const updateReadTable = data => {
       <td>${feedback.created_at}</td>
       <td>${feedback.updated_at}</td>
       <td>${feedback.rate}</td>
-      <td>${escape(feedback.message)}</td>
+      <td>${feedback.message}</td>
     </tr>
   `
   ).join('');

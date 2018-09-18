@@ -5,8 +5,7 @@
     <div class="card-header">Update existing feedback</div>
     <div class="card-body">
 
-      <label for="customization_id" class="form-label">Customization ID</label>
-      <input type="text" name='customization_id' value="" required>
+      <input type="text" name='customization_id' value="" class="form-control" placeholder="Customization ID" required>
 
       <hr class="hr">
 
@@ -25,8 +24,7 @@
         </label>
       </div>
 
-      <label for="update_message">Message</label>
-      <textarea type='text' id="update_message" name='{{ p.message.name }}' class="col-12 form-control"></textarea>
+      <textarea type='text' id="update_message" name='{{ p.message.name }}' class="col-12 form-control mt-3" placeholder="Message"></textarea>
 
       <button class="btn btn-primary mt-3">Update</button>
     </div>
