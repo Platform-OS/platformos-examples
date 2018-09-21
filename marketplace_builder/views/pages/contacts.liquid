@@ -1,0 +1,11 @@
+---
+slug: contacts
+---
+{%- assign id = context.params.slug2 -%}
+{%- query_graph "get_contacts", result_name: "g", id: id -%}
+
+{%- if id == blank -%}
+  {% include 'contacts/list', contacts: g.customizations.results %}
+{%- else -%}
+  {% include 'contacts/show', contact: g.customizations.results.first %}
+{%- endif -%}

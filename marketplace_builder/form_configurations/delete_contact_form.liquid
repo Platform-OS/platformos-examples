@@ -1,0 +1,11 @@
+---
+name: delete_contact_form
+resource: Customization
+resource_owner: anyone
+redirect_to: /contacts
+configuration: {}
+---
+
+{% form method: "delete" %}
+  <button type="submit">Delete</button>
+{% endform %}

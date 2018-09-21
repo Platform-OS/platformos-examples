@@ -1,0 +1,8 @@
+name: Contact
+custom_attributes:
+- name: name
+  attribute_type: string
+- name: email
+  attribute_type: string
+- name: description
+  attribute_type: string
