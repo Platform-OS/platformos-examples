@@ -1,8 +1,9 @@
-<h1>List View</h1>
+<h2>Recent contacts</h2>
+
 {% if contacts == blank %}
-  You don't have any contacts yet. Use the form below to add some.
+  There is no contacts yet. Use the form below to add some.
 {% else %}
-  <table>
+  <table class="table table-striped">
     <tr>
       <th>ID</th>
       <th>Email</th>
@@ -14,13 +15,14 @@
     <tr>
       <td>{{ contact.id }}</td>
       <td>{{ contact.email }}</td>
-      <td><a href="/contacts/{{ contact.id }}">Details</a></td>
-      <td><a href="/contacts/edit/{{ contact.id }}">Edit</a></td>
-      <td>{% include_form "delete_contact_form", resource_id: contact.id,
-          resource_type: 'contact' %}</td>
-
+      <td><a href="/contacts/{{ contact.id }}" class="btn btn-link">Details</a></td>
+      <td><a href="/contacts/edit/{{ contact.id }}" class="btn btn-link">Edit</a></td>
+      <td>{% include_form "delete_contact_form", resource_id: contact.id, resource_type: 'contact' %}</td>
     </tr>
     {% endfor %}
   </table>
 {% endif %}
+
+<hr class="hr">
+
 {% include_form 'contact_form', parent_resource_id: 'contact' %}

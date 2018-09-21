@@ -17,38 +17,36 @@ configuration:
         presence: true
 ---
 
+<h2>Create contact</h2>
+
 {% form %}
   <div class="row">
-    <label for="name">Name:</label>
-    <input name="{{ form_builder.fields.properties.name.name }}" value="{{ form_builder.fields.properties.name.value }}" id="name" type="text">
-    {% if form_builder.errors['properties.name'] %}
-      <p>{{ form_builder.errors['properties.name'] }}</p>
-    {% endif %}
+    <div class="form-group col-6">
+      <label for="name">Name:</label>
+      <input name="{{ form_builder.fields.properties.name.name }}" value="{{ form_builder.fields.properties.name.value }}" id="name" type="text" class="form-control">
+      {% if form_builder.errors['properties.name'] %}
+        <p>{{ form_builder.errors['properties.name'] }}</p>
+      {% endif %}
+    </div>
   </div>
   <div class="row">
-    <label for="email">Email:</label>
-    <input name="{{ form_builder.fields.properties.email.name }}" value="{{ form_builder.fields.properties.email.value }}" id="email" type="email">
-    {% if form_builder.errors['properties.email'] %}
-      <p>{{ form_builder.errors['properties.email'] }}</p>
-    {% endif %}
+    <div class="form-group col-6">
+      <label for="email">Email:</label>
+      <input name="{{ form_builder.fields.properties.email.name }}" value="{{ form_builder.fields.properties.email.value }}" id="email" type="email" class="form-control">
+      {% if form_builder.errors['properties.email'] %}
+        <p>{{ form_builder.errors['properties.email'] }}</p>
+      {% endif %}
+    </div>
   </div>
   <div class="row">
-    <label for="description">Description:</label>
-    <textarea name="{{ form_builder.fields.properties.description.name }}" id="description">{{ form_builder.fields.properties.description.value }}</textarea>
-    {% if form_builder.errors['properties.description'] %}
-      <p>{{ form_builder.errors['properties.description'] }}</p>
-    {% endif %}
+    <div class="form-group col-6">
+      <label for="description">Description:</label>
+      <textarea name="{{ form_builder.fields.properties.description.name }}" id="description" class="form-control">{{ form_builder.fields.properties.description.value }}</textarea>
+      {% if form_builder.errors['properties.description'] %}
+        <p>{{ form_builder.errors['properties.description'] }}</p>
+      {% endif %}
+    </div>
   </div>
 
-  <button>Save</button>
+  <button class="btn btn-primary btn-lg">Save</button>
 {% endform %}
-
-
-<style>
-  label { width: 100px; font-weight: 600; }
-  input, textarea { width: 300px }
-  .row { padding: 15px }
-  td, th { padding: 5px; border-bottom: 1px solid grey; }
-</style>
-
-
