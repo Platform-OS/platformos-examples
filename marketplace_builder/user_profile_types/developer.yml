@@ -8,5 +8,7 @@ custom_attributes:
   attribute_type: float
 - name: avatar
   attribute_type: photo
+- name: banner
+  attribute_type: photo
 - name: cv
   attribute_type: custom_attachment

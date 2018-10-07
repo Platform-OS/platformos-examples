@@ -1,0 +1,12 @@
+query get_developer_imges($user_id: ID!) {
+  user(id: $user_id) {
+    profile(profile_type: "developer") {
+      avatar: custom_image(name: "avatar") {
+        url(version: "transformed")
+      }
+      banner: custom_image(name: "banner") {
+        url(version: "transformed")
+      }
+    }
+  }
+}

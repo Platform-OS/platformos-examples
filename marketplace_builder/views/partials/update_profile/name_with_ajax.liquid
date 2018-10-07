@@ -1,5 +1,11 @@
 <script src="{{ 'UpdateProfileWithDirectUpload.js' | asset_url }}" defer></script>
 
+{% query_graph 'get_developer_images', result_name: 'g', user_id: current_user.id %}
+
+{% assign profile = g.user.profile %}
+{% assign avatar_url = profile.avatar.url %}
+{% assign banner_url = profile.banner.url %}
+
 <h2 id="#update-profile-with-direct-upload">Uploading Files Directly to Amazon S3 and using uploaded file as an avatar</h2>
 
 {% form html-data-s3-direct-upload: 'form' %}
@@ -10,7 +16,7 @@
   <input type="hidden" name="action" value="{{ image_s3_upload.direct_upload_url }}" disabled>
 
   <div class="row">
-    <div class="col-4">
+    <div class="col-12 col-md-4">
 
       <div class="card">
         <div class="card-header">Profile text field</div>
@@ -23,38 +29,59 @@
           <hr>
 
           <label for="{{ avatar.image.name }}">Avatar</label>
-          <input type="file" name="file" id="{{ avatar.image.name }}" data-s3-direct-upload-field="file">
-          <input type="hidden" name="{{ avatar.image.name }}" data-s3-direct-upload-field="file-url">
+          <input type="file" name="file" id="{{ avatar.image.name }}" data-s3-direct-upload-field-input="avatar">
+          <input type="hidden" name="{{ avatar.image.name }}" data-s3-direct-upload-field-file-url="avatar">
 
-          <div class="progress invisible mt-3" data-s3-direct-upload="progress">
+          <div class="progress invisible mt-3" data-s3-direct-upload-progress="avatar">
             <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" style="width: 100%"></div>
           </div>
 
-          <button class="btn btn-primary mt-3">Update profile</button>
+          <hr>
+
+          <label for="{{ banner.image.name }}">Banner</label>
+          <input type="file" name="file" id="{{ banner.image.name }}" data-s3-direct-upload-field-input="banner">
+          <input type="hidden" name="{{ banner.image.name }}" data-s3-direct-upload-field-file-url="banner">
+
+          <div class="progress invisible mt-3" data-s3-direct-upload-progress="banner">
+            <div class="progress-bar progress-bar-striped bg-info progress-bar-animated" style="width: 100%"></div>
+          </div>
+
+          <button class="btn btn-primary mt-3">Save changes</button>
         </div>
       </div>
     </div>
 
-    <div class="col-8">
+    <div class="col-12 col-md-8">
       <div class="card">
         <div class="card-header">Preview</div>
-        <div class="card-body" data-s3-direct-upload-field="preview">
-          {% if avatar.image.value %}
-            <figure class="figure mr-3 w-25 mw-25 pr-3 border-right">
-              <a href="{{ avatar.image.value }}" target="_blank">
-                <img src="{{ avatar.image.value }}" width="200" class="figure-img img-fluid rounded">
-              </a>
-              <figcaption class="figure-caption">Your saved image</figcaption>
-            </figure>
-          {% endif %}
-        </div>
 
-        <div class="card-body border-top pt-3">
-          Additional info about image from the server:
-          <ul>
-            <li>Field name: <code>{{ avatar.image.name }}</code></li>
-            <li>Field value: <code>{{ avatar.image.value }}</code></li>
-          </ul>
+        <div class="row">
+          <div class="col-6 border-right">
+            <div class="card-body" data-s3-direct-upload-field-preview="avatar">
+              {% if avatar_url %}
+                <figure class="figure mr-3 pr-3">
+                  <p class="text-muted">Current avatar</p>
+                  <a href="{{ avatar_url }}" target="_blank">
+                    <img src="{{ avatar_url }}" alt="{{ avatar_url }}" width="200" class="figure-img img-fluid rounded">
+                  </a>
+                </figure>
+                <hr class="hr">
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="card-body" data-s3-direct-upload-field-preview="banner">
+              {% if banner_url %}
+                <figure class="figure mr-3 pr-3">
+                  <p class="text-muted">Current banner</p>
+                  <a href="{{ banner_url }}" target="_blank">
+                    <img src="{{ banner_url }}" alt="{{ banner_url }}" width="200" class="figure-img img-fluid rounded">
+                  </a>
+                </figure>
+                <hr class="hr">
+              {% endif %}
+            </div>
+          </div>
         </div>
       </div>
     </div>

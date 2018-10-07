@@ -1,82 +1,100 @@
-(function() {
-  const qa = s => [...document.querySelectorAll(s)];
-  const q = s => document.querySelector(s);
+const qa = s => Array.prototype.slice.call(document.querySelectorAll(s));
+const q = s => document.querySelector(s);
+// prettier-ignore
+const getXMLText = (data, key) => $(data).find(key).text() || '';
 
-  const $form = $('[data-s3-direct-upload="form"]');
-  const $previewContainer = $form.find('[data-s3-direct-upload-field="preview"]');
-  const $fileField = q('[data-s3-direct-upload-field="file"]');
-  const $presignFields = qa('[data-s3-direct-upload-field="presign"]');
-  const $progress = $form.find('[data-s3-direct-upload="progress"]');
+class FileUpload {
+  constructor({ name }) {
+    if (!name) {
+      console.error('Missing name argument.');
+      return false;
+    }
 
-  const getXMLText = (data, key) => $(data).find(key).text() || '';
-  const getFileName = () => $form.find('[name="file"]').val().split("/").pop().split("\\").pop();
+    this.name = name;
 
-  const progressBar = {
-    show: () => $progress.removeClass('invisible'),
-    hide: () => $progress.addClass('invisible')
+    this.fileInput = q(`[data-s3-direct-upload-field-input="${this.name}"]`);
+    this.presignFields = qa('[data-s3-direct-upload-field="presign"]');
+
+    this.form = $(this.fileInput).closest('form');
+    this.action = this.form.find('[name="action"]').val();
+    this.fileUrl = q(`[data-s3-direct-upload-field-file-url="${this.name}"]`);
+    this.progress = this.form.find(`[data-s3-direct-upload-progress="${this.name}"]`);
+    this.previewContainer = this.form.find(`[data-s3-direct-upload-field-preview="${this.name}"]`);
+
+    this.attachEventHandlers();
   }
 
-  const updatePreview = data => {
-    const imageUrl = getXMLText(data, "Location");
+  onFileChange() {
+    this.sendForm()
+      .done(this.updateFileUrl.bind(this)) // save path to uploaded file in db
+      .done(this.disableFileInput.bind(this)) // do not submit files in form, since they are not used
+      .done(this.updatePreview.bind(this)) // update preview to show what has been uploaded to s3
+      .always(() => (this.showProgressBar = false));
+  }
+
+  attachEventHandlers() {
+    $(this.fileInput).on('change', this.onFileChange.bind(this));
+  }
+
+  updateFileUrl(data) {
+    this.fileUrl.value = getXMLText(data, 'Location');
+  }
+
+  get fileName() {
+    // prettier-ignore
+    return this.fileInput.value.split('/').pop().split('\\').pop();
+  }
+
+  get fileSize() {
+    return this.fileInput.files[0].size;
+  }
+
+  disableFileInput() {
+    this.fileInput.setAttribute('disabled', 'disabled');
+  }
+
+  updatePreview(data) {
+    const imageUrl = getXMLText(data, 'Location');
 
     const previewHtml = `
-      <figure class="figure mr-3 w-25 mw-25">
+      <figure class="figure mr-3">
+        <p class="text-muted">Newly uploaded ${this.name}</p>
         <a href="${imageUrl}" target="_blank">
-          <img src="${imageUrl}" width="150" class="figure-img img-fluid rounded">
+          <img src="${imageUrl}" class="figure-img img-fluid rounded">
         </a>
-        <figcaption class="figure-caption">New image: ${getFileName()}</figcaption>
+        <figcaption class="figure-caption">
+          Name: ${this.fileName}
+          <br/>
+          Size: ${this.fileSize} bytes
+        </figcaption>
       </figure>
     `;
 
-    $previewContainer.append(previewHtml);
-  };
-
-  const disableFileInput = () => $fileField.setAttribute('disabled', 'disabled');
-
-  const updateFileUrl = data => {
-    // save url where file landed to the database by sending it instead of the file
-    const fileUrl = getXMLText(data, "Location");
-    q('[data-s3-direct-upload-field="file-url"]').value = fileUrl;
+    this.previewContainer.append(previewHtml);
   }
 
-  const getFormData = () => {
-    const formdata = new FormData(); // create empty FormData object
-
-    // append all fields marked by data attribute
-    $presignFields.forEach(field => {
-      formdata.append(field.name, field.value);
-    });
-
-    // and finally, add file as a last field
-    formdata.append($fileField.name, $fileField.files[0], getFileName($fileField.value));
-
+  get formData() {
+    const formdata = new FormData();
+    this.presignFields.forEach(field => formdata.append(field.name, field.value));
+    formdata.append(this.fileInput.name, this.fileInput.files[0], this.fileName);
     return formdata;
   }
 
-  const sendForm = data => {
-    return $.ajax({
-      type: "post",
-      url: $form.find('[name="action"]').val(), // url to the s3 is saved inside hidden field named action
-      contentType: false,
-      processData: false,
-      beforeSend: progressBar.show,
-      data: data
-    });
-  };
-
-  const onFileChange = () => {
-    const formData = getFormData();
-
-    sendForm(formData)
-      .done(updateFileUrl)
-      .done(updatePreview)
-      .done(disableFileInput)
-      .always(progressBar.hide);
-  };
-
-  const initialize = () => {
-    $form.find('[name="file"]').on("change", onFileChange);
+  set showProgressBar(showOrHide) {
+    this.progress.toggleClass('invisible', !showOrHide);
   }
 
-  initialize();
-})();
+  sendForm() {
+    return $.ajax({
+      type: 'post',
+      url: this.action,
+      contentType: false,
+      processData: false,
+      beforeSend: () => (this.showProgressBar = true),
+      data: this.formData
+    });
+  }
+}
+
+new FileUpload({ name: 'avatar' });
+new FileUpload({ name: 'banner' });
