@@ -2,4 +2,12 @@
 slug: update_profile
 ---
 
+{% unless current_user.id %}
+  <div class="alert alert-info" role="alert">
+    <strong>Heads up!</strong> Those examples need you to be logged in as developer.
+    <br/>
+    If you dont have developer account, <a href="/developer/sign-up">create it here</a>.
+  </div>
+{% endunless %}
+
 {% include_form 'update_profile', resource_id: context.current_user.id %}

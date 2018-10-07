@@ -1,6 +1,8 @@
 <script src="{{ 'UpdateProfileWithDirectUpload.js' | asset_url }}" defer></script>
 
-{% query_graph 'get_developer_images', result_name: 'g', user_id: current_user.id %}
+{% if current_user.id %}
+  {% query_graph 'get_developer_images', result_name: 'g', user_id: current_user.id %}
+{% endif %}
 
 {% assign profile = g.user.profile %}
 {% assign avatar_url = profile.avatar.url %}
