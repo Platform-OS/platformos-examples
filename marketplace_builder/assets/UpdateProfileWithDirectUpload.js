@@ -26,18 +26,14 @@ class FileUpload {
 
   onFileChange() {
     this.sendForm()
-      .done(this.updateFileUrl.bind(this)) // save path to uploaded file in db
-      .done(this.disableFileInput.bind(this)) // do not submit files in form, since they are not used
+      .done(data => (this.fileUrl.value = getXMLText(data, 'Location'))) // save path to uploaded file in db
+      .done(() => this.fileInput.setAttribute('disabled', 'disabled')) // do not submit files in form, since they are not used
       .done(this.updatePreview.bind(this)) // update preview to show what has been uploaded to s3
       .always(() => (this.showProgressBar = false));
   }
 
   attachEventHandlers() {
     $(this.fileInput).on('change', this.onFileChange.bind(this));
-  }
-
-  updateFileUrl(data) {
-    this.fileUrl.value = getXMLText(data, 'Location');
   }
 
   get fileName() {
@@ -47,10 +43,6 @@ class FileUpload {
 
   get fileSize() {
     return this.fileInput.files[0].size;
-  }
-
-  disableFileInput() {
-    this.fileInput.setAttribute('disabled', 'disabled');
   }
 
   updatePreview(data) {
