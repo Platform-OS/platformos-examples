@@ -39,7 +39,7 @@ configuration:
 
   <div class="form-group">
     <label for="form_password">Password</label>
-    <input class="form-control name="{{ form_builder.fields.password.name }}" id="form_password" type="password">
+    <input class="form-control" name="{{ form_builder.fields.password.name }}" id="form_password" type="password">
     {% if form_builder.errors.password %}
       <p>{{ form_builder.errors.password }}</p>
     {% endif %}
