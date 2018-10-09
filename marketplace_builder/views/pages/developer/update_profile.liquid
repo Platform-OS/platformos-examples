@@ -1,8 +1,10 @@
 ---
 slug: update_profile
+metadata:
+  full_width: true
 ---
 
-{% unless current_user.id %}
+{% unless context.current_user.id %}
   <div class="alert alert-info" role="alert">
     <strong>Heads up!</strong> Those examples need you to be logged in as developer.
     <br/>

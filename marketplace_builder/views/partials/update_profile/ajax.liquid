@@ -1,3 +1,7 @@
+{% assign profile = form_builder.fields.profiles.developer %}
+{% assign avatar = profile.custom_images.avatar %}
+{% assign image_s3_upload = avatar.image.s3_upload %}
+
 <script src="{{ 'DirectUpload.js' | asset_url }}" defer></script>
 
 <h2 id="#direct-upload-using-ajax">Direct upload using AJAX</h2>

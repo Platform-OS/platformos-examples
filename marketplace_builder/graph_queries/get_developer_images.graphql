@@ -1,6 +1,6 @@
 query get_developer_images($user_id: ID!) {
   user(id: $user_id) {
-    profile(profile_type: "developer") {
+    images: profile(profile_type: "developer") {
       avatar: custom_image(name: "avatar") {
         url(version: "transformed")
       }

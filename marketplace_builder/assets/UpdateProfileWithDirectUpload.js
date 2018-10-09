@@ -16,12 +16,16 @@ class FileUpload {
     this.presignFields = qa('[data-s3-direct-upload-field="presign"]');
 
     this.form = $(this.fileInput).closest('form');
-    this.action = this.form.find('[name="action"]').val();
+    this.action = this.form.find('[name="action"]').val(); // get url from hidden input named action
     this.fileUrl = q(`[data-s3-direct-upload-field-file-url="${this.name}"]`);
     this.progress = this.form.find(`[data-s3-direct-upload-progress="${this.name}"]`);
     this.previewContainer = this.form.find(`[data-s3-direct-upload-field-preview="${this.name}"]`);
 
     this.attachEventHandlers();
+  }
+
+  attachEventHandlers() {
+    $(this.fileInput).on('change', this.onFileChange.bind(this));
   }
 
   onFileChange() {
@@ -32,37 +36,15 @@ class FileUpload {
       .always(() => (this.showProgressBar = false));
   }
 
-  attachEventHandlers() {
-    $(this.fileInput).on('change', this.onFileChange.bind(this));
-  }
-
-  get fileName() {
-    // prettier-ignore
-    return this.fileInput.value.split('/').pop().split('\\').pop();
-  }
-
-  get fileSize() {
-    return this.fileInput.files[0].size;
-  }
-
-  updatePreview(data) {
-    const imageUrl = getXMLText(data, 'Location');
-
-    const previewHtml = `
-      <figure class="figure mr-3">
-        <p class="text-muted">Newly uploaded ${this.name}</p>
-        <a href="${imageUrl}" target="_blank">
-          <img src="${imageUrl}" class="figure-img img-fluid rounded">
-        </a>
-        <figcaption class="figure-caption">
-          Name: ${this.fileName}
-          <br/>
-          Size: ${this.fileSize} bytes
-        </figcaption>
-      </figure>
-    `;
-
-    this.previewContainer.append(previewHtml);
+  sendForm() {
+    return $.ajax({
+      type: 'post',
+      url: this.action,
+      contentType: false,
+      processData: false,
+      beforeSend: () => (this.showProgressBar = true),
+      data: this.formData
+    });
   }
 
   get formData() {
@@ -76,17 +58,36 @@ class FileUpload {
     this.progress.toggleClass('invisible', !showOrHide);
   }
 
-  sendForm() {
-    return $.ajax({
-      type: 'post',
-      url: this.action,
-      contentType: false,
-      processData: false,
-      beforeSend: () => (this.showProgressBar = true),
-      data: this.formData
-    });
+  updatePreview(data) {
+    const imageUrl = getXMLText(data, 'Location');
+
+    const previewHtml = `
+      <figure class="figure mr-3">
+        <p class="text-muted">Newly uploaded ${this.name}</p>
+        <a href="${imageUrl}" target="_blank">
+          <img src="${imageUrl}" class="figure-img img-fluid rounded" width="200">
+        </a>
+        <figcaption class="figure-caption">
+          Name: ${this.fileName}
+          <br/>
+          Size: ${this.fileSize} bytes
+        </figcaption>
+      </figure>
+    `;
+
+    this.previewContainer.append(previewHtml);
+  }
+
+  get fileName() {
+    // prettier-ignore
+    return this.fileInput.value.split('/').pop().split('\\').pop();
+  }
+
+  get fileSize() {
+    return this.fileInput.files[0].size;
   }
 }
 
+// Initialize fileupload class for avatar and banner images
 new FileUpload({ name: 'avatar' });
 new FileUpload({ name: 'banner' });

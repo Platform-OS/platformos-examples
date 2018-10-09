@@ -1,3 +1,7 @@
+{% assign profile = form_builder.fields.profiles.developer %}
+{% assign avatar = profile.custom_images.avatar %}
+{% assign image_s3_upload = avatar.image.s3_upload %}
+
 <h2 id="#direct-upload-using-html-form">Direct upload using HTML form</h2>
 <form action="{{ image_s3_upload.direct_upload_url }}" enctype="multipart/form-data" accept-charset="UTF-8" method="post">
   {% for input in image_s3_upload.form_data %}

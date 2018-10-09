@@ -1,12 +1,23 @@
 <script src="{{ 'UpdateProfileWithDirectUpload.js' | asset_url }}" defer></script>
 
-{% if current_user.id %}
-  {% query_graph 'get_developer_images', result_name: 'g', user_id: current_user.id %}
-{% endif %}
+{% comment %}
+  Used to generate form fields
+{% endcomment %}
+{% assign profile = form_builder.fields.profiles.developer %}
+{% assign avatar = profile.custom_images.avatar %}
+{% assign banner = profile.custom_images.banner %}
+{% assign image_s3_upload = avatar.image.s3_upload %}
+{% assign bio_field = profile.properties.bio %}
 
-{% assign profile = g.user.profile %}
-{% assign avatar_url = profile.avatar.url %}
-{% assign banner_url = profile.banner.url %}
+{% comment %}
+  Used to get field values from the database
+{% endcomment %}
+{% if context.current_user.id %}
+  {% query_graph 'get_developer_images', result_name: 'g', user_id: context.current_user.id %}
+  {% assign images = g.user.images %}
+  {% assign avatar_url = images.avatar.url %}
+  {% assign banner_url = images.banner.url %}
+{% endif %}
 
 <h2 id="#update-profile-with-direct-upload">Uploading Files Directly to Amazon S3 and using uploaded file as an avatar</h2>
 
