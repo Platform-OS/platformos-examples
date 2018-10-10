@@ -5,11 +5,6 @@ const getXMLText = (data, key) => $(data).find(key).text() || '';
 
 class FileUpload {
   constructor({ name }) {
-    if (!name) {
-      console.error('Missing name argument.');
-      return false;
-    }
-
     this.name = name;
 
     this.fileInput = q(`[data-s3-direct-upload-field-input="${this.name}"]`);
