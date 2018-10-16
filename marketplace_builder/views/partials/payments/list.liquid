@@ -1,0 +1,20 @@
+<div class="mt-4">
+  <h4>List of last five test payments:</h4>
+  {% query_graph "get_payments" %}
+  <table>
+      <tr>
+        <th>ID</th>
+        <th>State</th>
+        <th>Payer</th>
+        <th>Amount</th>
+      </tr>
+    {% for payment in  g.payments.results  %}
+      <tr>
+        <td>{{ payment.id }}</td>
+        <td>{{ payment.state }}</td>
+        <td>{{ payment.payer.name }}</td>
+        <td>{{ payment.total_amount_cents | pricify_cents }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>

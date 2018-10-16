@@ -1,0 +1,4 @@
+name: Invoice
+custom_attributes:
+- name: amount
+  attribute_type: float

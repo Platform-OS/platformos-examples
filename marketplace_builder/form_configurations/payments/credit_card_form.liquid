@@ -1,0 +1,33 @@
+---
+name: credit_card_form
+resource: CreditCard
+redirect_to: '/payments'
+configuration:
+default_payload: "{}"
+callback_actions:
+---
+
+{%- query_graph 'get_payment_gateway', result_name: p -%}
+{% assign pub_key = p.payment_gateways.first.test_publishable_key %}
+{% assign pub_key = p.payment_gateways.first.current_mode_publishable_key %}
+{%- form -%}
+
+  {% if form.errors.base != blank %}
+    <div class="form-error">{{ form.errors.base }}</div>
+  {% endif %}
+   
+  <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="{{ pub_key }}"
+    data-name="Platform-OS"
+    data-description="Example Credit Card Store"
+    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    data-locale="auto"
+    data-zip-code="true">
+  </script>
+
+  {%- input_field payment_method_id, as: hidden, value: @p.payment_gateways[0].payment_methods[0].id -%}
+  {%- input_field payment_gateway_id, as: hidden, value: @p.payment_gateways[0].id -%}
+  {%- input_field credit_card_token, as: hidden, data-payment-form-token: true -%}
+
+{% endform %}
