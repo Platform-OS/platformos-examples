@@ -38,10 +38,10 @@ default_payload: |-
     <div class="form-error">{{ form_builder.errors.base }}</div>
   {% endif %}
 
-  <input name="form[payment_method_id]" type="hidden" value="{{ p.payment_gateways[0].payment_methods[0].id }}">
-  <input name="form[currency]" type="hidden" value="USD">
-  <input name="form[total_amount]" type="hidden" value="{{amount}}">
-  <input name="form[payer_id]" type="hidden" value="{{current_user.id }}">
+  <input name="{{ form_builder.fields.payment_method_id.name }}" type="hidden" value="{{ p.payment_gateways[0].payment_methods[0].id }}">
+  <input name="{{ form_builder.fields.currency.name }}" type="hidden" value="USD">
+  <input name="{{ form_builder.fields.total_amount.name }}" type="hidden" value="{{amount}}">
+  <input name="{{ form_builder.fields.payer_id.name }}" type="hidden" value="{{current_user.id }}">
 
   <script async
     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
