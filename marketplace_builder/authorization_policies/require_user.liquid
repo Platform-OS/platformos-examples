@@ -1,7 +1,7 @@
 ---
 name: require_user
 redirect_to: sign-in
-flash_alert: "Please Sign-In for payment example"
+flash_alert: Please Sign-In for payment example
 ---
-{% if context.current_user.id != blank %}true{%endif %}
+{% if context.current_user.id != blank %}true{% endif %}
 
