@@ -5,10 +5,9 @@
     </div>
     <div class="col text-right">
       {% if context.current_user.id %}
-        {% query_graph 'current_user', result_name: g %}
-        {{ g.current_user.email }}
+        {{ context.current_user.email }}
         <br>
-        {% render_form log_out_form %}
+        {% include_form 'log_out_form' %}
       {% else %}
         <a href="/sign-up">Sign up</a>
         |

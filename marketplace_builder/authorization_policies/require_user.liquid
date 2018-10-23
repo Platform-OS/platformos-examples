@@ -3,6 +3,5 @@ name: require_user
 redirect_to: sign-in
 flash_alert: "Please Sign-In for payment example"
 ---
-{%- query_graph "current_user" -%}
-{% if g.current_user.id != blank %}true{%endif %}
+{% if context.current_user.id != blank %}true{%endif %}
 

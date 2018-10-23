@@ -20,6 +20,6 @@ slug: upload_application
 
 <div class="row">
   <div class="col-6">
-    {% render_form 'upload_application', resource_id: @context.current_user.id %}
+    {% include_form 'upload_application', resource_id: context.current_user.id %}
   </div>
 </div>

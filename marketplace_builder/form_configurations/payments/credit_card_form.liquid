@@ -1,13 +1,13 @@
 ---
 name: credit_card_form
 resource: CreditCard
-redirect_to: '/payments'
+redirect_to: /payments
 configuration:
 default_payload: "{}"
 callback_actions:
 ---
 
-{%- query_graph 'get_payment_gateway', result_name: p -%}
+{%- query_graph 'get_payment_gateway', result_name: 'p' -%}
 {% assign pub_key = p.payment_gateways.first.test_publishable_key %}
 {% assign pub_key = p.payment_gateways.first.current_mode_publishable_key %}
 {%- form -%}
@@ -15,7 +15,7 @@ callback_actions:
   {% if form.errors.base != blank %}
     <div class="form-error">{{ form.errors.base }}</div>
   {% endif %}
-   
+
   <script
     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
     data-key="{{ pub_key }}"

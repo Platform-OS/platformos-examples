@@ -1,30 +1,30 @@
 ---
 slug: /
-format: html
-layout_name: application
 ---
-{% query_graph 'current_user', result_name: g %}
+{% query_graph 'current_user', result_name: 'g' %}
 <h1>Welcome
-  {% if g.current_user %}
+  {% if context.current_user %}
     , {{ g.current_user.first_name }}
   {% else %}
     ! <a href="/sign-up">Please sign up</a> or <a href="/sign-in">Sign In</a>
   {% endif %}
 </h1>
-{% if g.current_user %}
-Not you? {% render_form log_out_form %}
+
+{% if context.current_user %}
+  Not you? {% include_form 'log_out_form' %}
 {% endif %}
 
 {% if g.current_user.client_profile %}
   {% assign page = params.page | default: 1 | plus: 0 %}
   <a href="/client/projects/new">Create project</a>
 
-  {% query_graph 'client_projects', result_name: g, creator_id: g.current_user.id, per_page: 20, page: page %}
+  {% query_graph 'client_projects', result_name: 'g', creator_id: context.current_user.id, per_page: 20, page: page %}
 
   {% if g.projects.total_entries > 0 %}
     <ul>
       {% for project in g.projects.results %}
-        <li>{{ project.name }} ({{ project.state }}) - <a href="/client/projects/edit/{{project.slug}}">edit</a> {% render_form destroy_project, resource_id: @project.id %}</li>
+        <li>{{ project.name }} ({{ project.state }}) - <a href="/client/projects/edit/{{project.slug}}">edit</a>
+        {% include_form 'destroy_project', resource_id: project.id %}</li>
       {% endfor %}
     </ul>
     {% assign pages = g.projects.total_pages %}
