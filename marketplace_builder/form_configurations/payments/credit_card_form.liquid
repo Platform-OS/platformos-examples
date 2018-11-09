@@ -12,6 +12,7 @@ callback_actions:
 {% assign pub_key = p.payment_gateways.first.current_mode_publishable_key %}
 {%- form -%}
 
+  {% comment %} TODO: Rewrite to form_builder.errors {% endcomment %}
   {% if form.errors.base != blank %}
     <div class="form-error">{{ form.errors.base }}</div>
   {% endif %}
@@ -26,6 +27,7 @@ callback_actions:
     data-zip-code="true">
   </script>
 
+  {% comment %} TODO: Rewrite to form_builder {% endcomment %}
   {%- input_field payment_method_id, as: hidden, value: @p.payment_gateways[0].payment_methods[0].id -%}
   {%- input_field payment_gateway_id, as: hidden, value: @p.payment_gateways[0].id -%}
   {%- input_field credit_card_token, as: hidden, data-payment-form-token: true -%}
