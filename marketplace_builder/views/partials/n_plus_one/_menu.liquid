@@ -1,0 +1,24 @@
+<ul class="list-inline inline">
+  <li class="list-inline-item btn"><a href="https://documentation-staging.staging.oregon.platform-os.com/tutorials/custom-model-types/loading-related-models" class="menu-link">Docs</a></li> |
+  <li class="list-inline-item btn"><a href="/companies/index" class="menu-link">Companies</a></li> |
+  <li class="list-inline-item btn"><a href="/programmers/index" class="menu-link">Programmers</a></li> |
+  <li class="list-inline-item btn"><a href="/programmers/with_companies_1" class="menu-link">Programmers&Companies Slow</a></li> |
+  <li class="list-inline-item btn"><a href="/programmers/with_companies_2" class="menu-link">Programmers&Companies Correct</a></li> |
+</ul>
+<hr/>
+
+<style>
+  .scroll tbody {
+    display:block;
+    height: 250px;
+    overflow:auto;
+  }
+  thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;/* even columns width , fix width of table too*/
+  }
+  thead {
+    width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+  }
+</style>

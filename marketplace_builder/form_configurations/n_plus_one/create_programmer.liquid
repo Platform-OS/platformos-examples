@@ -1,0 +1,27 @@
+---
+name: create_programmer
+configuration:
+  properties:
+    email:
+    title:
+    expertise:
+    company_id:
+redirect_to: /programmers/list
+resource: Customization
+resource_owner: anyone
+async_callback_actions: {}
+---
+{% form classes: "pure-form pure-form-stacked" -%}
+    <input required="true" name="{{ form_builder.fields.properties.email.name }}" id="email" type="text" placeholder="email">
+    <input required="true" name="{{ form_builder.fields.properties.title.name }}" id="title" type="text" placeholder="title">
+    <input required="true" name="{{ form_builder.fields.properties.expertise.name }}" id="expertise" type="text" placeholder="expertise">
+
+    {% query_graph 'list_companies', result_name: 'gc' %}
+    <select name="{{ form_builder.fields.properties.company_id.name }}">
+      {% for c in gc.companies.results %}
+        {{ c }}
+        <option value="{{c.id}}">{{c.properties.name}}</option>
+      {% endfor %}
+    </select>
+    <input type="submit" value="add programmer">
+{% endform -%}

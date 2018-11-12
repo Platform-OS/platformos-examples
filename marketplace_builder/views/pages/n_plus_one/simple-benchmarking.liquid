@@ -1,0 +1,64 @@
+---
+slug: docs/benchmark
+converter: markdown
+---
+
+# how to measure execution time of liquid code fragments
+
+Let's image we have a slow page and we want to find out what is wrong. There are at least two ways.
+The first is enabling liquid profiling options. Read more about here.
+
+However, if we want something quick and simple we could use `time_diff` filter.
+
+## example
+Let's look at this simple snippet. There two suspecious parts:
+1. graphql query
+2. for loop rendering records.
+
+```liquid
+{% raw %}
+  {% query_graph 'n1_programmers' %}
+
+  {% for programmer in g.programmers.results %}
+    <tr>
+      <td> {{ programmer.properties.email }} </td>
+      <td> {{ programmer.properties.title }} </td>
+      <td>{{ programmer.company.properties.name }} </td>
+    </tr>
+ {% endfor %}
+{% endraw %}
+```
+Assume, there is a problem somewhere. So we have to know how long it takes to process each separate part.
+Using two simple tags `to_time` and then `time_diff` we can get to know some numbers.
+
+```liquid
+{% raw %}
+{% assign __start = "now" | to_time %}
+
+{% query_graph 'programmers' %}
+
+{% assign __graph = "now" | to_time %}
+
+  {% for programmer in g.programmers.results %}
+    <tr>
+      <td> {{ programmer.properties.email }} </td>
+      <td> {{ programmer.properties.title }} </td>
+      <td>{{ programmer.company.properties.name }} </td>
+    </tr>
+ {% endfor %}
+
+{% assign __render = "now" | to_time %}
+
+{% assign _total_duration = __start | time_diff: __render %}
+{% assign _graph_duration = __start | time_diff: __graph %}
+ {% assign _render_duration = __graph | time_diff: __render %}
+
+{% log _total_duration, type: "benchmark-total" %}
+{% log _graph_duration, type: "benchmark-graph" %}
+{% log _render_duration, type: "benchmark-render" %}
+
+{% endraw %}
+```
+
+Finally under `__graph_duration` and `__render_duration` variables we have partial execution times in millisecords. Under `__total_duration` we have overall execution time of code block.
+Test results are sent to your instance log stream and can be accessed by using `marketplace-kit log` tool.

@@ -1,0 +1,59 @@
+---
+slug: companies/seed
+---
+
+{% assign _start = "now" | to_time %}
+
+{% log "adding companies" %}
+{% execute_query "cleanup", result_name: "d" %}
+{% log d, type: 'cleanup-done' %}
+
+{% assign company_ids = "[]" | parse_json %}
+
+{% assign _step_1 = "now" | to_time %}
+{% for i in (1..100) %}
+  {% parse_json company %}
+  {
+  "name": "Company #{{i}}",
+  "email": "company-{{i}}@example.com",
+  "url": "company-{{i}}.com",
+  "number": "{{i}}"
+  }
+  {% endparse_json %}
+
+  {% execute_query "add_company", name: company.name, email: company.email, url: company.url, number: company.number, result_name: '_company' %}
+  {% assign company_ids = company_ids | add_to_array: _company.customization_create.id %}
+{% endfor %}
+
+{% assign _step_2 = "now" | to_time %}
+
+{% assign titles = "senior,junior,middle,cycor" | split: "," %}
+
+{% for i in (1..100) %}
+  {% assign title_id = forloop.index | modulo: 4 %}
+  {% parse_json programmer %}
+  {
+  "title": "{{ titles[title_id] }}",
+  "email": "programmer-{{i}}@example.com",
+  "company_id": "{{company_ids[i]}}"
+  }
+  {% endparse_json %}
+
+  {% execute_query "add_programmer", company_id: programmer.company_id, email: programmer.email, title: programmer.title %}
+{% endfor %}
+
+{% assign _step_3 = "now" | to_time %}
+
+{% assign _duration_total = _start | time_diff: _step_3 %}
+{% assign _duration_1 = _start | time_diff: _step_1 %}
+{% assign _duration_2 = _step_1 | time_diff: _step_2 %}
+{% assign _duration_3 = _step_2 | time_diff: _step_3 %}
+
+<h3>benchmarking results</h3>
+<table class="table table-bordered table-striped">
+  <tr> <td>step</td> <td>result in ms</td> </tr>
+  <tr> <td>total</td> <td>{{_duration_total}}</td> </tr>
+  <tr> <td>cleanup</td> <td>{{_duration_1}}</td> </tr>
+  <tr> <td>add-companies</td> <td>{{_duration_2}}</td> </tr>
+  <tr> <td>add-developers</td> <td>{{_duration_3}}</td> </tr>
+</table>

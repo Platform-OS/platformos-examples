@@ -1,0 +1,45 @@
+---
+slug: programmers/with_companies_2
+layout_name: application
+---
+{% include 'n_plus_one/menu' %}
+
+{% assign _start = "now" | to_time %}
+
+{% query_graph 'n1_programmers_with_companies' %}
+
+{% assign _graph = "now" | to_time %}
+
+<table class="table table-bordered table-striped scroll">
+  <thead>
+    <tr><th colspan="4"> programmers [{{g.programmers.total_entries}}] </th></tr>
+    <tr>
+      <th>id</th>
+      <th>email</th>
+      <th>title</th>
+      <th>company_name</th>
+      <th>company_url</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for programmer in g.programmers.results %}
+      <tr>
+        <td> {{ programmer.id }} </td>
+        <td> {{ programmer.properties.email }} </td>
+        <td> {{ programmer.properties.title }} </td>
+        <td>{{ programmer.company.properties.name }} </td>
+        <td>{{ programmer.company.properties.url }} </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% assign _render = "now" | to_time %}
+
+{% assign _graph_duration = _start | time_diff: _graph %}
+{% assign _render_duration = _start | time_diff: _render %}
+
+{% log _graph_duration, type: "benchmark-graph-model-on-demand" %}
+{% log _render_duration, type: "benchmark-render-model-on-demand" %}
+
+{% include 'n_plus_one/benchmark-report' %}

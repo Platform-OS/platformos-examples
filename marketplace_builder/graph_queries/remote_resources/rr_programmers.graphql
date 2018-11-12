@@ -1,0 +1,18 @@
+query rr_programmers {
+  programmers: customizations(name: "programmer", per_page: 200) {
+    results {
+      id
+      properties
+
+      company: remote_model(
+        join_on_property: "company_id",
+        endpoint: {url: "http://alpha.dg.apps.near-me.com:3000/api/companies.json" token: "token"}
+      ) { properties }
+
+      extra_company: remote_model(
+        join_on_property: "company_id",
+        endpoint: {url: "http://alpha.dg.apps.near-me.com:3000/api/companies-extra.json" token: "token"}
+      ) { properties }
+    }
+  }
+}

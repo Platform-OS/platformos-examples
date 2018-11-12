@@ -1,0 +1,153 @@
+---
+slug: docs/remote-models
+converter: markdown
+---
+
+# custom remote model relations
+## problem
+- complete solution can be found
+- one master instance
+- many other instances
+- master instance collects information about users
+- we want to get access to the data stored in community instance and display it using graphql on satelite instances
+
+## server side
+First this we have to prepare a remote page:
+###  Authorization
+- requests from client have authentication-token attached in headers
+
+~{{ context.headers.HTTP_AUTHENTICATION_TOKEN }}~
+
+### API requirements
+API endpoint should accept params:
+- ~ids~ - array of object primary keys - ID UUID email
+
+obligatory response structure
+- array of objects
+- each object must have ~id~ field
+- each object should have ~properties~ object
+
+#+BEGIN_SRC json
+[
+{
+"id": 1234,
+"properties": {
+"property_name_1": "property_value_1",
+"property_name_2": "property_value_2",
+"property_name_3": "property_value_3",
+"property_name_4": [ "property_value_4" ]
+}
+}
+]
+#+END_SRC
+
+### example of page and graphql query
+
+~graph_queries/community-user-profiles.graphql~
+
+#+BEGIN_SRC graphql
+query community-user-profiles($emails: [String]){
+people(
+user: {
+emails: $emails
+}
+) {
+results {
+email
+profile(profile_type: "default"){
+properties
+}
+}
+}
+}
+#+END_SRC
+
+
+- simple liquid page providing valid JSON respose
+- correct production solution should include authorization-policy
+- when working with user profiles we have to manipulate a bit the response from grapqhl
+- when dealing with customizations we can pass over response directly to client
+
+~views/pages/api-community-profiles.liquid~
+
+#+BEGIN_SRC web
+---
+slug: api/community/profiles
+format: json
+---
+
+{% query_graph 'community-user-profiles', result_name: g, emails: params.ids %}
+{% assign users = g.people.results  %}
+
+{% assign profileList = "[]" | parse_json %}
+{% for u in users %}
+  {% assign p = "{}" | parse_json | assign_to_hash_key: "id", u.email | assign_to_hash_key: "properties", u.profile.properties %}
+  {% assign profileList = profileList | add_to_array: p %}
+{% endfor %}
+
+{{ profileList | json }}
+#+END_SRC
+
+## client side
+
+for the sake of clarity it the json page as well
+
+#page ~views/pages/user-profiles.liquid~#
+
+#+BEGIN_SRC web
+---
+slug: marketplace/profiles
+format: json
+---
+{% query_graph 'markeplace-users', result_name: g %}
+{% assign users = g.people.results  %}
+{{ users | json }}
+#+END_SRC
+
+graphql query ~graph_queries/marketplace-users.graphql~
+
+query uses new graphql field ~remote_model~ with two argument:
+1. ~endpoint~ which has two fields:
+- ~url~ - our JSON API endpoint
+- ~token~ - authorization token to be used in the server authorization-policy
+2. ~field~  name of field in user object of which value will be used as a primary key
+- in our case it's ~email~
+
+#+BEGIN_SRC graphql
+query getUsers {
+people
+{
+results {
+email
+
+remote_profile: remote_model(
+field: "email"
+endpoint: {
+url: "http://dg.apps.near-me.com:3000/api/community/profiles.json"
+token: "authorization-secret-token"
+}
+) {
+id
+properties
+}
+
+# local_profile: profile(profile_type: "default"){
+#   properties
+# }
+}
+}
+}
+#+END_SRC
+
+there will be executed request to the server API endpoint similar to:
+
+~http://dg.apps.near-me.com:3000/api/profiles.json?token=auth-token&ids[]=email1&ids[]=email2~
+
+##  comments
+- it's powerful and flexible solution
+- using pages we can easily authorize any requests and prepare any data we need
+- it's fast as fast is API endpoint - ~model_relation~ makes only one request - it lazy resolves selection
+-
+# ideas
+- this model_relation could be used everywhere
+- automatically resolve relation on activity-stream records [?]

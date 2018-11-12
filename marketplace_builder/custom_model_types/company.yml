@@ -1,0 +1,12 @@
+---
+name: company
+custom_attributes:
+- name: name
+  attribute_type: string
+- name: email
+  attribute_type: string
+- name: url
+  attribute_type: string
+- name: number
+  attribute_type: integer
+---

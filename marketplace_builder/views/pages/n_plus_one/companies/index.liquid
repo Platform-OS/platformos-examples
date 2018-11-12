@@ -1,0 +1,44 @@
+---
+slug: companies/index
+layout_name: application
+---
+{% include 'n_plus_one/menu' %}
+
+{% assign _start = "now" | to_time %}
+
+{% query_graph 'n1_companies' %}
+
+{% assign _graph = "now" | to_time %}
+
+<table class="table table-bordered table-striped scroll">
+  <thead>
+    <tr> <th colspan="4"> companies [{{ g.companies.total_entries }}] </th> </tr>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>email</th>
+      <th>url</th>
+      <th>number</th>
+      </tr>
+  </thead>
+  <tbody>
+    {% for company in g.companies.results %}
+      <tr>
+        <td> {{ company.id }} </td>
+        <td> {{ company.properties.name }} </td>
+        <td> {{ company.properties.email }} </td>
+        <td> {{ company.properties.url }} </td>
+        <td> {{ company.properties.number }} </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% assign _render = "now" | to_time %}
+
+{% assign _graph_duration = _start | time_diff: _graph %}
+{% assign _render_duration = _start | time_diff: _render %}
+
+{% log _graph_duration, type: "benchmark-graph" %}
+{% log _render_duration, type: "benchmark-render" %}
+{% include 'n_plus_one/benchmark-report' %}

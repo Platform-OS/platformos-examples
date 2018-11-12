@@ -1,0 +1,10 @@
+name: programmer
+custom_attributes:
+- name: title
+  attribute_type: string
+- name: email
+  attribute_type: string
+- name: expertise
+  attribute_type: array
+- name: company_id
+  attribute_type: string
