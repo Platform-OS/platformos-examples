@@ -1,0 +1,8 @@
+query get_customizations {
+  customizations(per_page: 10, sort: [{ name: "id", order: "desc" }]) {
+    results {
+      human_name
+      properties
+    }
+  }
+}

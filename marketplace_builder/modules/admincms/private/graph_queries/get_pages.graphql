@@ -1,0 +1,10 @@
+query get_pages {
+  pages(per_page: 10) {
+    results {
+      format
+      slug
+      layout_name
+      # id # for debugging
+    }
+  }
+}

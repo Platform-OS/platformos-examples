@@ -1,0 +1,49 @@
+---
+slug: admincms
+---
+
+<h2> Module example - Admin </h2>
+
+<div class="row">
+  <div class="col-xs-12 col-lg-6">
+    <h3> Customizations </h3>
+    {%- query_graph "get_customizations", result_name: "c" -%}
+    <table class="table table-compact">
+      <thead>
+        <tr>
+          <th> Name </th>
+          <th> Properties </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for customization in c.customizations.results %}
+          <tr>
+            <td> {{ customization.human_name }} </td>
+            <td> {{ customization.properties }} </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-xs-12 col-lg-6">
+    <h3> Pages </h3>
+    {%- query_graph "get_pages", result_name: "c" -%}
+    <table class="table table-compact">
+      <thead>
+        <tr>
+          <th> Slug </th>
+          <th> Format </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for page in c.pages.results %}
+          <tr>
+            <td> {{ page.slug }} </td>
+            <td> {{ page.format }} </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
