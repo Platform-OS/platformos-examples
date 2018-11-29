@@ -27,9 +27,8 @@ callback_actions:
     data-zip-code="true">
   </script>
 
-  {% comment %} TODO: Rewrite to form_builder {% endcomment %}
-  {%- input_field payment_method_id, as: hidden, value: @p.payment_gateways[0].payment_methods[0].id -%}
-  {%- input_field payment_gateway_id, as: hidden, value: @p.payment_gateways[0].id -%}
-  {%- input_field credit_card_token, as: hidden, data-payment-form-token: true -%}
+  <input name="{{ form_builder.fields.payment_method_id.name }}" type="hidden" value="{{ p.payment_gateways[0].payment_methods[0].id }}">
+  <input name="{{ form_builder.fields.payment_gateway_id.name }}" type="hidden" value="{{ p.payment_gateways[0].id }}">
+  <input name="{{ form_builder.fields.credit_card_token.name }}" type="hidden" data-payment-form-token="true">
 
 {% endform %}
