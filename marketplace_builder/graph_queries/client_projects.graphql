@@ -27,8 +27,8 @@ query client_projects(
       id
       name
       slug
-      state
-      description
+      state: property(name: "state")
+      description: property(name: "description")
     }
   }
 }

@@ -3,8 +3,6 @@ name: project
 resource: Transactable
 configuration:
   name:
-    validation: { presence: true }
-  description:
     validation:
       presence: true
   properties:
@@ -16,6 +14,9 @@ configuration:
     workplace_online:
       validation: {}
     budget:
+      validation:
+        presence: true
+    description:
       validation:
         presence: true
 ---
@@ -31,10 +32,10 @@ configuration:
     </div>
   </div>
 
-  <div>  
+  <div>
     <label for="form_description"><abbr title="required">*</abbr> Description</label>
     <div>
-      <textarea class="text required" name="{{ form_builder.fields.description.name }}" id="form_description">{{ form_builder.fields.description.value }}</textarea>
+      <textarea class="text required" name="{{ form_builder.fields.properties.description.name }}" id="form_description">{{ form_builder.fields.properties.description.value }}</textarea>
       {% if form_builder.errors.description %}
         <p>{{ form_builder.errors.description }}</p>
       {% endif %}
@@ -73,7 +74,7 @@ configuration:
       {% endif %}
     </div>
   </div>
-  
-  {% submit Save %}
+
+  <button class="btn btn-primary mt-3">Save</button>
 
 {% endform %}

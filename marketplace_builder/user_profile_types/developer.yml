@@ -12,3 +12,5 @@ custom_attributes:
   attribute_type: photo
 - name: cv
   attribute_type: custom_attachment
+- name: mobile_number
+  attribute_type: string

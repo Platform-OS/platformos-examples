@@ -9,4 +9,8 @@ custom_attributes:
   attribute_type: date
 - name: budget
   attribute_type: float
+- name: state
+  attribute_type: string
+- name: description
+  attribute_type: string
 ---

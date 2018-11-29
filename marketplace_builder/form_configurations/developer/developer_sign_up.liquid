@@ -8,11 +8,12 @@ configuration:
   first_name:
     validation:
       presence: true
-  mobile_number:
-    validation:
-      presence: true
   profiles:
     developer:
+      properties:
+        mobile_number:
+          validation:
+            presence: true
       enabled:
         property_options:
           default: true
@@ -29,7 +30,6 @@ api_call_notifications:
   - ping_example_com_on_user_sign_up
 ---
 {% form html-class: 'w-50' %}
-
   <div class="form-group">
     <label for="form_first_name">First name</label>
     <input class="form-control" name="{{ form_builder.fields.first_name.name }}" value="{{ form_builder.fields.first_name.value }}" id="form_first_name" type="text">
@@ -56,9 +56,9 @@ api_call_notifications:
 
   <div class="form-group">
     <label for="form_mobile_number">Mobile number</label>
-    <input class="form-control" placeholder="Please include country code" name="{{ form_builder.fields.mobile_number.name }}" value="{{ form_builder.fields.mobile_number.value }}" id="form_mobile_number" type="text">
-    {% if form_builder.errors.mobile_number %}
-      <p>{{ form_builder.errors.mobile_number }}</p>
+    <input class="form-control" placeholder="Please include country code" name="{{ form_builder.fields.profiles.developer.properties.mobile_number.name }}" value="{{ form_builder.fields.profiles.developer.properties.mobile_number.value }}" id="form_mobile_number" type="text">
+    {% if form_builder.fields.profiles.developer.properties.mobile_number.validation.errors %}
+      <p>{{ form_builder.fields.profiles.developer.properties.mobile_number.validation.errors }}</p>
     {% endif %}
   </div>
 
