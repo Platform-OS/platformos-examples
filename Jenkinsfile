@@ -16,6 +16,7 @@ pipeline {
     stage('Staging') {
       environment {
         MP_URL = "https://nearme-example.staging-oregon.near-me.com"
+        GH_URL = "https://github.com/mdyd-dev/marketplace-nearme-example"
         GI_SUITE_ID = "588f27fcc8a68278cfc2a501"
       }
 
@@ -29,7 +30,7 @@ pipeline {
           commitAuthor = sh(returnStdout: true, script: 'git log --no-merges --format="%an" -1').trim()
           commitMsg = sh(returnStdout: true, script: 'git log --no-merges --format="%B" -1').trim()
 
-          commitInfo = "<https://github.com/mdyd-dev/nearme-documentation/commit/${commitSha}|${commitSha}> - ${commitAuthor} - ${commitMsg}"
+          commitInfo = "<${env.GH_URL}/commit/${commitSha}|${commitSha}> - ${commitAuthor} - ${commitMsg}"
         }
 
         slackSend (channel: "#notifications-example", message: "STARTED: Deploying to <${MP_URL}|staging environment> (<${env.BUILD_URL}|Build #${env.BUILD_NUMBER}>) \n ${commitInfo}")
