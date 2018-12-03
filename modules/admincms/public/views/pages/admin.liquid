@@ -4,26 +4,6 @@ slug: admincms
 
 <h2> Module example - Admin </h2>
 
-<h3>Instance assets, including this module</h3>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>Asset path</th>
-      <th>Resolved url</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for asset in asset_url %}
-      <tr>
-        <td>{{ asset[0] }}</td>
-        <td>{{ asset[1] }}</td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
-
 <div class="row">
   <div class="col-xs-12 col-lg-6">
     <h3> Customizations </h3>
@@ -61,6 +41,25 @@ slug: admincms
           <tr>
             <td> {{ page.slug }} </td>
             <td> {{ page.format }} </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <h3>Instance assets, including this module</h3>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Asset path</th>
+          <th>Resolved url</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for asset in asset_url %}
+          <tr>
+            <td>{{ asset[0] }}</td>
+            <td>{{ asset[1] }}</td>
           </tr>
         {% endfor %}
       </tbody>
