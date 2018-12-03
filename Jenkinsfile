@@ -29,7 +29,7 @@ pipeline {
           commitAuthor = sh(returnStdout: true, script: 'git log --no-merges --format="%an" -1').trim()
           commitMsg = sh(returnStdout: true, script: 'git log --no-merges --format="%B" -1').trim()
 
-          commitInfo = "<https://github.com/mdyd-dev/nearme-documentation/commit/${commitSha}|Github> \n ${commitAuthor} - ${commitMsg}"
+          commitInfo = "<https://github.com/mdyd-dev/nearme-documentation/commit/${commitSha}|${commitSha}> - ${commitAuthor} - ${commitMsg}"
         }
 
         slackSend (channel: "#notifications-example", message: "STARTED: Deploying to <${MP_URL}|staging environment> (<${env.BUILD_URL}|Build #${env.BUILD_NUMBER}>) \n ${commitInfo}")
