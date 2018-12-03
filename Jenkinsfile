@@ -25,9 +25,9 @@ pipeline {
 
       steps {
         script {
-          commitSha = sh(returnStdout: true, script: 'git log --no-merges --format="%h" -1')
-          commitAuthor = sh(returnStdout: true, script: 'git log --no-merges --format="%an" -1')
-          commitMsg = sh(returnStdout: true, script: 'git log --no-merges --format="%B" -1')
+          commitSha = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+          commitAuthor = sh(returnStdout: true, script: 'git log --no-merges --format="%an" -1').trim()
+          commitMsg = sh(returnStdout: true, script: 'git log --no-merges --format="%B" -1').trim()
 
           commitInfo = "[https://github.com/mdyd-dev/nearme-documentation/commit/${commitSha}] ${commitAuthor} - ${commitMsg}"
         }
