@@ -49,9 +49,9 @@ Using two simple tags `to_time` and then `time_diff` we can get to know some num
 
 {% assign __render = "now" | to_time %}
 
-{% assign _total_duration = __start | time_diff: __render %}
-{% assign _graph_duration = __start | time_diff: __graph %}
- {% assign _render_duration = __graph | time_diff: __render %}
+{% assign _total_duration = __start | time_diff: __render | round %}
+{% assign _graph_duration = __start | time_diff: __graph | round %}
+{% assign _render_duration = __graph | time_diff: __render | round %}
 
 {% log _total_duration, type: "benchmark-total" %}
 {% log _graph_duration, type: "benchmark-graph" %}

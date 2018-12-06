@@ -1,6 +1,8 @@
 ---
 slug: companies/index
 layout_name: application
+metadata:
+  full_width: true
 ---
 {% include 'n_plus_one/menu' %}
 
@@ -12,14 +14,14 @@ layout_name: application
 
 <table class="table table-bordered table-striped scroll">
   <thead>
-    <tr> <th colspan="4"> companies [{{ g.companies.total_entries }}] </th> </tr>
+    <tr> <th colspan="5"> companies [{{ g.companies.total_entries }}] </th> </tr>
     <tr>
       <th>id</th>
       <th>name</th>
       <th>email</th>
       <th>url</th>
       <th>number</th>
-      </tr>
+    </tr>
   </thead>
   <tbody>
     {% for company in g.companies.results %}
@@ -36,8 +38,8 @@ layout_name: application
 
 {% assign _render = "now" | to_time %}
 
-{% assign _graph_duration = _start | time_diff: _graph %}
-{% assign _render_duration = _start | time_diff: _render %}
+{% assign _graph_duration = _start | time_diff: _graph | round %}
+{% assign _render_duration = _start | time_diff: _render | round %}
 
 {% log _graph_duration, type: "benchmark-graph" %}
 {% log _render_duration, type: "benchmark-render" %}

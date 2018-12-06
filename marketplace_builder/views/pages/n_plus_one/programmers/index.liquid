@@ -1,6 +1,8 @@
 ---
 slug: programmers/index
 layout_name: application
+metadata:
+  full_width: true
 ---
 {% include 'n_plus_one/menu' %}
 
@@ -34,8 +36,8 @@ layout_name: application
 
 {% assign _render = "now" | to_time %}
 
-{% assign _graph_duration = _start | time_diff: _graph %}
-{% assign _render_duration = _start | time_diff: _render %}
+{% assign _graph_duration = _start | time_diff: _graph | round %}
+{% assign _render_duration = _start | time_diff: _render | round %}
 
 {% log _graph_duration, type: "benchmark-graph-model-on-demand" %}
 {% log _render_duration, type: "benchmark-render-model-on-demand" %}

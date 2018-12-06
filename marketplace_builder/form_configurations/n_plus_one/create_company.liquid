@@ -10,15 +10,35 @@ configuration:
       validation: { presence: true }
     number:
       validation: { presence: true }
-redirect_to: /companies/list
+redirect_to: /companies/index
 resource: Customization
 resource_owner: anyone
 async_callback_actions: {}
 ---
 {% form -%}
-    <input required="true" name="{{ form_builder.fields.properties.email.name }}" id="email" type="text" placeholder="email">
-    <input required="true" name="{{ form_builder.fields.properties.name.name }}" id="name" type="text" placeholder="name">
-    <input required="true" name="{{ form_builder.fields.properties.url.name }}" id="url" type="text" placeholder="url">
-    <input required="true" name="{{ form_builder.fields.properties.number.name }}" id="number" type="text" placeholder="number">
-    <input type="submit" value="add company">
+
+  <div class="row">
+    <div class="col-xs-12 col-md-4">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input required="true" name="{{ form_builder.fields.properties.name.name }}" id="name" type="text" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input required="true" name="{{ form_builder.fields.properties.email.name }}" id="email" type="email" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="url">URL</label>
+        <input required="true" name="{{ form_builder.fields.properties.url.name }}" id="url" type="url" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="number">Number</label>
+        <input required="true" name="{{ form_builder.fields.properties.number.name }}" id="number" type="number" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary">Add company</button>
+      </div>
+    </div>
+  </div>
+
 {% endform -%}

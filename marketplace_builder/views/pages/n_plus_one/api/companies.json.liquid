@@ -8,14 +8,14 @@ authorization_policies:
 {% assign limit = params.ids | size  %}
 {% if limit == 0 %} {% assign limit = 50 %} {% endif %}
 
-{% query_graph 'rr_companies', result_name: g, ids: params.ids, limit: limit %}
+{% query_graph 'rr_companies', result_name: "g", ids: params.ids, limit: limit %}
 {% assign _query = "now" | to_time  %}
 
 {% for company in g.companies.results %}
   {% assign c = company.properties | assign_to_hash_key: 'extra', company.extra.properties %}
 {% endfor %}
 
-{{  g.companies.results | json }}
+{{ g.companies.results | json }}
 
 {% assign _stop = "now" | to_time %}
 
