@@ -1,0 +1,11 @@
+query company($id: ID) {
+  companies: customizations(name: "company", per_page: 200, id: $id){
+    total_entries
+    results {
+      name
+      id
+      deleted_at
+      properties
+    }
+  }
+}

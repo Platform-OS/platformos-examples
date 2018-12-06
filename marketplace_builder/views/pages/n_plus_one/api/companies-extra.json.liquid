@@ -1,0 +1,32 @@
+---
+slug: api/companies-extra
+format: json
+authorization_policies:
+- authenticated_api_request
+---
+{% assign _start = "now" | to_time  %}
+{% assign limit = params.ids | size  %}
+{% if limit == 0 %} {% assign limit = 50 %} {% endif %}
+
+{% query_graph 'rr_companies_extra', result_name: g, ids: params.ids, limit: limit %}
+{% assign _query = "now" | to_time  %}
+
+{% assign companies = g.companies.results %}
+
+{% assign list = "[]" | parse_json %}
+{% for company in companies %}
+  {% parse_json address %} {% include "n_plus_one/company_details" %} {% endparse_json %}
+  {% assign properties = company.properties | assign_to_hash_key: "time", _start %}
+  {% assign result = "{}" | parse_json | assign_to_hash_key: "id", company.id | assign_to_hash_key: "properties", properties %}
+  {% assign list = list | add_to_array: result %}
+{% endfor %}
+
+{{ list | json }}
+
+{% assign _stop = "now" | to_time %}
+
+{% assign _result_a = _start | time_diff: _query %}
+{% assign _result_b = _start | time_diff: _stop %}
+
+{% log _result_a, type: "benchmark-companies-extra-query" %}
+{% log _result_b, type: "benchmark-companies-extra-total" %}

@@ -1,0 +1,13 @@
+query programmers_with_companies {
+  programmers: customizations(name: "programmer", per_page: 200){
+    total_entries
+    results {
+      id
+      properties
+      company: model(join_on_property: "company_id") {
+        url: property(name: "url")
+        properties
+      }
+    }
+  }
+}

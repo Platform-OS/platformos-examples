@@ -1,0 +1,219 @@
+---
+slug: docs/model
+converter: markdown
+---
+
+# loading related models and avoiding n+1
+
+you can find examples from this tutorial [here](/companies/index)
+
+
+## simple scenario - companies and programmers
+
+Our data schema consists of two models: `company` and `programmer`
+
+```yaml
+name: company
+custom_attributes:
+- name: name
+  attribute_type: string
+- name: email
+  attribute_type: string
+- name: url
+  attribute_type: string
+```
+
+```yaml
+name: programmer
+custom_attributes:
+- name: title
+  attribute_type: string
+- name: email
+  attribute_type: string
+- name: company_id
+  attribute_type: string
+```
+
+Programmer model has `company_id` property which references a corresponding company model [foreigh key].
+
+## problem: we want to load programmers data along with related company
+
+We want to join both collections programmers
+```
+|--------------------------|--------|------------|
+| email                    | title  | company_id |
+|--------------------------|--------|------------|
+| programmer-1@example.com | junior |     238415 |
+| programmer-2@example.com | middle |     238416 |
+| programmer-3@example.com | cycor  |     238417 |
+| programmer-7@example.com | cycor  |     238421 |
+|--------------------------|--------|------------|
+```
+[demo](/programmers/index)
+
+and companies
+```
+|--------|------------|---------------|
+|     id | name       | url           |
+|--------|------------|---------------|
+| 238415 | Company #2 | company-2.com |
+| 238416 | Company #3 | company-3.com |
+| 238417 | Company #4 | company-4.com |
+| 238421 | Company #8 | company-8.com |
+|--------|------------|---------------|
+```
+[demo](/companies/index)
+
+on programmer `company_id` and company `id`.
+
+Result collection should be as follows:
+```
+|--------------------------+------------------+--------------+---------------|
+| programmer.email         | programmer.title | company.name | company.url   |
+|..........................+..................+..............+...............|
+| programmer-1@example.com | junior           | Company #2   | company-2.com |
+| programmer-2@example.com | middle           | Company #3   | company-3.com |
+| programmer-3@example.com | cycor            | Company #4   | company-4.com |
+| programmer-7@example.com | cycor            | Company #8   | company-8.com |
+|--------------------------+------------------+--------------+---------------|
+```
+[demo](/programmers/with_companies_2)
+
+## approach #1 - naive & not recommended - for each programmer record load related company model
+
+This approach requires two grapqhl queries:
+##### programmers.grapqhl
+
+```graphql
+query programmers {
+  programmers: customizations(name: "programmer"){
+    total_entries
+    results {
+      properties
+    }
+  }
+}
+```
+
+##### company.graphql
+```graphql
+query company($id: ID) {
+  companies: customizations(name: "company", id: $id){
+    results {
+      name
+      id
+      properties
+    }
+  }
+}
+
+```
+
+While displaying the programmer collection - for each programmer record - we fetch related company model using `company` graphql query.
+
+```liquid
+{% raw %}
+{% query_graph 'programmers' %}
+
+{% for programmer in g.programmers.results %}
+  <tr>
+    <td> {{ programmer.properties.email }} </td>
+    <td> {{ programmer.properties.title }} </td>
+      {% if programmer.properties.company_id %}
+        {% query_graph 'company', id: programmer.properties.company_id, result_name: 'company' %}
+        <td> {{ company.companies.results.first.properties.name }} </td>
+        <td> {{ company.companies.results.first.properties.url }} </td>
+      {% endif  %}
+</tr>
+{% endfor %}
+{%endraw%}
+```
+
+[demo](/programmers/with_companies_2)
+It's really slow because displaying each programmer record produces a request for company model. It's called n+1 and we should avoind such a code at any cost.
+To proof this we will do some benchmarking using handy `time_diff` filter. [more](/docs/benchmark)
+
+Results:
+```
+|---------------|---------|----------|
+|               | graphql |   render |
+|---------------|---------|----------|
+| benchmark-n+1 |  24.065 | 1748.686 |
+|               |  29.663 | 1862.711 |
+|               |  27.478 | 1654.610 |
+|               |  25.765 | 1787.026 |
+|---------------|---------|----------|
+|               |  27.478 | 1787.026 |
+|---------------|---------|----------|
+```
+
+So what we can do to avoid n+1 queries?
+
+## approach #2 - request company data within `programmers` graphql query
+
+We are able to load related data at once along with the programmer collection using new graphql field called `model`.
+
+```graphql
+   model(join_on_property: "company_id") { properties }
+```
+
+`join_on_property` argument is required and is used as a foreign key of company collection. In SQL language this could look similarly to:
+
+```sql
+select * from programmers joins companies on (programmers.company_id = companies.id)
+```
+
+and after updating our graphql query looks now:
+```graphql
+query programmers {
+  programmers: customizations(name: "programmer", per_page: 200){
+    total_entries
+    results {
+      properties
+      company: model(join_on_property: "company_id") {
+        url: property(name: "url")
+        properties
+      }
+    }
+  }
+}
+
+```
+
+we have to also update `programmers/index` page. The page looks much simpler now:
+```liquid
+{% raw %}
+  {% for programmer in g.programmers.results %}
+    <tr>
+      <td> {{ programmer.properties.email }} </td>
+      <td> {{ programmer.properties.title }} </td>
+      <td>{{ programmer.company.properties.name }} </td>
+      <td>{{ programmer.company.properties.url }} </td>
+    </tr>
+ {% endfor %}
+{% endraw %}
+```
+
+What about the page speed now?
+```
+|-----------------|-----------|---------|
+|                 |   graphql |  render |
+| benchmark-model |     57.42 |  165.78 |
+|                 |     61.52 |  187.39 |
+|                 |    51.407 | 154.171 |
+|                 |    49.946 | 153.696 |
+|                 |    48.501 | 241.319 |
+|                 |    45.854 | 192.571 |
+|-----------------|-----------|---------|
+|                 | 64.281001 | 182.718 |
+|-----------------|-----------|---------|
+
+```
+
+The benchmarking results say enough which approach is better. Using `model` we get our results 10 times faster.
+demo](/programmers/with_companies_1)
+
+Futher reading:
+- remote_model
+- page#profile
+- time_diff and simple benchmarking

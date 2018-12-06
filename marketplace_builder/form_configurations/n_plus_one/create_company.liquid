@@ -1,0 +1,24 @@
+---
+name: create_company
+configuration:
+  properties:
+    email:
+      validation: { presence: true }
+    name:
+      validation: { presence: true }
+    url:
+      validation: { presence: true }
+    number:
+      validation: { presence: true }
+redirect_to: /companies/list
+resource: Customization
+resource_owner: anyone
+async_callback_actions: {}
+---
+{% form -%}
+    <input required="true" name="{{ form_builder.fields.properties.email.name }}" id="email" type="text" placeholder="email">
+    <input required="true" name="{{ form_builder.fields.properties.name.name }}" id="name" type="text" placeholder="name">
+    <input required="true" name="{{ form_builder.fields.properties.url.name }}" id="url" type="text" placeholder="url">
+    <input required="true" name="{{ form_builder.fields.properties.number.name }}" id="number" type="text" placeholder="number">
+    <input type="submit" value="add company">
+{% endform -%}

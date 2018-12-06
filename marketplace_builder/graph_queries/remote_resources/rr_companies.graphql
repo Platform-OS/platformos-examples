@@ -1,0 +1,17 @@
+query rr_companies($ids: [ID], $limit: Int) {
+  companies: customizations(name: "company", per_page: $limit, ids: $ids){
+    total_entries
+    results {
+      id
+      name
+      properties
+
+      model(join_on_property: "id"){ properties }
+
+      extra: remote_model(
+        join_on_property: "id",
+        endpoint: { url: "http://alpha.dg.apps.near-me.com:3000/api/companies-extra.json" token: "token" }
+      ) { properties }
+    }
+  }
+}

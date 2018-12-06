@@ -1,0 +1,9 @@
+query programmers {
+  programmers: customizations(name: "programmer", per_page: 200){
+    total_entries
+    results {
+      id
+      properties
+    }
+  }
+}

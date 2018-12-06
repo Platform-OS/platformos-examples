@@ -1,0 +1,25 @@
+---
+slug: api/programmers
+format: json
+authorization_policies:
+- authenticated_api_request
+---
+{% assign _start = "now" | to_time  %}
+{% assign limit = params.ids | size  %}
+{% if limit == 0 %} {% assign limit = 200 %} {% endif %}
+
+{% query_graph 'rr_programmers', result_name: g, emails: params.ids, limit: limit %}
+
+{% assign _query = "now" | to_time  %}
+
+{% assign programmers = g.programmers.results %}
+
+{{ programmers | json }}
+
+{% assign _stop = "now" | to_time %}
+
+{% assign _result_a = _start | time_diff: _query %}
+{% assign _result_b = _start | time_diff: _stop %}
+
+{% log _result_a, type: "benchmark-programmers-query" %}
+{% log _result_b, type: "benchmark-programmers-total" %}

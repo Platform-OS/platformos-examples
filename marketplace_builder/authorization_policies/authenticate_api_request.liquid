@@ -1,0 +1,5 @@
+---
+name: authenticated_api_request
+redirect_to:
+---
+{% if context.headers.HTTP_AUTHENTICATION_TOKEN == 'token' or params.f == 'token' %}true{% endif %}

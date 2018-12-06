@@ -1,0 +1,10 @@
+query rr_companies_extra($ids: [ID], $limit: Int) {
+  companies: customizations(name: "company", per_page: $limit, ids: $ids){
+    total_entries
+    results {
+      properties
+      id
+      name
+    }
+  }
+}
