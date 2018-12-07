@@ -10,16 +10,16 @@ const signUp = new SignUp();
 const signIn = new SignIn();
 
 const userData = {
-    NAME: `test_user`,
-    USER_EMAIL: `test+${+new Date()}@example.com`,
-    PASSWORD: `password`,
-    TELEPHONE_NUMBER: `00123456789`,
-  };
+  NAME: 'test_user',
+  USER_EMAIL: 'test+${+new Date()}@example.com',
+  PASSWORD: 'password',
+  TELEPHONE_NUMBER: '00123456789',
+};
 
 const userName = userData.NAME;
 const userEmail = userData.USER_EMAIL;
 const userPass = userData.PASSWORD;
-const userPhone = userData.TELEPHONE_NUMBER
+const userPhone = userData.TELEPHONE_NUMBER;
 
 fixture('Homepage').page(layoutPage.URL.staging);
 
@@ -28,7 +28,7 @@ test('There are no liquid errors on the page', async () => {
 });
 
 test('Create developer account', async t => {
-    await t 
+  await t
     .click(homePage.linkSignUp)
     .click(signUp.developerSignUp)
     .typeText(signUp.firstname, userName)
@@ -36,12 +36,12 @@ test('Create developer account', async t => {
     .typeText(signUp.password, userPass)
     .typeText(signUp.mobileNumber, userPhone)
     .click(signUp.submitButton)
-    .expect(layoutPage.alertSuccess.exists).ok();
-  });
+    .expect(layoutPage.alertSuccess.exists)
+    .ok();
+});
 
-  test('Sign in as a developer', async t => {
-    await t.click(homePage.linkLogIn)
-    await signIn.signin(userEmail,userPass)
-    await t.expect(layoutPage.alertSuccess.exists).ok();
-  });
-  
+test('Sign in as a developer', async t => {
+  await t.click(homePage.linkLogIn);
+  await signIn.signin(userEmail, userPass);
+  await t.expect(layoutPage.alertSuccess.exists).ok();
+});
