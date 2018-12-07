@@ -6,7 +6,7 @@ slug: /
   {% if context.current_user %}
     , {{ g.current_user.first_name }}
   {% else %}
-    ! <a href="/sign-up">Please sign up</a> or <a href="/sign-in">Sign In</a>
+    ! <a href="/sign-up">Please register</a> or <a href="/sign-in">log in</a>
   {% endif %}
 </h1>
 
@@ -40,4 +40,3 @@ slug: /
     <p>You have not created any projects yet.</p>
   {% endif %}
 {% endif %}
-
