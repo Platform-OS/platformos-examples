@@ -10,11 +10,8 @@ const layoutPage = new LayoutPage();
 fixture('Homepage').page(layoutPage.URL.staging);
 
 test('Log in to the Dashboard', async t => {
-
-  await t 
-  .click(homePage.linkLogIn)
-
+  await t.click(homePage.linkLogIn)
   await signIn.signin('test_user@test.com','password')
-  .expect(layoutPage.alertSuccess.exists).ok();
+  await t.expect(layoutPage.alertSuccess.exists).ok();
 });
   

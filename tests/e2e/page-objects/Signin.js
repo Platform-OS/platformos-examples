@@ -1,4 +1,4 @@
-import 'testcafe';
+import { Selector, t } from 'testcafe';
 import SignUp from './Signup';
 
 const signUp = new SignUp();
