@@ -1,5 +1,4 @@
 import 'testcafe';
-
 import LayoutPage from './page-objects/Layout';
 import HomePage from './page-objects/Homepage';
 import SignUp from './page-objects/Signup';

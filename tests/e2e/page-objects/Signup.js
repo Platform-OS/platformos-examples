@@ -7,9 +7,8 @@ export default class SignUp {
         this.firstname = Selector('#form_first_name');
         this.email = Selector('#form_email');
         this.developerSignUp = Selector('a').withText('I am developer');
-        this.email = Selector('#form_email');
         this.password = Selector('#form_password');
         this.mobileNumber = Selector('#form_mobile_number');
-        this.submitButton = Selector('button.btn')
+        this.submitButton = Selector('button.btn');
     }
 }
