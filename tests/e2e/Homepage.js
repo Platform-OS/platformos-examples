@@ -12,6 +12,6 @@ test('There are no liquid errors on the page', async () => {
 });
 
 test('There are links to sign up and log in', async t => {
-  await t.expect(homePage.linkSignUp).ok();
+  await t.expect(homePage.linkRegister).ok();
   await t.expect(homePage.linkLogIn).ok();
 });

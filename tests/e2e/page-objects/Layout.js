@@ -3,7 +3,9 @@ import { Selector, t } from 'testcafe';
 export default class LayoutPage {
   constructor() {
     this.URL = {
-      staging: process.env.MP_URL || 'https://nearme-example.staging-oregon.near-me.com'
+      staging:
+        process.env.MP_URL ||
+        'https://nearme-example.staging-oregon.near-me.com',
     };
     this.Body = Selector('body');
     this.Content = this.Body.find('main');
