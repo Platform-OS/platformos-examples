@@ -21,7 +21,7 @@ pipeline {
       }
 
       when {
-        branch 'master'
+        branch 'release_candidate'
       }
 
       steps {
