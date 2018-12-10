@@ -17,7 +17,6 @@ pipeline {
       environment {
         MP_URL = "https://nearme-example.staging-oregon.near-me.com"
         GH_URL = "https://github.com/mdyd-dev/marketplace-nearme-example"
-        GI_SUITE_ID = "588f27fcc8a68278cfc2a501"
       }
 
       when {
@@ -36,6 +35,7 @@ pipeline {
         slackSend (channel: "#notifications-example", message: "STARTED: Deploying to <${MP_URL}|staging environment> (<${env.BUILD_URL}|Build #${env.BUILD_NUMBER}>) \n ${commitInfo}")
 
         sh 'bash -l ./scripts/deploy.sh'
+        sh 'bash -l ./scripts/test-e2e.sh'
       }
 
       post {
