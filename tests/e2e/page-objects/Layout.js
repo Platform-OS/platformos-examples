@@ -7,6 +7,12 @@ export default class LayoutPage {
         process.env.MP_URL ||
         'https://nearme-example.staging-oregon.near-me.com',
     };
+    this.formErrors = {
+      errorInvalidPassText: 'Invalid email or password.',
+      errorText: "can't be blank",
+      errorIsNotValidEmailText: 'is not a valid email address',
+      errorIsTooShort: 'is too short (minimum is 6 characters)',
+    };
     this.Body = Selector('body');
     this.Content = this.Body.find('main');
     this.alertSuccess = Selector('.alert.alert-success');

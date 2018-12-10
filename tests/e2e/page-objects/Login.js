@@ -1,14 +1,14 @@
-import { Selector, t } from 'testcafe';
+import { t } from 'testcafe';
 import Register from './Register';
+import HomePage from './Homepage';
 
 const register = new Register();
+const homePage = new HomePage();
 
 export default class LogIn {
-  constructor() {
-    this.errorText = Selector('.form-group p');
-  }
-  async signin(username, password) {
+  async login(username, password) {
     await t
+      .click(homePage.linkLogIn)
       .typeText(register.email, username)
       .typeText(register.password, password)
       .click(register.submitButton);
