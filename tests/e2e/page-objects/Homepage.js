@@ -2,7 +2,12 @@ import { Selector } from 'testcafe';
 
 export default class HomePage {
   constructor() {
-    this.linkRegister = Selector('a').withText('Register');
-    this.linkLogIn = Selector('a').withText('Log in');
+    this.link = {
+      register: Selector('a').withText('Register'),
+      login: Selector('a').withText('Log in'),
+      contacts: Selector('a').withText(
+        'Building a contact form with customization'
+      ),
+    };
   }
 }

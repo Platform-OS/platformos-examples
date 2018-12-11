@@ -21,7 +21,7 @@ const userEmail = userData.USER_EMAIL;
 const userPass = userData.PASSWORD;
 const userPhone = userData.TELEPHONE_NUMBER;
 
-fixture('Homepage').page(layoutPage.URL.staging);
+fixture('Register').page(layoutPage.URL.staging);
 
 test('There are no liquid errors on the page', async () => {
   await layoutPage.checkLiquidErrors();
@@ -29,19 +29,34 @@ test('There are no liquid errors on the page', async () => {
 
 test('Create developer account', async t => {
   await t
-    .click(homePage.linkRegister)
-    .click(register.developerSignUp)
-    .typeText(register.firstname, userName)
-    .typeText(register.email, userEmail)
-    .typeText(register.password, userPass)
-    .typeText(register.mobileNumber, userPhone)
-    .click(register.submitButton)
-    .expect(layoutPage.alertSuccess.exists)
-    .ok();
+    .click(homePage.link.register)
+    .click(register.link.devSignUp)
+    .typeText(register.input.firstname, userName)
+    .typeText(register.input.email, userEmail)
+    .typeText(register.input.password, userPass)
+    .typeText(register.input.phone, userPhone)
+    .click(register.button.submit);
+  await t.expect(layoutPage.alertSuccess.exists).ok();
 });
 
-test('Sign in as a developer', async t => {
-  await t.click(homePage.linkLogIn);
-  await logIn.signin(userEmail, userPass);
+test('Log in as a developer', async t => {
+  await t.click(homePage.link.login);
+  await logIn.login(userEmail, userPass);
   await t.expect(layoutPage.alertSuccess.exists).ok();
+});
+
+test('Display errors message on the form', async t => {
+  await t
+    .click(homePage.link.register)
+    .click(register.link.devSignUp)
+    .click(register.button.submit);
+  await t
+    .expect(register.error.firstname.innerText)
+    .eql(layoutPage.formErrors.errorText)
+    .expect(register.error.email.innerText)
+    .eql(layoutPage.formErrors.errorText)
+    .expect(register.error.password.innerText)
+    .eql(layoutPage.formErrors.errorIsTooShort)
+    .expect(register.error.phone.innerText)
+    .eql(layoutPage.formErrors.errorText);
 });
