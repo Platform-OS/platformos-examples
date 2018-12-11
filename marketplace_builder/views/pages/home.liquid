@@ -4,16 +4,40 @@ slug: /
 
 {%- query_graph "pages_list", result_name: "g" -%}
 
-<h1>Examples index</h1>
+<div class="row">
+  <div class="col col-sm-12">
+    <h2>Examples index</h2>
 
-<table class="table table-lg table-bordered table-striped">
-  <thead>
-    <tr>
-      <th>Example</th>
-      <th>Docs</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% include "home/item" for g.admin_pages.results %}
-  </tbody>
-</table>
+    <table class="table table-lg table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Example</th>
+          <th>Docs</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% include "home/item" for g.admin_pages.results %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col col-sm-12">
+    <h2>Example Google AMP websites</h2>
+
+    <p>What is <a href="https://www.ampproject.org/learn/overview/" target="_blank" rel="noopener">Google AMP?</a></p>
+
+    <ol>
+      <li><a href="https://amp-demo-ecommerce.prod01.oregon.platform-os.com" target="_blank" rel="noopener">E-commerce</a></li>
+      <li><a href="https://amp-demo-travel.prod01.oregon.platform-os.com" target="_blank" rel="noopener">Travel</a></li>
+      <li><a href="https://amp-demo-lune.prod01.oregon.platform-os.com" target="_blank" rel="noopener">Product page</a></li>
+      <li><a href="https://amp-demo-gallery.prod01.oregon.platform-os.com/gallery" target="_blank" rel="noopener">Gallery</a></li>
+      <li><a href="https://amp-demo-blog.prod01.oregon.platform-os.com" target="_blank" rel="noopener">Blog</a></li>
+    </ol>
+
+    <p>
+      Source code of those pages on GitHub: <a href="https://github.com/mdyd-dev/amp-demo-pages">https://github.com/mdyd-dev/amp-demo-pages</a>.
+    </p>
+  </div>
+</div>
