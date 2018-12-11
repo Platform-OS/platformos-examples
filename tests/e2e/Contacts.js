@@ -25,12 +25,14 @@ test('Add new contact to the list', async t => {
   await t
     .expect(contacts.text.title.innerText)
     .eql('Create contact')
+    .expect(contacts.link.documentation.exists)
+    .ok();
+  await t
     .typeText(contacts.input.name, name)
     .typeText(contacts.input.email, email)
     .typeText(contacts.input.description, description)
-    .click(contacts.button.save)
-    .expect(layoutPage.alertSuccess.exists)
-    .ok();
+    .click(contacts.button.save);
+  await t.expect(layoutPage.alertSuccess.exists).ok();
 });
 
 test('On details page are contact data', async t => {
@@ -39,7 +41,8 @@ test('On details page are contact data', async t => {
     .ok()
     .expect(contacts.table.email.withText(email).exists)
     .ok()
-    .click(contacts.link.details)
+    .click(contacts.link.details);
+  await t
     .expect(contacts.data.name.withText(name).exists)
     .ok()
     .expect(contacts.data.email.withText(email).exists)
@@ -54,7 +57,8 @@ test('Edit of data on edit form', async t => {
     .selectText(contacts.input.name)
     .pressKey('delete')
     .typeText(contacts.input.name, 'Tester 2')
-    .click(contacts.button.save)
+    .click(contacts.button.save);
+  await t
     .expect(layoutPage.alertSuccess.exists)
     .ok()
     .click(contacts.link.details)

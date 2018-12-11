@@ -5,6 +5,9 @@ export default class HomePage {
     this.link = {
       register: Selector('a').withText('Register'),
       login: Selector('a').withText('Log in'),
+      contacts: Selector('a').withText(
+        'Building a contact form with customization'
+      ),
     };
   }
 }

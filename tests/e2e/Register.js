@@ -35,9 +35,8 @@ test('Create developer account', async t => {
     .typeText(register.input.email, userEmail)
     .typeText(register.input.password, userPass)
     .typeText(register.input.phone, userPhone)
-    .click(register.button.submit)
-    .expect(layoutPage.alertSuccess.exists)
-    .ok();
+    .click(register.button.submit);
+  await t.expect(layoutPage.alertSuccess.exists).ok();
 });
 
 test('Log in as a developer', async t => {
@@ -50,7 +49,8 @@ test('Display errors message on the form', async t => {
   await t
     .click(homePage.link.register)
     .click(register.link.devSignUp)
-    .click(register.button.submit)
+    .click(register.button.submit);
+  await t
     .expect(register.error.firstname.innerText)
     .eql(layoutPage.formErrors.errorText)
     .expect(register.error.email.innerText)

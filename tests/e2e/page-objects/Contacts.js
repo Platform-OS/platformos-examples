@@ -19,6 +19,9 @@ export default class Contacts {
       details: Selector('a').withText('Details'),
       edit: Selector('a').withText('Edit'),
       delete: Selector('.btn.btn-link').withText('Delete'),
+      documentation: Selector('a').withText(
+        'Building a contact form with customization'
+      ),
     };
     this.table = {
       email: Selector('tbody > tr:nth-of-type(2) > td:nth-of-type(2)'),
