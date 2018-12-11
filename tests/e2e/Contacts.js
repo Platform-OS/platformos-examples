@@ -23,42 +23,42 @@ test('There are no liquid errors on the page', async () => {
 
 test('Add new contact to the list', async t => {
   await t
-    .expect(contacts.formTitle.innerText)
+    .expect(contacts.text.title.innerText)
     .eql('Create contact')
-    .typeText(contacts.name, name)
-    .typeText(contacts.email, email)
-    .typeText(contacts.description, description)
-    .click(contacts.buttonSave)
+    .typeText(contacts.input.name, name)
+    .typeText(contacts.input.email, email)
+    .typeText(contacts.input.description, description)
+    .click(contacts.button.save)
     .expect(layoutPage.alertSuccess.exists)
     .ok();
 });
 
 test('On details page are contact data', async t => {
   await t
-    .expect(contacts.userEmail.exists)
+    .expect(contacts.table.email.exists)
     .ok()
-    .expect(contacts.userEmail.withText(email).exists)
+    .expect(contacts.table.email.withText(email).exists)
     .ok()
-    .click(contacts.linkDetails)
-    .expect(contacts.userDetails.withText(name).exists)
+    .click(contacts.link.details)
+    .expect(contacts.data.name.withText(name).exists)
     .ok()
-    .expect(contacts.emailDetails.withText(email).exists)
+    .expect(contacts.data.email.withText(email).exists)
     .ok()
-    .expect(contacts.descriptionDetails.withText(description).exists)
+    .expect(contacts.data.description.withText(description).exists)
     .ok();
 });
 
 test('Edit of data on edit form', async t => {
   await t
-    .click(contacts.linkEdit)
-    .selectText(contacts.name)
+    .click(contacts.link.edit)
+    .selectText(contacts.input.name)
     .pressKey('delete')
-    .typeText(contacts.name, 'Tester 2')
-    .click(contacts.buttonSave)
+    .typeText(contacts.input.name, 'Tester 2')
+    .click(contacts.button.save)
     .expect(layoutPage.alertSuccess.exists)
     .ok()
-    .click(contacts.linkDetails)
-    .expect(contacts.userDetails.withText(name).exists)
+    .click(contacts.link.details)
+    .expect(contacts.data.name.withText(name).exists)
     .ok();
 });
 
@@ -66,20 +66,20 @@ test('Remove contact', async t => {
   const emptyList = 'There is no contacts yet. Use the form below to add some.';
 
   await t
-    .click(contacts.linkDelete)
+    .click(contacts.link.delete)
     .expect(layoutPage.alertSuccess.exists)
     .ok()
-    .expect(contacts.infoNoContact.withText(emptyList).exists)
+    .expect(contacts.text.info.withText(emptyList).exists)
     .ok();
 });
 
 test('Display errors message on the form', async t => {
   await t
-    .click(contacts.buttonSave)
-    .expect(contacts.errorFormName.innerText)
+    .click(contacts.button.save)
+    .expect(contacts.error.name.innerText)
     .eql(layoutPage.formErrors.errorText)
-    .expect(contacts.errorFormEmail.innerText)
+    .expect(contacts.error.email.innerText)
     .eql(layoutPage.formErrors.errorIsNotValidEmailText)
-    .expect(contacts.errorFormName.innerText)
+    .expect(contacts.error.name.innerText)
     .eql(layoutPage.formErrors.errorText);
 });

@@ -2,17 +2,25 @@ import { Selector } from 'testcafe';
 
 export default class Register {
   constructor() {
-    this.headerSignUp = Selector('a').withText('Sign up');
-    this.headerLogIn = Selector('a').withText('Log in');
-    this.firstname = Selector('#form_first_name');
-    this.email = Selector('#form_email');
-    this.errorFormFirstName = Selector('#form_first_name +p');
-    this.errorFormEmail = Selector('#form_email +p');
-    this.errorFormPassword = Selector('#form_password +p');
-    this.errorFormMobileNumber = Selector('#form_mobile_number +p');
-    this.developerSignUp = Selector('a').withText('Developer');
-    this.password = Selector('#form_password');
-    this.mobileNumber = Selector('#form_mobile_number');
-    this.submitButton = Selector('button.btn');
+    this.link = {
+      signup: Selector('a').withText('Sign up'),
+      login: Selector('a').withText('Log in'),
+      devSignUp: Selector('a').withText('Developer'),
+    };
+    this.input = {
+      firstname: Selector('#form_first_name'),
+      email: Selector('#form_email'),
+      password: Selector('#form_password'),
+      phone: Selector('#form_mobile_number'),
+    };
+    this.button = {
+      submit: Selector('button.btn'),
+    };
+    this.error = {
+      firstname: Selector('#form_first_name + p'),
+      email: Selector('#form_email + p'),
+      password: Selector('#form_password + p'),
+      phone: Selector('#form_mobile_number + p'),
+    };
   }
 }

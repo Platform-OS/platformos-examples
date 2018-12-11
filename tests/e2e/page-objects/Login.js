@@ -8,9 +8,9 @@ const homePage = new HomePage();
 export default class LogIn {
   async login(username, password) {
     await t
-      .click(homePage.linkLogIn)
-      .typeText(register.email, username)
-      .typeText(register.password, password)
-      .click(register.submitButton);
+      .click(homePage.link.login)
+      .typeText(register.input.email, username)
+      .typeText(register.input.password, password)
+      .click(register.button.submit);
   }
 }

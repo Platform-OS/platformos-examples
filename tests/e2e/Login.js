@@ -12,7 +12,7 @@ fixture('Log in').page(layoutPage.URL.staging);
 test('Display error message on invalid password', async t => {
   await logIn.login('test@placek.com', 'wrongpassword');
   await t
-    .expect(register.errorFormPassword.innerText)
+    .expect(register.error.password.innerText)
     .eql(layoutPage.formErrors.errorInvalidPassText);
 });
 
