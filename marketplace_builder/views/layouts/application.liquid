@@ -19,12 +19,16 @@
     <footer class="my-3 py-3 border-top border-secondary">
       {% if context.page.metadata and context.page.metadata.docs_slug %}
       <p>
-        This page is an example for documentation article: <a href="https://documentation.platform-os.com/{{ context.page.metadata.docs_slug }}">{{ context.page.metadata.description }}</a>
+        This page is an example for documentation article: <a href="https://documentation.platform-os.com/{{ context.page.metadata.docs_slug }}" target="_blank" rel="noopener">{{ context.page.metadata.description }}</a>
       </p>
+      {% else %}
+        <p>
+          This page is an examples repository for documentation website:  <a href="https://documentation.platform-os.com" target="_blank" rel="noopener">https://documentation.platform-os.com</a>.
+        </p>
       {% endif %}
 
       <p>
-        Source code of this project can be found at: <a href="https://github.com/mdyd-dev/marketplace-nearme-example" target="_blank">https://github.com/mdyd-dev/marketplace-nearme-example</a>
+        Source code of this project can be found at: <a href="https://github.com/mdyd-dev/marketplace-nearme-example" target="_blank" rel="noopener">https://github.com/mdyd-dev/marketplace-nearme-example</a>
       </p>
     </footer>
   </div>
