@@ -1,0 +1,8 @@
+{
+  admin_pages(filter: { metadata: { has_key: "description" } }) {
+    results {
+      metadata
+      slug
+    }
+  }
+}

@@ -1,7 +1,13 @@
 ---
 slug: sign-in-recaptcha
+metadata:
+  description: Adding reCaptcha Spam Protection
+  docs_slug: tutorials/integrations/adding-recaptcha-spam-protection
 ---
-<h2>Log in </h2>
+<h2>Log in</h2>
+
+<div class="alert alert-info">Recaptcha will appear after 3 failed login attempts.</div>
+
 {% assign signin_failed_attempts = context.session.failed_attempts | plus: 0 %}
 {% if signin_failed_attempts > 3 %}
   {% include_form 'sign_in_with_recaptcha' %}
@@ -9,5 +15,9 @@ slug: sign-in-recaptcha
   {% include_form 'sign_in_without_recaptcha' %}
 {% endif %}
 
-<p>Forgot password? <a href="/recover-password">Recover password</a></p>
-<p>New user? Create <a href="/sign-up"> new account</a>.
+<div class="row">
+  <div class="col col-sm-12">
+    <p>Forgot password? <a href="/recover-password">Recover password</a></p>
+    <p>New user? Create <a href="/sign-up"> new account</a>.
+  </div>
+</div>

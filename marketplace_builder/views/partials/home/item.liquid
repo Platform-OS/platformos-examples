@@ -1,0 +1,13 @@
+<tr>
+  <td>
+    <a href="/{{ item.slug }}">{{ item.metadata.description }}</a>
+  </td>
+  <td>
+    <a href="https://documentation.platform-os.com/{{ item.metadata.docs_slug }}" target="_blank" rel="noopener">
+      Open
+      <sup>
+        <img src="{{ 'external.svg' | asset_url }}" width="12">
+      </sup>
+    </a>
+  </td>
+</tr>

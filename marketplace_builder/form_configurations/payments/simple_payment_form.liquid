@@ -1,7 +1,7 @@
 ---
 name: simple_payment_form
 resource: Payment
-redirect_to: '/payments'
+redirect_to: /payments
 configuration:
   credit_card_token:
   with_charge:
@@ -19,8 +19,8 @@ configuration:
       presence: true
       numericality:
         greater_than: 0
-flash_notice: "Payment successfull!"
-flash_alert: "Please fix validation errors"
+flash_notice: Payment successful!
+flash_alert: Please fix validation errors
 default_payload: |-
   {
     "credit_card_token": "{{ context.params.stripeToken }}",
@@ -35,7 +35,7 @@ default_payload: |-
 
 {%- form -%}
   {% if form_builder.errors.base != blank %}
-    <div class="form-error">{{ form_builder.errors.base }}</div>
+    <div class="alert alert-danger">{{ form_builder.errors.base }}</div>
   {% endif %}
 
   <input name="{{ form_builder.fields.payment_method_id.name }}" type="hidden" value="{{ p.payment_gateways[0].payment_methods[0].id }}">
@@ -53,5 +53,4 @@ default_payload: |-
     data-locale="auto"
     data-zip-code="true">
   </script>
-
 {% endform %}
