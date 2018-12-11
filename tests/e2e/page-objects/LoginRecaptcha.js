@@ -11,5 +11,8 @@ export default class LogInRecaptcha {
       iframe: Selector('iframe:nth-of-type(1)'),
       checkBoxRecaptcha: Selector('#recaptcha-anchor'),
     };
+    this.link = {
+      documentation: Selector('a').withText('Adding reCaptcha Spam Protection'),
+    };
   }
 }
