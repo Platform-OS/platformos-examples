@@ -12,11 +12,17 @@ test('There are no liquid errors on the page', async () => {
 });
 
 test('There are links to sign up and log in', async t => {
-  await t.expect(homePage.link.register).ok();
-  await t.expect(homePage.link.login).ok();
+  await t
+    .expect(homePage.link.register)
+    .ok()
+    .expect(homePage.link.login)
+    .ok();
 });
 
 test('There are links to all examples', async t => {
-  await t.expect(homePage.link.register).ok();
-  await t.expect(homePage.link.login).ok();
+  await t
+    .expect(homePage.link.contacts.exists)
+    .ok()
+    .expect(homePage.link.reCaptcha.exists)
+    .ok();
 });

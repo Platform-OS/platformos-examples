@@ -21,6 +21,10 @@ test('There are no liquid errors on the page', async () => {
   await layoutPage.checkLiquidErrors();
 });
 
+test('Documentation link', async t => {
+  await t.expect(contacts.link.documentation.exists).ok();
+});
+
 test('Add new contact to the list', async t => {
   await t
     .expect(contacts.text.title.innerText)

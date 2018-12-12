@@ -8,6 +8,7 @@ export default class HomePage {
       contacts: Selector('a').withText(
         'Building a contact form with customization'
       ),
+      reCaptcha: Selector('a').withText('Adding reCaptcha Spam Protection'),
     };
   }
 }
