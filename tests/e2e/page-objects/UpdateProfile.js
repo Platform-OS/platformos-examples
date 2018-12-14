@@ -34,4 +34,3 @@ export default class UpdateProfile {
     };
   }
 }
-//const uploadedPreviewImages = layoutPage.Content.find(updateProfile.files.imgAWS)
