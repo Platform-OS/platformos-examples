@@ -1,9 +1,11 @@
 import 'testcafe';
 import Contacts from './page-objects/Contacts';
 import LayoutPage from './page-objects/Layout';
+import Notifications from './page-objects/Notifications';
 
 const contacts = new Contacts();
 const layoutPage = new LayoutPage();
+const notifications = new Notifications();
 
 const contactData = {
   NAME: 'Tester',
@@ -36,7 +38,7 @@ test('Add new contact to the list', async t => {
     .typeText(contacts.input.email, email)
     .typeText(contacts.input.description, description)
     .click(contacts.button.save);
-  await t.expect(layoutPage.alertSuccess.exists).ok();
+  await t.expect(notifications.messageType.success.innerText).eql(notifications.text.saveContact);
 });
 
 test('On details page are contact data', async t => {
@@ -63,8 +65,7 @@ test('Edit of data on edit form', async t => {
     .typeText(contacts.input.name, 'Tester 2')
     .click(contacts.button.save);
   await t
-    .expect(layoutPage.alertSuccess.exists)
-    .ok()
+    .expect(notifications.messageType.success.innerText).eql(notifications.text.updateContact)
     .click(contacts.link.details)
     .expect(contacts.data.name.withText(name).exists)
     .ok();
@@ -75,10 +76,8 @@ test('Remove contact', async t => {
 
   await t
     .click(contacts.link.delete)
-    .expect(layoutPage.alertSuccess.exists)
-    .ok()
-    .expect(contacts.text.info.withText(emptyList).exists)
-    .ok();
+    .expect(notifications.messageType.success.innerText).eql(notifications.text.removeContact)
+    .expect(contacts.text.info.withText(emptyList).exists).ok();
 });
 
 test('Display errors message on the form', async t => {

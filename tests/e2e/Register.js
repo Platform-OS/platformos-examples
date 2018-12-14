@@ -3,11 +3,13 @@ import LayoutPage from './page-objects/Layout';
 import HomePage from './page-objects/Homepage';
 import Register from './page-objects/Register';
 import LogIn from './page-objects/Login';
+import Notifications from './page-objects/Notifications';
 
 const homePage = new HomePage();
 const layoutPage = new LayoutPage();
 const register = new Register();
 const logIn = new LogIn();
+const notifications = new Notifications();
 
 const userData = {
   NAME: 'test_user',
@@ -36,13 +38,13 @@ test('Create developer account', async t => {
     .typeText(register.input.password, userPass)
     .typeText(register.input.phone, userPhone)
     .click(register.button.submit);
-  await t.expect(layoutPage.alertSuccess.exists).ok();
+  await t.expect(notifications.messageType.success.innerText).eql(notifications.text.register);
 });
 
 test('Log in as a developer', async t => {
   await t.click(homePage.link.login);
   await logIn.login(userEmail, userPass);
-  await t.expect(layoutPage.alertSuccess.exists).ok();
+  await t.expect(notifications.messageType.success.innerText).eql(notifications.text.login);
 });
 
 test('Display errors message on the form', async t => {
