@@ -10,9 +10,6 @@ const layoutPage = new LayoutPage();
 const notifications = new Notifications();
 const updateProfile = new UpdateProfile();
 const homePage = new HomePage();
-const uploadedPreviewImages = layoutPage.Content.find(
-  updateProfile.files.imgAWS
-);
 
 fixture('Update profile').page(layoutPage.URL.staging);
 
@@ -37,13 +34,11 @@ test('Direct upload using AJAX', async t => {
   await t
     .expect(updateProfile.files.name.innerText)
     .eql('hero.png')
-    .expect(uploadedPreviewImages.count)
+    .expect(updateProfile.files.imgAWS.count)
     .eql(1);
 });
 
 test('Uploading Files Directly to Amazon S3 and using uploaded file as an avatar', async t => {
-  const previewImages = layoutPage.Content.find(updateProfile.files.img);
-
   await logIn.login('test_user@test.com', 'password');
   await t
     .expect(notifications.messageType.success.innerText)
@@ -80,6 +75,6 @@ test('Uploading Files Directly to Amazon S3 and using uploaded file as an avatar
     )
     .ok();
 
-  await t.expect(previewImages.count).eql(2);
-  await t.expect(uploadedPreviewImages.count).eql(2);
+  await t.expect(updateProfile.files.img.count).eql(2);
+  await t.expect(updateProfile.files.imgAWS.count).eql(2);
 });

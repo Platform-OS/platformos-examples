@@ -1,4 +1,7 @@
 import {Selector} from 'testcafe';
+import LayoutPage from './Layout';
+
+const layoutPage = new LayoutPage();
 
 export default class UpdateProfile {
   constructor() {
@@ -21,8 +24,8 @@ export default class UpdateProfile {
     this.files = {
       name: Selector('figcaption.figure-caption'),
       currentImgName: Selector('p.text-muted'),
-      imgAWS: 'img[src*="amazonaws.com/uploads"]',
-      img: 'img[src*="uploads/image"]',
+      imgAWS: layoutPage.Content.find('img[src*="amazonaws.com/uploads'),
+      img: layoutPage.Content.find('img[src*="uploads/image"]'),
     };
     this.link = {
       documentation: Selector('a').withText(
@@ -31,3 +34,4 @@ export default class UpdateProfile {
     };
   }
 }
+//const uploadedPreviewImages = layoutPage.Content.find(updateProfile.files.imgAWS)
