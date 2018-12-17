@@ -1,7 +1,7 @@
-import {Selector} from 'testcafe';
+import { Selector } from 'testcafe';
 
 export default class Notifications {
-  constructor () {
+  constructor() {
     this.text = {
       login: 'Session was successfully created.',
       register: 'You have signed up successfully.',
@@ -11,12 +11,13 @@ export default class Notifications {
       updateContact: 'Contact was successfully updated.',
       removeContact: 'Contact was successfully destroyed.',
       infoReCaptcha: 'Recaptcha will appear after 3 failed login attempts.',
-      recoverPassword: 'If you provided the right email, we will send you reset password instructions.',
+      recoverPassword:
+        'If you provided the right email, we will send you reset password instructions.',
       profileUpdate: 'Congratulations, your profile has been updated.',
     };
     this.messageType = {
-      success: Selector ('.alert.alert-success'),
-      info: Selector ('.alert.alert-info'),
+      success: Selector('.alert.alert-success'),
+      info: Selector('.alert.alert-info'),
     };
   }
 }

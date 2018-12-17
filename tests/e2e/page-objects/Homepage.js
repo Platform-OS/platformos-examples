@@ -9,7 +9,13 @@ export default class HomePage {
         'Building a contact form with customization'
       ),
       reCaptcha: Selector('a').withText('Adding reCaptcha Spam Protection'),
-      uploadFiles: Selector('a').withText('Uploading files directly to Amazon S3 using AJAX'),
+      uploadFiles: Selector('a').withText(
+        'Uploading files directly to Amazon S3 using AJAX'
+      ),
+      stripe: Selector('a').withText('Integrating Stripe payments'),
+    };
+    this.button = {
+      logout: Selector('.btn.btn-secondary.btn-sm'),
     };
   }
 }

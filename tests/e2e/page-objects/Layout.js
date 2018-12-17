@@ -15,7 +15,6 @@ export default class LayoutPage {
     };
     this.Body = Selector('body');
     this.Content = this.Body.find('main');
-    this.alertSuccess = Selector('.alert.alert-success');
   }
 
   async checkLiquidErrors() {
