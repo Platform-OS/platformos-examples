@@ -13,6 +13,9 @@ export default class HomePage {
         'Uploading files directly to Amazon S3 using AJAX'
       ),
       stripe: Selector('a').withText('Integrating Stripe payments'),
+      ajax: Selector('a').withText(
+        'Managing customizations using AJAX (CRUD operations)'
+      ),
     };
     this.button = {
       logout: Selector('.btn.btn-secondary.btn-sm'),

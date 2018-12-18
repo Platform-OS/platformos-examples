@@ -1,6 +1,6 @@
 import { Selector } from 'testcafe';
 
-export default class HomePage {
+export default class Stripe {
   constructor() {
     this.button = {
       submit: Selector('button[type="submit"]'),
