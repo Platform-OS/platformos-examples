@@ -16,6 +16,9 @@ export default class HomePage {
       ajax: Selector('a').withText(
         'Managing customizations using AJAX (CRUD operations)'
       ),
+      models: Selector('a').withText(
+        'Loading related models while avoiding n+1 queries. Increase speed 10x'
+      ),
     };
     this.button = {
       logout: Selector('.btn.btn-secondary.btn-sm'),
