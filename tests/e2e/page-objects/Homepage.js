@@ -13,6 +13,12 @@ export default class HomePage {
         'Uploading files directly to Amazon S3 using AJAX'
       ),
       stripe: Selector('a').withText('Integrating Stripe payments'),
+      ajax: Selector('a').withText(
+        'Managing customizations using AJAX (CRUD operations)'
+      ),
+      models: Selector('a').withText(
+        'Loading related models while avoiding n+1 queries. Increase speed 10x'
+      ),
     };
     this.button = {
       logout: Selector('.btn.btn-secondary.btn-sm'),
