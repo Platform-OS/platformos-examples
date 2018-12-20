@@ -1,6 +1,27 @@
+{% assign _total_duration = _graph_duration | plus: _render_duration %}
 <h3>benchmarking results</h3>
-<table class="table table-bordered table-striped">
-  <tr> <td>step</td> <td>result</td> </tr>
-  <tr> <td>graph</td> <td>{{_graph_duration}}</td> </tr>
-  <tr> <td>render</td> <td>{{_render_duration}}</td> </tr>
-</table>
+
+<div class="row">
+  <div class="col-4">
+    <table class="table table-bordered table-striped">
+      <tbody>
+        <tr>
+          <th>step</th>
+          <th>result (ms)</th>
+        </tr>
+        <tr>
+          <td>graph</td>
+          <td>{{ _graph_duration }}</td>
+        </tr>
+        <tr>
+          <td>render</td>
+          <td>{{ _render_duration }}</td>
+        </tr>
+        <tr>
+          <td>total</td>
+          <td>{{_total_duration }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
