@@ -25,7 +25,6 @@
   {% for input in image_s3_upload.form_data %}
     <input type="hidden" name="{{ input[0] }}" value="{{ input[1] }}" data-s3-direct-upload-field="presign" disabled>
   {% endfor %}
-  <input type="hidden" name="x-amz-meta-metadata" value="{}" data-s3-direct-upload-field="presign" disabled>
   <input type="hidden" name="action" value="{{ image_s3_upload.direct_upload_url }}" disabled>
 
   <div class="row">
