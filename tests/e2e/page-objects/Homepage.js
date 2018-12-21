@@ -19,6 +19,11 @@ export default class HomePage {
       models: Selector('a').withText(
         'Loading related models while avoiding n+1 queries. Increase speed 10x'
       ),
+      simplePage: Selector('a').withText('Example of a very simple page'),
+      timeDiff: Selector('a').withText(
+        'Measuring execution time of liquid code fragments (time_diff)'
+      ),
+      module: Selector('a').withText('Creating a module'),
     };
     this.button = {
       logout: Selector('.btn.btn-secondary.btn-sm'),

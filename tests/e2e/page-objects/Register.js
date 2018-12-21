@@ -3,9 +3,9 @@ import { Selector } from 'testcafe';
 export default class Register {
   constructor() {
     this.link = {
-      signup: Selector('a').withText('Sign up'),
       login: Selector('a').withText('Log in'),
-      devSignUp: Selector('a').withText('Developer'),
+      devRegister: Selector('a').withText('Developer'),
+      clienRegister: Selector('a').withText('Client'),
     };
     this.input = {
       firstname: Selector('#form_first_name'),
