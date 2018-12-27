@@ -24,6 +24,21 @@ export default class HomePage {
         'Measuring execution time of liquid code fragments (time_diff)'
       ),
       module: Selector('a').withText('Creating a module'),
+      googleAMP: Selector('a').withText('Google AMP?'),
+      eCommerce: Selector('a').withText('E-commerce'),
+      travel: Selector('a').withText('Travel'),
+      productPage: Selector('a').withText('Product page'),
+      gallery: Selector('a').withText('Gallery'),
+      blog: Selector('a').withText('Blog'),
+      googleAMPcode: Selector('a').withText(
+        'https://github.com/mdyd-dev/amp-demo-pages'
+      ),
+      documentationWebsite: Selector('a').withText(
+        'https://documentation.platform-os.com'
+      ),
+      exampleCode: Selector('a').withText(
+        'https://github.com/mdyd-dev/marketplace-nearme-example'
+      ),
     };
     this.button = {
       logout: Selector('.btn.btn-secondary.btn-sm'),

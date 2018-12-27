@@ -1,4 +1,4 @@
-import { Selector, t } from 'testcafe';
+import { Selector, ClientFunction, t } from 'testcafe';
 
 export default class LayoutPage {
   constructor() {
@@ -23,8 +23,15 @@ export default class LayoutPage {
       .expect(bodyText)
       .notContains('Liquid Error')
       .expect(bodyText)
-      .notContains('RenderFormTag Error')
+      .notContains('RenderFormTag Error:')
       .expect(bodyText)
-      .notContains('QueryGraphTag Error');
+      .notContains('QueryGraphTag Error:');
+    // .expect(bodyText)
+    // .notContains('ExecuteQueryTagError:');
+  }
+
+  async checkURL(domain) {
+    const getPageHref = ClientFunction(() => document.location.href.toString());
+    return t.expect(await getPageHref()).eql(domain);
   }
 }

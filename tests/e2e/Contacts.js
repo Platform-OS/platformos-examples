@@ -2,10 +2,12 @@ import 'testcafe';
 import Contacts from './page-objects/Contacts';
 import LayoutPage from './page-objects/Layout';
 import Notifications from './page-objects/Notifications';
+import Documentation from './page-objects/Documentation';
 
 const contacts = new Contacts();
 const layoutPage = new LayoutPage();
 const notifications = new Notifications();
+const documentation = new Documentation();
 
 const contactData = {
   NAME: 'Tester',
@@ -23,8 +25,12 @@ test('There are no liquid errors on the page', async () => {
   await layoutPage.checkLiquidErrors();
 });
 
-test('Documentation link', async t => {
-  await t.expect(contacts.link.documentation.exists).ok();
+test('There is a link to the documentation', async t => {
+  await t.click(contacts.link.documentation);
+  layoutPage.checkURL(
+    documentation.URL.production +
+      '/tutorials/customizations/building-contact-form-with-customization'
+  );
 });
 
 test('Add new contact to the list', async t => {
@@ -38,7 +44,9 @@ test('Add new contact to the list', async t => {
     .typeText(contacts.input.email, email)
     .typeText(contacts.input.description, description)
     .click(contacts.button.save);
-  await t.expect(notifications.messageType.success.innerText).eql(notifications.text.saveContact);
+  await t
+    .expect(notifications.messageType.success.innerText)
+    .eql(notifications.text.saveContact);
 });
 
 test('On details page are contact data', async t => {
@@ -65,7 +73,8 @@ test('Edit of data on edit form', async t => {
     .typeText(contacts.input.name, 'Tester 2')
     .click(contacts.button.save);
   await t
-    .expect(notifications.messageType.success.innerText).eql(notifications.text.updateContact)
+    .expect(notifications.messageType.success.innerText)
+    .eql(notifications.text.updateContact)
     .click(contacts.link.details)
     .expect(contacts.data.name.withText(name).exists)
     .ok();
@@ -76,8 +85,10 @@ test('Remove contact', async t => {
 
   await t
     .click(contacts.link.delete)
-    .expect(notifications.messageType.success.innerText).eql(notifications.text.removeContact)
-    .expect(contacts.text.info.withText(emptyList).exists).ok();
+    .expect(notifications.messageType.success.innerText)
+    .eql(notifications.text.removeContact)
+    .expect(contacts.text.info.withText(emptyList).exists)
+    .ok();
 });
 
 test('Display errors message on the form', async t => {

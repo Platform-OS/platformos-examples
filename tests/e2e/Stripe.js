@@ -4,12 +4,14 @@ import LogIn from './page-objects/Login';
 import Notifications from './page-objects/Notifications';
 import Stripe from './page-objects/Stripe';
 import HomePage from './page-objects/Homepage';
+import Documentation from './page-objects/Documentation';
 
 const logIn = new LogIn();
 const layoutPage = new LayoutPage();
 const notifications = new Notifications();
 const stripe = new Stripe();
 const homePage = new HomePage();
+const documentation = new Documentation();
 
 fixture('Stripe').page(layoutPage.URL.staging);
 
@@ -20,7 +22,14 @@ test('There are no liquid errors on the page', async t => {
     .eql(notifications.text.login);
   await t.click(homePage.link.stripe);
   await layoutPage.checkLiquidErrors();
-  await t.expect(stripe.link.documentation.exists).ok();
+});
+
+test('There is a link to the documentation', async t => {
+  await logIn.login('test_user@test.com', 'password');
+  await t.click(homePage.link.stripe).click(stripe.link.documentation);
+  layoutPage.checkURL(
+    documentation.URL.production + '/tutorials/payments/integrating-stripe'
+  );
 });
 
 test('Pay by using valid credit card', async t => {
