@@ -25,9 +25,9 @@ export default class LayoutPage {
       .expect(bodyText)
       .notContains('RenderFormTag Error:')
       .expect(bodyText)
-      .notContains('QueryGraphTag Error:');
-    // .expect(bodyText)
-    // .notContains('ExecuteQueryTagError:');
+      .notContains('QueryGraphTag Error:')
+      .expect(bodyText)
+      .notContains('ExecuteQueryTagError:');
   }
 
   async checkURL(domain) {
