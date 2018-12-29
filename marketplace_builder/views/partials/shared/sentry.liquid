@@ -1,0 +1,43 @@
+<script src="https://browser.sentry-cdn.com/4.4.2/bundle.min.js" crossorigin="anonymous"></script>
+
+{% if context.environment == 'staging' or context.environment == 'production' %}
+  <script>
+    Sentry.init({
+      dsn: 'https://8a5c7bd1e2f5450caadeeac76ea18950@sentry.io/1361925',
+      environment: "{{ context.environment }}",
+      captureUnhandledRejections: false,
+      ignoreErrors: [
+        'Script error.',
+        /Blocked a frame with origin/,
+        'document.getElementsByClassName.ToString is not a function'
+      ],
+      ignoreUrls: [
+        /^chrome:\/\//i, // Chrome extensions
+        /^resource:\/\//i, // Firefox extensions
+      ]
+    });
+
+    {% if context.current_user.id %}
+      Sentry.configureScope(function(scope) {
+        scope.setUser({
+          "id": "{{ context.current_user.id }}",
+          "email": "{{ context.current_user.email }}"
+        });
+      });
+    {% endif %}
+
+    document.addEventListener('DOMContentLoaded', () => {
+      var ERROR_SIGNATURE = new RegExp('(Liquid|RenderFormTag|QueryGraphTag) Error');
+      var bodyText = document.body.textContent;
+
+      if (ERROR_SIGNATURE.test(bodyText)) {
+        captureException(new Error('Liquid/Form/GraphQL error found on the page', location.href));
+      }
+    });
+  </script>
+
+
+
+
+
+{% endif %}
