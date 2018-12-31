@@ -1,18 +1,18 @@
-import { Selector } from 'testcafe';
+import {Selector} from 'testcafe';
 
 export default class Module {
-  constructor() {
+  constructor () {
     this.link = {
-      documentation: Selector('a').withText('Creating a module'),
+      documentation: Selector ('a').withText ('Creating a module'),
     };
     this.table = {
-      propertiesRows: Selector(
+      propertiesRows: Selector (
         '.row > div:nth-of-type(1) > table.table.table-compact > tbody > tr > td:nth-of-type(2)'
       ),
-      pagesRows: Selector(
+      pagesRows: Selector (
         '.row > div:nth-of-type(2) > table.table.table-compact > tbody > tr > td:nth-of-type(2)'
       ),
-      assetsRows: Selector(
+      assetsRows: Selector (
         'table.table.table-sm > tbody > tr > td:nth-of-type(2)'
       ),
     };

@@ -2,55 +2,84 @@ import 'testcafe';
 import LayoutPage from './page-objects/Layout';
 import HomePage from './page-objects/Homepage';
 
-const homePage = new HomePage();
-const layoutPage = new LayoutPage();
+const homePage = new HomePage ();
+const layoutPage = new LayoutPage ();
+const actualURL = homePage.getPageUrl ();
 
-fixture('Homepage').page(layoutPage.URL.staging);
+fixture ('Homepage').page (layoutPage.URL.staging);
 
-test('There are no liquid errors on the page', async () => {
-  await layoutPage.checkLiquidErrors();
+test ('There are no liquid errors on the page', async () => {
+  await layoutPage.checkLiquidErrors ();
 });
 
-test('There are links to sign up and log in', async t => {
+test ('There are links to sign up and log in', async t => {
   await t
-    .expect(homePage.link.register)
-    .ok()
-    .expect(homePage.link.login)
-    .ok();
+    .expect (homePage.link.register)
+    .ok ()
+    .expect (homePage.link.login)
+    .ok ();
 });
 
-test('There are links to all examples', async t => {
+test ('There are links to all examples', async t => {
   await t
-    .expect(homePage.link.contacts.exists)
-    .ok()
-    .expect(homePage.link.reCaptcha.exists)
-    .ok();
+    .expect (homePage.link.contacts.exists)
+    .ok ()
+    .expect (homePage.link.reCaptcha.exists)
+    .ok ();
 });
 
-test('Redirection to Example Google AMP websites', async t => {
-  await t.click(homePage.link.googleAMP);
-  layoutPage.checkURL('https://www.ampproject.org/learn/overview/');
-  await t.navigateTo(layoutPage.URL.staging).click(homePage.link.eCommerce);
-  layoutPage.checkURL(
-    'https://amp-demo-ecommerce.prod01.oregon.platform-os.com/'
-  );
-  await t.navigateTo(layoutPage.URL.staging).click(homePage.link.travel);
-  layoutPage.checkURL('https://amp-demo-travel.prod01.oregon.platform-os.com/');
-  await t.navigateTo(layoutPage.URL.staging).click(homePage.link.productPage);
-  layoutPage.checkURL('https://amp-demo-lune.prod01.oregon.platform-os.com/');
-  await t.navigateTo(layoutPage.URL.staging).click(homePage.link.gallery);
-  layoutPage.checkURL(
-    'https://amp-demo-gallery.prod01.oregon.platform-os.com/gallery'
-  );
-  await t.navigateTo(layoutPage.URL.staging).click(homePage.link.blog);
-  layoutPage.checkURL('https://amp-demo-blog.prod01.oregon.platform-os.com/');
-  await t.navigateTo(layoutPage.URL.staging).click(homePage.link.googleAMPcode);
-  layoutPage.checkURL('https://github.com/mdyd-dev/amp-demo-pages');
+test ('Redirection to Example Google AMP websites', async t => {
+  await t
+    .click (homePage.link.googleAMP)
+    .expect (actualURL ())
+    .contains (homePage.URL.ampProject);
+
+  await t
+    .navigateTo (layoutPage.URL.staging)
+    .click (homePage.link.eCommerce)
+    .expect (actualURL ())
+    .contains (homePage.URL.ecommerce);
+
+  await t
+    .navigateTo (layoutPage.URL.staging)
+    .click (homePage.link.travel)
+    .expect (actualURL ())
+    .contains (homePage.URL.travel);
+
+  await t
+    .navigateTo (layoutPage.URL.staging)
+    .click (homePage.link.productPage)
+    .expect (actualURL ())
+    .contains (homePage.URL.lune);
+
+  await t
+    .navigateTo (layoutPage.URL.staging)
+    .click (homePage.link.gallery)
+    .expect (actualURL ())
+    .contains (homePage.URL.gallery);
+
+  await t
+    .navigateTo (layoutPage.URL.staging)
+    .click (homePage.link.blog)
+    .expect (actualURL ())
+    .contains (homePage.URL.blog);
+
+  await t
+    .navigateTo (layoutPage.URL.staging)
+    .click (homePage.link.googleAMPcode)
+    .expect (actualURL ())
+    .contains (homePage.URL.ampDemoGH);
 });
 
-test('Footer links', async t => {
-  await t.click(homePage.link.documentationWebsite);
-  layoutPage.checkURL('https://documentation.platform-os.com/');
-  await t.navigateTo(layoutPage.URL.staging).click(homePage.link.exampleCode);
-  layoutPage.checkURL('https://github.com/mdyd-dev/marketplace-nearme-example');
+test ('Footer links', async t => {
+  await t
+    .click (homePage.link.documentationWebsite)
+    .expect (actualURL ())
+    .contains (homePage.URL.documentation);
+
+  await t
+    .navigateTo (layoutPage.URL.staging)
+    .click (homePage.link.exampleCode)
+    .expect (actualURL ())
+    .contains (homePage.URL.nmExamples);
 });
