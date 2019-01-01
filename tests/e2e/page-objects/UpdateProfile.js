@@ -1,4 +1,6 @@
-import {Selector} from 'testcafe';
+import {
+  Selector
+} from 'testcafe';
 import LayoutPage from './Layout';
 
 const layoutPage = new LayoutPage();
@@ -6,8 +8,7 @@ const layoutPage = new LayoutPage();
 export default class UpdateProfile {
   constructor() {
     this.URL = {
-      staging:
-        process.env.MP_URL ||
+      staging: process.env.MP_URL ||
         'https://nearme-example.staging-oregon.near-me.com/update_profile',
     };
     this.txt = {

@@ -1,10 +1,11 @@
-import { Selector } from 'testcafe';
+import {
+  Selector
+} from 'testcafe';
 
 export default class Contacts {
   constructor() {
     this.URL = {
-      staging:
-        process.env.MP_URL ||
+      staging: process.env.MP_URL ||
         'https://nearme-example.staging-oregon.near-me.com/contacts',
     };
     this.input = {

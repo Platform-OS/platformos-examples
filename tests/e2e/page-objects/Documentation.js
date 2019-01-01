@@ -1,9 +1,11 @@
-import {Selector} from 'testcafe';
+import {
+  Selector
+} from 'testcafe';
 
 export default class Documentation {
-  constructor () {
+  constructor() {
     this.element = {
-      titlePage: Selector ('.content > h1'),
+      titlePage: Selector('.content > h1'),
     };
     this.title = {
       contactFormTitle: 'Building a Contact Form with Customization',
