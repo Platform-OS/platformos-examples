@@ -1,6 +1,10 @@
 pipeline {
   agent any
 
+triggers {
+  cron('30 8 * * *')
+}
+
   environment {
     TOKEN = credentials('POS_TOKEN')
     EMAIL = "darek+ci@near-me.com"
