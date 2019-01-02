@@ -20,7 +20,7 @@ test('There are links to sign up and log in', async t => {
     .ok();
 });
 
-test('There are links to all examples', async t => {
+test.skip('There are links to all examples', async t => {
   await t
     .expect(homePage.link.contacts.exists)
     .ok()
