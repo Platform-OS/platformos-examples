@@ -2,32 +2,32 @@ import 'testcafe';
 import LayoutPage from './page-objects/Layout';
 import HomePage from './page-objects/Homepage';
 import RelatedModels from './page-objects/RelatedModels';
-import Documentation from './page-objects/Documentation';
+import TimeDiff from './page-objects/TimeDiff';
 
 const layoutPage = new LayoutPage();
 const homePage = new HomePage();
 const relatedModels = new RelatedModels();
-const documentation = new Documentation();
+const timeDiff = new TimeDiff();
 
-fixture('Loading related models while avoiding n+1 queries').page(
+fixture('Measuring execution time of liquid code fragments').page(
   layoutPage.URL.staging
 );
 
 test('There are no liquid errors on the page', async t => {
-  await t.click(homePage.link.models);
+  await t.click(homePage.link.timeDiff);
   await layoutPage.checkLiquidErrors();
 });
 
-test('There is a link to the documentation', async t => {
-  await t.click(homePage.link.models).click(relatedModels.link.documentation);
+test('There is a link to documentation', async t => {
   await t
-    .expect(documentation.element.titlePage.innerText)
-    .eql(documentation.title.releatedModelsTitle);
+    .click(homePage.link.timeDiff)
+    .expect(timeDiff.link.documentation.exists)
+    .ok();
 });
 
-test('Loading related models while avoiding n+1 queries. Increase speed 10x', async t => {
+test('Measuring execution time of liquid code fragments (time_diff)', async t => {
   await t
-    .click(homePage.link.models)
+    .click(homePage.link.timeDiff)
     .click(relatedModels.link.programmersCompaniesSlow);
   let msSlow = await relatedModels.data.result.innerText;
   await t.click(relatedModels.link.programmersCompaniesCorrect);

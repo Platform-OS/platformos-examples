@@ -4,12 +4,14 @@ import LogIn from './page-objects/Login';
 import Notifications from './page-objects/Notifications';
 import UpdateProfile from './page-objects/UpdateProfile';
 import HomePage from './page-objects/Homepage';
+import Documentation from './page-objects/Documentation';
 
 const logIn = new LogIn();
 const layoutPage = new LayoutPage();
 const notifications = new Notifications();
 const updateProfile = new UpdateProfile();
 const homePage = new HomePage();
+const documentation = new Documentation();
 
 fixture('Update profile').page(layoutPage.URL.staging);
 
@@ -20,7 +22,15 @@ test('There are no liquid errors on the page', async t => {
     .eql(notifications.text.login);
   await t.click(homePage.link.uploadFiles);
   await layoutPage.checkLiquidErrors();
-  await t.expect(updateProfile.link.documentation.exists).ok();
+});
+
+test('There is a link to the documentation', async t => {
+  await t
+    .click(homePage.link.uploadFiles)
+    .click(updateProfile.link.documentation);
+  await t
+    .expect(documentation.element.titlePage.innerText)
+    .eql(documentation.title.ajaxUploadTitle);
 });
 
 test('Direct upload using AJAX', async t => {
@@ -64,17 +74,9 @@ test('Uploading Files Directly to Amazon S3 and using uploaded file as an avatar
     './uploads/bug.png',
   ]);
   await t
-    .expect(
-      updateProfile.files.currentImgName.withText(updateProfile.txt.newAvatar)
-        .exists
-    )
-    .ok()
-    .expect(
-      updateProfile.files.currentImgName.withText(updateProfile.txt.newBanner)
-        .exists
-    )
-    .ok();
-
-  await t.expect(updateProfile.files.img.count).eql(2);
-  await t.expect(updateProfile.files.imgAWS.count).eql(2);
+    .expect(updateProfile.files.currentImgName.withText(updateProfile.txt.newAvatar).exists).ok()
+    .expect(updateProfile.files.currentImgName.withText(updateProfile.txt.newBanner).exists).ok();
+  await t
+    .expect(updateProfile.files.img.count).eql(2)
+    .expect(updateProfile.files.imgAWS.count).eql(2);
 });

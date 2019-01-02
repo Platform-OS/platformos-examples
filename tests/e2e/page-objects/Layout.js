@@ -1,10 +1,12 @@
-import { Selector, t } from 'testcafe';
+import {
+  Selector,
+  t
+} from 'testcafe';
 
 export default class LayoutPage {
   constructor() {
     this.URL = {
-      staging:
-        process.env.MP_URL ||
+      staging: process.env.MP_URL ||
         'https://nearme-example.staging-oregon.near-me.com',
     };
     this.formErrors = {
@@ -23,8 +25,10 @@ export default class LayoutPage {
       .expect(bodyText)
       .notContains('Liquid Error')
       .expect(bodyText)
-      .notContains('RenderFormTag Error')
+      .notContains('RenderFormTag Error:')
       .expect(bodyText)
-      .notContains('QueryGraphTag Error');
+      .notContains('QueryGraphTag Error:')
+      .expect(bodyText)
+      .notContains('ExecuteQueryTagError:');
   }
 }
