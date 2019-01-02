@@ -20,7 +20,7 @@ test('There are links to sign up and log in', async t => {
     .ok();
 });
 
-test.skip('There are links to all examples', async t => {
+test('There are links to all examples', async t => {
   await t
     .expect(homePage.link.contacts.exists)
     .ok()
@@ -28,7 +28,7 @@ test.skip('There are links to all examples', async t => {
     .ok();
 });
 
-test('Redirection to Example Google AMP websites', async t => {
+test.skip('Redirection to Example Google AMP websites', async t => {
   await t
     .click(homePage.link.googleAMP)
     .expect(actualURL())
@@ -71,7 +71,7 @@ test('Redirection to Example Google AMP websites', async t => {
     .contains(homePage.URL.ampDemoGH);
 });
 
-test('Footer links', async t => {
+test.skip('Footer links', async t => {
   await t
     .click(homePage.link.documentationWebsite)
     .expect(actualURL())
