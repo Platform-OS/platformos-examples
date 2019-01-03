@@ -1,10 +1,10 @@
 import 'testcafe';
-import LayoutPage from './page-objects/Layout';
-import LogIn from './page-objects/Login';
-import Notifications from './page-objects/Notifications';
-import RecoverPassword from './page-objects/RecoverPassword';
-import Contacts from './page-objects/Contacts';
-import HomePage from './page-objects/Homepage';
+import LayoutPage from '../page-objects/Layout';
+import LogIn from '../page-objects/Login';
+import Notifications from '../page-objects/Notifications';
+import RecoverPassword from '../page-objects/RecoverPassword';
+import Contacts from '../page-objects/Contacts';
+import HomePage from '../page-objects/Homepage';
 
 const logIn = new LogIn();
 const layoutPage = new LayoutPage();

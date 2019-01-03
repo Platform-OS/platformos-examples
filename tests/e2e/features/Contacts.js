@@ -1,13 +1,11 @@
 import 'testcafe';
-import Contacts from './page-objects/Contacts';
-import LayoutPage from './page-objects/Layout';
-import Notifications from './page-objects/Notifications';
-import Documentation from './page-objects/Documentation';
+import Contacts from '../page-objects/Contacts';
+import LayoutPage from '../page-objects/Layout';
+import Notifications from '../page-objects/Notifications';
 
 const contacts = new Contacts();
 const layoutPage = new LayoutPage();
 const notifications = new Notifications();
-const documentation = new Documentation();
 
 const contactData = {
   NAME: 'Tester',
@@ -23,13 +21,6 @@ fixture('Contacts').page(contacts.URL.staging);
 
 test('There are no liquid errors on the page', async () => {
   await layoutPage.checkLiquidErrors();
-});
-
-test('There is a link to the documentation', async t => {
-  await t
-    .click(contacts.link.documentation)
-    .expect(documentation.element.titlePage.innerText)
-    .eql(documentation.title.contactFormTitle);
 });
 
 test('Add new contact to the list', async t => {
