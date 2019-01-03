@@ -1,28 +1,17 @@
 import 'testcafe';
-import LayoutPage from './page-objects/Layout';
-import SimplePage from './page-objects/SimplePage';
-import HomePage from './page-objects/Homepage';
-import Documentation from './page-objects/Documentation';
+import LayoutPage from '../page-objects/Layout';
+import SimplePage from '../page-objects/SimplePage';
+import HomePage from '../page-objects/Homepage';
 
 const layoutPage = new LayoutPage();
 const simplePage = new SimplePage();
 const homePage = new HomePage();
-const documentation = new Documentation();
 
 fixture('Simple page').page(layoutPage.URL.staging);
 
 test('There are no liquid errors on the page', async t => {
   await t.click(homePage.link.simplePage);
   await layoutPage.checkLiquidErrors();
-});
-
-test('There is a link to the documentation', async t => {
-  await t
-    .click(homePage.link.simplePage)
-    .click(simplePage.link.documentation);
-  await t
-    .expect(documentation.element.titlePage.innerText)
-    .eql(documentation.title.pagesTitle);
 });
 
 test('About us page', async t => {

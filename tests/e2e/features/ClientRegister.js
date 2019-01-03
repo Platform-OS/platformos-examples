@@ -1,9 +1,9 @@
 import 'testcafe';
-import LayoutPage from './page-objects/Layout';
-import HomePage from './page-objects/Homepage';
-import Register from './page-objects/Register';
-import LogIn from './page-objects/Login';
-import Notifications from './page-objects/Notifications';
+import LayoutPage from '../page-objects/Layout';
+import HomePage from '../page-objects/Homepage';
+import Register from '../page-objects/Register';
+import LogIn from '../page-objects/Login';
+import Notifications from '../page-objects/Notifications';
 
 const homePage = new HomePage();
 const layoutPage = new LayoutPage();
