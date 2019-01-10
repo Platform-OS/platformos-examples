@@ -1,0 +1,4 @@
+name: example_model
+properties:
+  - name: email
+    type: string

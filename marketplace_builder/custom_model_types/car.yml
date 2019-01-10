@@ -1,0 +1,5 @@
+name: Car
+custom_attributes:
+- name: color
+  type: string
+

@@ -1,0 +1,11 @@
+---
+name: "car_form"
+resource: "car"
+configuration:
+  properties:
+    color: {}
+---
+{% form %}
+  <input name="{{ form_builder.fields.properties.brand.name }}" />
+  <button type="submit">Save</button>
+{% endform %}

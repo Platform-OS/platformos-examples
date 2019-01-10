@@ -1,0 +1,61 @@
+---
+name: full_form_example
+resource: example_model
+resource_owner: anyone
+return_to: '/full-form-example'
+flash_alert: "Hello from flash alert"
+flash_notice: "Hello from flash notice"
+spam_protection: "" # e.g. recaptcha - needs to be fonfigured
+configuration:
+  properties:
+    email:
+      validation:
+        presence:
+          message: "Hello from presence validator"
+        email: true
+    greeting:
+      property_options:
+        virtual: true
+email_notifications:
+- welcome_user
+api_call_notifications:
+- ping_example_com_on_user_sign_up
+callback_actions: >
+  {% log "Hello from callback actions" %}
+sms_notifications: ""
+async_callback_actions:
+  delay: 1
+  content: |-
+    {% log "Hello from async callback actions - I am delayed 1 minute!" %}
+authorization_policies:
+  - valid_example_policy
+default_payload: |-
+  {
+    "properties_attributes": {
+      "greeting": "Hello from default payload!"
+    }
+  }
+---
+<p>{{ context.flash.notice }}</p>
+<p>{{ context.flash.alert }}</p>
+<p>{{ form_builder.fields.properties.greeting.value }}</p>
+
+{% form html-class: 'w-50' %}
+  <div class="form-group">
+    <label for="form_email">
+      Email
+    </label>
+
+    <input
+      class="form-control"
+      name="{{ form_builder.fields.properties.email.name }}"
+      value="{{ form_builder.fields.properties.email.value}}"
+      id="form_email"
+      type="email"
+     >
+
+     {{ form_builder.fields.properties.email.validation.rules.presence.message }}
+  </div>
+
+  <button class="btn btn-primary">Save</button>
+{% endform %}
