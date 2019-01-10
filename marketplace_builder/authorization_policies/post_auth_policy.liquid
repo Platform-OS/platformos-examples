@@ -1,0 +1,7 @@
+---
+name: post_auth_policy
+redirect_to: /
+---
+{% query_graph 'current_user', result_name: 'g' %}
+{% log g.current_user, type: "from policy" %}
+{% if g.current_user %}true{%else%}false{%endif%}

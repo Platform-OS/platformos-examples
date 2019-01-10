@@ -1,0 +1,34 @@
+---
+slug: post-form
+---
+{% query_graph 'current_user', result_name: 'g' %}
+<h1>Posting</h1>
+
+<textarea id="log" rows="15" cols="120">
+Current User:
+{{ g.current_user | json }}
+
+</textarea>
+
+<script>
+  const log = document.getElementById("log")
+  const authenticity_token = "{{ context.authenticity_token }}"
+
+  log.append("Token:\n")
+  log.append(authenticity_token)
+  log.append("\n")
+
+  fetch("/post-endpoint.json", {
+    method: "post",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ authenticity_token: authenticity_token })
+  })
+     .then( (response) => response.json() )
+     .then(body => {
+       log.append("\nJSON Response:\n")
+       log.append(JSON.stringify(body, null, 2))
+     })
+</script>

@@ -1,0 +1,9 @@
+---
+slug: post-endpoint
+authorization_policies:
+- post_auth_policy
+method: post
+format: json
+---
+{% query_graph 'current_user', result_name: 'g' %}
+{{ g.current_user | json }}
