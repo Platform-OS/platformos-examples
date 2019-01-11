@@ -10,7 +10,7 @@ export default class LayoutPage {
         'https://nearme-example.staging-oregon.near-me.com',
     };
     this.formErrors = {
-      errorInvalidPassText: 'Invalid email or password.',
+      errorInvalidPassText: 'Invalid email or password',
       errorText: "can't be blank",
       errorIsNotValidEmailText: 'is not a valid email address',
       errorIsTooShort: 'is too short (minimum is 6 characters)',
