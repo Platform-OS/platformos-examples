@@ -15,7 +15,7 @@ pipeline {
   stages {
     stage('Staging') {
       environment {
-        MP_URL = "https://nearme-example.staging-oregon.near-me.com"
+        MP_URL = "https://nearme-example.staging.oregon.platform-os.com"
         GH_URL = "https://github.com/mdyd-dev/marketplace-nearme-example"
       }
 

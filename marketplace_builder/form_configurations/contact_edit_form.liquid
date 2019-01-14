@@ -1,0 +1,52 @@
+---
+name: contact_edit_form
+resource: Customization
+resource_owner: anyone
+redirect_to: /contacts
+configuration:
+  properties:
+    name:
+      validation:
+        presence: true
+    email:
+      validation:
+        presence: true
+        email: true
+    description:
+      validation:
+        presence: true
+flash_notice: Contact was successfully updated.
+---
+<h2>Edit contact</h2>
+
+{% form %}
+  <div class="row">
+    <div class="form-group col-6">
+      <label for="name">Name:</label>
+      <input name="{{ form_builder.fields.properties.name.name }}" value="{{ form_builder.fields.properties.name.value }}" id="name" type="text" class="form-control">
+      {% if form_builder.errors['properties.name'] %}
+        <p>{{ form_builder.errors['properties.name'] }}</p>
+      {% endif %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-6">
+      <label for="email">Email:</label>
+      <input name="{{ form_builder.fields.properties.email.name }}" value="{{ form_builder.fields.properties.email.value }}" id="email" type="email" class="form-control">
+      {% if form_builder.errors['properties.email'] %}
+        <p>{{ form_builder.errors['properties.email'] }}</p>
+      {% endif %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-6">
+      <label for="description">Description:</label>
+      <textarea name="{{ form_builder.fields.properties.description.name }}" id="description" class="form-control">{{ form_builder.fields.properties.description.value }}</textarea>
+      {% if form_builder.errors['properties.description'] %}
+        <p>{{ form_builder.errors['properties.description'] }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <button class="btn btn-primary btn-lg">Save</button>
+{% endform %}
