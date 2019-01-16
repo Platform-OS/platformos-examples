@@ -1,5 +1,5 @@
 name: Car
-custom_attributes:
+properties:
 - name: color
   type: string
 
