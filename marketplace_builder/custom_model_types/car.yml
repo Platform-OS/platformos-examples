@@ -1,0 +1,5 @@
+name: car
+properties:
+- name: color
+  type: string
+
