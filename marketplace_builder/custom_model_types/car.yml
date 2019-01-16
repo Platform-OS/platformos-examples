@@ -1,4 +1,4 @@
-name: Car
+name: car
 properties:
 - name: color
   type: string
