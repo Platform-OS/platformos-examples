@@ -13,7 +13,7 @@ slug: client/projects
     <ul>
       {% for project in g.projects.results %}
         <li>{{ project.name }} ({{ project.state }}) - <a href="/client/projects/edit/{{project.slug}}">edit</a>
-        {% include_form 'destroy_project', resource_id: project.id %}</li>
+        {% include_form 'destroy_project', id: project.id %}</li>
       {% endfor %}
     </ul>
     {% assign pages = g.projects.total_pages %}
