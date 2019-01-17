@@ -1,4 +1,4 @@
 name: default
-custom_attributes:
+properties:
 - name: password_token
-  attribute_type: string
+  type: string

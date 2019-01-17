@@ -1,16 +1,16 @@
 name: developer
-custom_attributes:
+properties:
 - name: bio
-  attribute_type: string
+  type: string
 - name: years_of_experience
-  attribute_type: integer
+  type: integer
 - name: hourly_rate
-  attribute_type: float
+  type: float
 - name: avatar
-  attribute_type: photo
+  type: photo
 - name: banner
-  attribute_type: photo
+  type: photo
 - name: cv
-  attribute_type: custom_attachment
+  type: custom_attachment
 - name: mobile_number
-  attribute_type: string
+  type: string
