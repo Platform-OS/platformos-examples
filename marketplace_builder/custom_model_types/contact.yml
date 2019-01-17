@@ -1,8 +1,8 @@
 name: Contact
-custom_attributes:
+properties:
   - name: name
-    attribute_type: string
+    type: string
   - name: email
-    attribute_type: string
+    type: string
   - name: description
-    attribute_type: string
+    type: string

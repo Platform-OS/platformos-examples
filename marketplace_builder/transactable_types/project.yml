@@ -2,15 +2,15 @@
 name: Project
 custom_attributes:
 - name: workplace_onsite
-  attribute_type: boolean
+  type: boolean
 - name: workplace_online
-  attribute_type: boolean
+  type: boolean
 - name: deadline
-  attribute_type: date
+  type: date
 - name: budget
-  attribute_type: float
+  type: float
 - name: state
-  attribute_type: string
+  type: string
 - name: description
-  attribute_type: string
+  type: string
 ---

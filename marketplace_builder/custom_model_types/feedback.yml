@@ -1,6 +1,6 @@
 name: Feedback
-custom_attributes:
+properties:
   - name: message
-    attribute_type: string
+    type: string
   - name: rate
-    attribute_type: string
+    type: string

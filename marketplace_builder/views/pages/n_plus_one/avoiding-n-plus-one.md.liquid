@@ -16,22 +16,22 @@ Our data schema consists of two models: `company` and `programmer`
 name: company
 custom_attributes:
 - name: name
-  attribute_type: string
+  type: string
 - name: email
-  attribute_type: string
+  type: string
 - name: url
-  attribute_type: string
+  type: string
 ```
 
 ```yaml
 name: programmer
 custom_attributes:
 - name: title
-  attribute_type: string
+  type: string
 - name: email
-  attribute_type: string
+  type: string
 - name: company_id
-  attribute_type: string
+  type: string
 ```
 
 Programmer model has `company_id` property which references a corresponding company model [foreigh key].

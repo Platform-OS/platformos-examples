@@ -1,10 +1,10 @@
 name: company
-custom_attributes:
+properties:
   - name: name
-    attribute_type: string
+    type: string
   - name: email
-    attribute_type: string
+    type: string
   - name: url
-    attribute_type: string
+    type: string
   - name: number
-    attribute_type: integer
+    type: integer
