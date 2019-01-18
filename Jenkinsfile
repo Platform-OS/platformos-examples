@@ -35,7 +35,7 @@ pipeline {
           commitInfo = "<${env.GH_URL}/commit/${commitSha}|${commitSha}> - ${commitAuthor} - ${commitMsg}"
         }
 
-        slackSend (channel: "#notifications-example", message: "STARTED: Deploying to <${env.MP_URL}|staging environment> (<${env.BUILD_URL}|Build #${env.BUILD_NUMBER}>) \n ${commitInfo}")
+        // slackSend (channel: "#notifications-example", message: "STARTED: Deploying to <${env.MP_URL}|staging environment> (<${env.BUILD_URL}|Build #${env.BUILD_NUMBER}>) \n ${commitInfo}")
 
         sh 'bash -l ./scripts/deploy.sh'
         sh 'bash -l ./scripts/test-e2e.sh'
@@ -43,11 +43,11 @@ pipeline {
 
       post {
         success {
-          slackSend (channel: "#notifications-example", color: '#00FF00', message: "SUCCESS: Deployed new code to staging (<${env.MP_URL}|Preview staging>)")
+          // slackSend (channel: "#notifications-example", color: '#00FF00', message: "SUCCESS: Deployed new code to staging (<${env.MP_URL}|Preview staging>)")
         }
 
         failure {
-          slackSend (channel: "#notifications-example", color: '#FF0000', message: "FAILED: Build failed (<${env.BUILD_URL}|Open build details>)")
+          // slackSend (channel: "#notifications-example", color: '#FF0000', message: "FAILED: Build failed (<${env.BUILD_URL}|Open build details>)")
         }
       }
     }
