@@ -43,11 +43,11 @@ pipeline {
 
       post {
         success {
-          // slackSend (channel: "#notifications-example", color: '#00FF00', message: "SUCCESS: Deployed new code to staging (<${env.MP_URL}|Preview staging>)")
+          slackSend (channel: "#notifications-example", color: '#00FF00', message: "SUCCESS: Deployed new code to staging (<${env.MP_URL}|Preview staging>)")
         }
 
         failure {
-          // slackSend (channel: "#notifications-example", color: '#FF0000', message: "FAILED: Build failed (<${env.BUILD_URL}|Open build details>)")
+          slackSend (channel: "#notifications-example", color: '#FF0000', message: "FAILED: Build failed (<${env.BUILD_URL}|Open build details>)")
         }
       }
     }
