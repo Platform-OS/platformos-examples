@@ -17,7 +17,7 @@
       <td>{{ contact.email }}</td>
       <td><a href="/contacts/{{ contact.id }}" class="btn btn-link">Details</a></td>
       <td><a href="/contacts/edit/{{ contact.id }}" class="btn btn-link">Edit</a></td>
-      <td>{% include_form "delete_contact_form", id: contact.id, resource_type: 'contact' %}</td>
+      <td>{% include_form "delete_contact_form", id: contact.id %}</td>
     </tr>
     {% endfor %}
   </table>
@@ -25,4 +25,4 @@
 
 <hr class="hr">
 
-{% include_form 'contact_form', parent_resource_id: 'contact' %}
+{% include_form 'contact_form' %}

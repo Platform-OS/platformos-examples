@@ -1,4 +1,4 @@
 name: application_files
-custom_attributes:
+properties:
   - name: application_file
-    attribute_type: file
+    type: file
