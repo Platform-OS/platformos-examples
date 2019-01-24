@@ -1,11 +1,9 @@
-import {
-  Selector
-} from 'testcafe';
+import { Selector } from 'testcafe';
 
 export default class Documentation {
   constructor() {
     this.element = {
-      titlePage: Selector('.content > h1'),
+      titlePage: Selector('.content > h1')
     };
     this.title = {
       contactFormTitle: 'Building a Contact Form with Customization',
@@ -15,7 +13,7 @@ export default class Documentation {
       releatedModelsTitle: 'Loading Related Models',
       pagesTitle: 'Pages',
       stripeTitle: 'Integrating Stripe',
-      ajaxUploadTitle: 'Uploading Files Directly to Amazon S3 Using AJAX',
+      ajaxUploadTitle: 'Uploading Files Directly to Amazon S3 Using AJAX'
     };
   }
 }

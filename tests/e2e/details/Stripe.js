@@ -16,7 +16,5 @@ fixture('Stripe').page(layoutPage.URL.staging);
 test.skip('There is a link to the documentation', async t => {
   await logIn.login('test_user@test.com', 'password');
   await t.click(homePage.link.stripe).click(stripe.link.documentation);
-  await t
-    .expect(documentation.element.titlePage.innerText)
-    .eql(documentation.title.stripeTitle);
+  await t.expect(documentation.element.titlePage.innerText).eql(documentation.title.stripeTitle);
 });

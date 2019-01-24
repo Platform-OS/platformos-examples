@@ -12,10 +12,6 @@ const documentation = new Documentation();
 fixture('Simple page').page(layoutPage.URL.staging);
 
 test.skip('There is a link to the documentation', async t => {
-  await t
-    .click(homePage.link.simplePage)
-    .click(simplePage.link.documentation);
-  await t
-    .expect(documentation.element.titlePage.innerText)
-    .eql(documentation.title.pagesTitle);
+  await t.click(homePage.link.simplePage).click(simplePage.link.documentation);
+  await t.expect(documentation.element.titlePage.innerText).eql(documentation.title.pagesTitle);
 });

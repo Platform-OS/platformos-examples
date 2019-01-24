@@ -12,10 +12,6 @@ const documentation = new Documentation();
 fixture('Update profile').page(layoutPage.URL.staging);
 
 test.skip('There is a link to the documentation', async t => {
-  await t
-    .click(homePage.link.uploadFiles)
-    .click(updateProfile.link.documentation);
-  await t
-    .expect(documentation.element.titlePage.innerText)
-    .eql(documentation.title.ajaxUploadTitle);
+  await t.click(homePage.link.uploadFiles).click(updateProfile.link.documentation);
+  await t.expect(documentation.element.titlePage.innerText).eql(documentation.title.ajaxUploadTitle);
 });

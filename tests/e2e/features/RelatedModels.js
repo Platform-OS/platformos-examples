@@ -7,9 +7,7 @@ const layoutPage = new LayoutPage();
 const homePage = new HomePage();
 const relatedModels = new RelatedModels();
 
-fixture('Loading related models while avoiding n+1 queries').page(
-  layoutPage.URL.staging
-);
+fixture('Loading related models while avoiding n+1 queries').page(layoutPage.URL.staging);
 
 test('There are no liquid errors on the page', async t => {
   await t.click(homePage.link.models);
@@ -17,9 +15,7 @@ test('There are no liquid errors on the page', async t => {
 });
 
 test('Loading related models while avoiding n+1 queries. Increase speed 10x', async t => {
-  await t
-    .click(homePage.link.models)
-    .click(relatedModels.link.programmersCompaniesSlow);
+  await t.click(homePage.link.models).click(relatedModels.link.programmersCompaniesSlow);
   let msSlow = await relatedModels.data.result.innerText;
   await t.click(relatedModels.link.programmersCompaniesCorrect);
   let msCorrect = await relatedModels.data.result.innerText;

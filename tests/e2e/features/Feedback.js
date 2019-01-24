@@ -28,9 +28,7 @@ test('Create, Read, Update, Delete pattern using AJAX and customization', async 
     .expect(feedback.data.message.innerText)
     .eql(feedback.txt.createMessage);
   let customization_id = await feedback.data.id.innerText;
-  await t
-    .typeText(feedback.input.update_id, customization_id)
-    .click(feedback.radio.radioMeh);
+  await t.typeText(feedback.input.update_id, customization_id).click(feedback.radio.radioMeh);
   await t
     .typeText(feedback.input.update_message, 'Dolor ipsum')
     .click(feedback.button.update)

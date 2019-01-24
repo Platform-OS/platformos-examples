@@ -1,6 +1,4 @@
-import {
-  Selector
-} from 'testcafe';
+import { Selector } from 'testcafe';
 
 export default class Notifications {
   constructor() {
@@ -14,11 +12,11 @@ export default class Notifications {
       removeContact: 'Contact was successfully destroyed.',
       infoReCaptcha: 'Recaptcha will appear after 3 failed login attempts.',
       recoverPassword: 'If you provided the right email, we will send you reset password instructions.',
-      profileUpdate: 'Congratulations, your profile has been updated.',
+      profileUpdate: 'Congratulations, your profile has been updated.'
     };
     this.messageType = {
       success: Selector('.alert.alert-success'),
-      info: Selector('.alert.alert-info'),
+      info: Selector('.alert.alert-info')
     };
   }
 }

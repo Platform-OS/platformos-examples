@@ -13,7 +13,5 @@ fixture('Module').page(layoutPage.URL.staging);
 
 test.skip('There is a link to the documentation', async t => {
   await t.click(homePage.link.module).click(module.link.documentation);
-  await t
-    .expect(documentation.element.titlePage.innerText)
-    .eql(documentation.title.moduleTitle);
+  await t.expect(documentation.element.titlePage.innerText).eql(documentation.title.moduleTitle);
 });

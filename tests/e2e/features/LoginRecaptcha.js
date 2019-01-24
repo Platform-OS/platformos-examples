@@ -16,13 +16,9 @@ test('There are no liquid errors on the page', async () => {
 });
 
 test('Log in to the Dashboard with Recaptcha', async t => {
-  await t
-    .expect(notifications.messageType.info.innerText)
-    .eql(notifications.text.infoReCaptcha);
+  await t.expect(notifications.messageType.info.innerText).eql(notifications.text.infoReCaptcha);
   for (let i = 0; i < 4; i++) {
     await t.click(register.button.submit);
   }
-  await t
-    .switchToIframe(logInRecaptcha.reCaptcha.iframe)
-    .click(logInRecaptcha.reCaptcha.checkBoxRecaptcha);
+  await t.switchToIframe(logInRecaptcha.reCaptcha.iframe).click(logInRecaptcha.reCaptcha.checkBoxRecaptcha);
 });

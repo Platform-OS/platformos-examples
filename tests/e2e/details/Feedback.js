@@ -13,7 +13,5 @@ fixture('Feedback').page(layoutPage.URL.staging);
 
 test.skip('There is a link to the documentation', async t => {
   await t.click(homePage.link.ajax).click(feedback.link.documentation);
-  await t
-    .expect(documentation.element.titlePage.innerText)
-    .eql(documentation.title.feedbackTitle);
+  await t.expect(documentation.element.titlePage.innerText).eql(documentation.title.feedbackTitle);
 });

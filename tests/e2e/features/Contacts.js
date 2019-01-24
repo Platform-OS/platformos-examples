@@ -9,8 +9,8 @@ const notifications = new Notifications();
 
 const contactData = {
   NAME: 'Tester',
-  EMAIL: `test+${+new Date ()}@example.com`,
-  DESCRIPTION: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+  EMAIL: `test+${+new Date()}@example.com`,
+  DESCRIPTION: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
 };
 
 const name = contactData.NAME;
@@ -34,9 +34,7 @@ test('Add new contact to the list', async t => {
     .typeText(contacts.input.email, email)
     .typeText(contacts.input.description, description)
     .click(contacts.button.save);
-  await t
-    .expect(notifications.messageType.success.innerText)
-    .eql(notifications.text.saveContact);
+  await t.expect(notifications.messageType.success.innerText).eql(notifications.text.saveContact);
 });
 
 test('On details page are contact data', async t => {

@@ -15,7 +15,7 @@ const userData = {
   NAME: 'test_client_user',
   USER_EMAIL: `test+${+new Date()}@example.com`,
   PASSWORD: 'password',
-  TELEPHONE_NUMBER: '00123456789',
+  TELEPHONE_NUMBER: '00123456789'
 };
 
 const userName = userData.NAME;
@@ -36,17 +36,13 @@ test('Create client account', async t => {
     .typeText(register.input.email, userEmail)
     .typeText(register.input.password, userPass)
     .click(register.button.submit);
-  await t
-    .expect(notifications.messageType.success.innerText)
-    .eql(notifications.text.register);
+  await t.expect(notifications.messageType.success.innerText).eql(notifications.text.register);
 });
 
 test('Log in as a client', async t => {
   await t.click(homePage.link.login);
   await logIn.login(userEmail, userPass);
-  await t
-    .expect(notifications.messageType.success.innerText)
-    .eql(notifications.text.login);
+  await t.expect(notifications.messageType.success.innerText).eql(notifications.text.login);
 });
 
 test('Display errors message on the form', async t => {

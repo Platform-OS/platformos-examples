@@ -1,7 +1,4 @@
-import {
-  Selector,
-  t
-} from 'testcafe';
+import { Selector, t } from 'testcafe';
 import Register from './Register';
 import HomePage from './Homepage';
 
@@ -11,7 +8,7 @@ const homePage = new HomePage();
 export default class LogIn {
   constructor() {
     this.link = {
-      recoverPassword: Selector('a').withText('Recover password'),
+      recoverPassword: Selector('a').withText('Recover password')
     };
   }
 
