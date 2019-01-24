@@ -6,6 +6,10 @@ pipeline {
     EMAIL = "darek+ci@near-me.com"
   }
 
+  parameters {
+    string(defaultValue: "https://nearme-example.staging.oregon.platform-os.com", description: 'nearme-example marketplace URL', name: 'MP_URL')
+  }
+
   options {
     disableConcurrentBuilds()
     timeout(time: 30, unit: 'MINUTES')
@@ -15,12 +19,11 @@ pipeline {
   stages {
     stage('Staging') {
       environment {
-        MP_URL = "https://nearme-example.staging-oregon.near-me.com"
         GH_URL = "https://github.com/mdyd-dev/marketplace-nearme-example"
       }
 
       when {
-        branch 'release_candidate'
+        anyOf { branch 'release_candidate'; branch 'fixes-for-new-stack' }
       }
 
       steps {
@@ -32,7 +35,7 @@ pipeline {
           commitInfo = "<${env.GH_URL}/commit/${commitSha}|${commitSha}> - ${commitAuthor} - ${commitMsg}"
         }
 
-        slackSend (channel: "#notifications-example", message: "STARTED: Deploying to <${MP_URL}|staging environment> (<${env.BUILD_URL}|Build #${env.BUILD_NUMBER}>) \n ${commitInfo}")
+        // slackSend (channel: "#notifications-example", message: "STARTED: Deploying to <${env.MP_URL}|staging environment> (<${env.BUILD_URL}|Build #${env.BUILD_NUMBER}>) \n ${commitInfo}")
 
         sh 'bash -l ./scripts/deploy.sh'
         sh 'bash -l ./scripts/test-e2e.sh'
@@ -40,7 +43,7 @@ pipeline {
 
       post {
         success {
-          slackSend (channel: "#notifications-example", color: '#00FF00', message: "SUCCESS: Deployed new code to staging (<${MP_URL}|Preview staging>)")
+          slackSend (channel: "#notifications-example", color: '#00FF00', message: "SUCCESS: Deployed new code to staging (<${env.MP_URL}|Preview staging>)")
         }
 
         failure {

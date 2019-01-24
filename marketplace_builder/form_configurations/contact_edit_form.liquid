@@ -1,5 +1,5 @@
 ---
-name: contact_form
+name: contact_edit_form
 resource: contact
 resource_owner: anyone
 redirect_to: /contacts
@@ -15,10 +15,9 @@ fields:
     description:
       validation:
         presence: true
-flash_notice: Contact was successfully created.
+flash_notice: Contact was successfully updated.
 ---
-
-<h2>Create contact</h2>
+<h2>Edit contact</h2>
 
 {% form %}
   <div class="row">

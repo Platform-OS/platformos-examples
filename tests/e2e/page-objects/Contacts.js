@@ -5,8 +5,7 @@ import {
 export default class Contacts {
   constructor() {
     this.URL = {
-      staging: process.env.MP_URL ||
-        'https://nearme-example.staging-oregon.near-me.com/contacts',
+      staging: `${process.env.MP_URL || 'https://nearme-example.staging-oregon.near-me.com'}/contacts`,
     };
     this.input = {
       name: Selector('#name'),
