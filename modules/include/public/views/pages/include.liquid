@@ -1,0 +1,77 @@
+---
+slug: include
+metadata:
+  description: Include tag
+  docs_slug: api-reference/liquid/include
+---
+
+<div class="card mb-5">
+  <div class="card-header">
+    <h3>Simple include</h3>
+  </div>
+  <div class="card-body">
+    {% include 'modules/include/mypartial' %}
+    <br/>
+    {% include 'modules/include/mypartial2' %}
+  </div>
+</div>
+
+<div class="card mb-5">
+  <div class="card-header">
+    <h3>Local variable using <code>with</code></h3>
+  </div>
+  <div class="card-body">
+    {% parse_json cars %}
+    [{
+      "maker": "Honda",
+      "model": "CRX"
+    }]
+    {% endparse_json %}
+    {% include 'modules/include/product' with cars[0] %}
+  </div>
+</div>
+
+<div class="card mb-5">
+  <div class="card-header">
+    <h3>
+      Iterating over collection using <code>for</code>
+    </h3>
+  </div>
+  <div class="card-body">
+    {% parse_json cars %}
+    [{
+      "maker": "Honda",
+      "model": "CRX"
+    }, {
+      "maker": "Subaru",
+      "model": "Forester"
+    }, {
+      "maker": "Lexus",
+      "model": "LFA"
+    }]
+    {% endparse_json %}
+
+    {% include 'modules/include/product' for cars %}
+  </div>
+</div>
+
+
+<div class="card mb-5">
+  <div class="card-header">
+    <h3>Private variables and exporting them</h3>
+  </div>
+  <div class="card-body">
+    <h3>Demonstration</h3>
+
+    {% include 'modules/include/export' %}
+    This is empty: {{ myproduct }}
+  </div>
+  
+  <div class="card-body">
+    <h3>Exporting variable</h3>
+
+    {% include 'modules/include/export' %}
+    Car: {{ context.exports.cars.honda }}
+  </div>
+</div>
+
