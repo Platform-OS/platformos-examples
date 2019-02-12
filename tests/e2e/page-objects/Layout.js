@@ -3,7 +3,7 @@ import { Selector, t } from 'testcafe';
 export default class LayoutPage {
   constructor() {
     this.URL = {
-      staging: process.env.MP_URL || 'https://nearme-example.staging-oregon.near-me.com'
+      staging: process.env.MP_URL || 'https://examples.staging.oregon.platform-os.com'
     };
     this.formErrors = {
       errorInvalidPassText: 'Invalid email or password.',
