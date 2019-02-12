@@ -3,10 +3,10 @@ import { Selector, t } from 'testcafe';
 export default class LayoutPage {
   constructor() {
     this.URL = {
-      staging: process.env.MP_URL || 'https://nearme-example.staging.oregon.platform-os.com'
+      staging: 'https://nearme-example.staging.oregon.platform-os.com'
     };
     this.formErrors = {
-      errorInvalidPassText: 'Invalid email or password.',
+      errorInvalidPassText: 'Invalid email or password',
       errorText: "can't be blank",
       errorIsNotValidEmailText: 'is not a valid email address',
       errorIsTooShort: 'is too short (minimum is 6 characters)'

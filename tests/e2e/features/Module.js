@@ -50,7 +50,7 @@ test('There are should be list of instance assets', async t => {
 
   for (let i = 0; i < count; i++) {
     const row = tableRowsCount.nth(i);
-    await t.expect(row.innerText).match(/.*cloudfront\.net.*/);
+    await t.expect(row.innerText).match(/.*uploads.staging.oregon.platform-os.com.*/);
     await t.expect(row.innerText).notMatch(/.*\/assets\/$/);
   }
 });
