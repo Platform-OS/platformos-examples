@@ -1,0 +1,22 @@
+---
+slug: multilanguage
+layout_name: application
+---
+
+<h2 class="result-1">{{ 'general.greeting' | t }}</h2>
+
+<hr class="hr">
+
+<div class="card mb-5">
+  <div class="card-header">
+    <h3>Language settings</h3>
+  </div>
+  <div class="card-body">
+    <p>
+      <i>context.params.language</i>: <b>{{ context.params.language }}</b>
+    </p>
+    <p>
+      <i>context.session.language</i>: <b>{{ context.session.language }}</b>
+    </p>
+  </div>
+</div>
