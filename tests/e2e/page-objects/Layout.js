@@ -13,6 +13,7 @@ export default class LayoutPage {
     };
     this.Body = Selector('body');
     this.Content = this.Body.find('main');
+    this.getResult = async n => await Selector(`.result-${n}`).textContent;
   }
 
   async checkLiquidErrors() {

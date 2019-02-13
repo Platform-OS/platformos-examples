@@ -1,0 +1,9 @@
+jp:
+  personal:
+    hello: '%{name} - %{url}'
+  general:
+    greeting: 今日は!
+    cars:
+      - Honda
+      - Subaru
+      - Lexus
