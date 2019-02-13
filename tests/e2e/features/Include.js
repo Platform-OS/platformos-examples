@@ -22,12 +22,14 @@ test('Iterating over collection using for', async t => {
     .contains('{"maker"=>"Honda", "model"=>"CRX"}{"maker"=>"Subaru", "model"=>"Forester"}{"maker"=>"Lexus", "model"=>"LFA"}');
 });
 
-// commented out. PP flag makes this feature not work on this MP.
+// PP flag makes this feature not work on this MP.
 // Turning it will break MP and will require migration of MP to flag:true approach
 test.skip('Private variables - Demonstration', async t => {
   await t.expect(await getResult(4)).notContains('Honda');
 });
 
-test('Private variables - Exporting variable', async t => {
+// PP flag makes this feature not work on this MP.
+// Turning it will break MP and will require migration of MP to flag:true approach
+test.skip('Private variables - Exporting variable', async t => {
   await t.expect(await getResult(5)).contains('Car: {"honda"=>{"maker"=>"Honda", "model"=>"CRX", "year"=>"1991"}}');
 });
