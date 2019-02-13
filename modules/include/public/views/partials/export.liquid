@@ -1,9 +1,9 @@
-{% capture honda %}
+{% parse_json honda %}
 {
   "maker": "Honda",
   "model": "CRX",
   "year": "1991"
 }
-{% endcapture %}
+{% endparse_json %}
 
-{% export honda, namespace: "cars" %}
+{% export honda, namespace: "my_car" %}

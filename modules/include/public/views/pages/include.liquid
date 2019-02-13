@@ -10,9 +10,11 @@ metadata:
     <h3>Simple include</h3>
   </div>
   <div class="card-body">
-    {% include 'modules/include/mypartial' %}
-    <br/>
-    {% include 'modules/include/mypartial2' %}
+    <p class="result-1">
+      {% include 'modules/include/mypartial' %}
+      <br/>
+      {% include 'modules/include/mypartial2' %}
+    </p>
   </div>
 </div>
 
@@ -27,7 +29,9 @@ metadata:
       "model": "CRX"
     }]
     {% endparse_json %}
-    {% include 'modules/include/product' with cars[0] %}
+    <p class="result-2">
+      {% include 'modules/include/product' with cars[0] %}
+    </p>
   </div>
 </div>
 
@@ -50,11 +54,11 @@ metadata:
       "model": "LFA"
     }]
     {% endparse_json %}
-
-    {% include 'modules/include/product' for cars %}
+    <p class="result-3">
+      {% include 'modules/include/product' for cars %}
+    </p>
   </div>
 </div>
-
 
 <div class="card mb-5">
   <div class="card-header">
@@ -63,15 +67,18 @@ metadata:
   <div class="card-body">
     <h3>Demonstration</h3>
 
-    {% include 'modules/include/export' %}
-    This is empty: {{ myproduct }}
+    {% include 'modules/include/variable' %}
+    <p class="result-4">
+      This is empty: {{ my_car }}
+    </p>
   </div>
-  
+
   <div class="card-body">
     <h3>Exporting variable</h3>
 
     {% include 'modules/include/export' %}
-    Car: {{ context.exports.cars.honda }}
+    <p class="result-5">
+      Car: {{ context.exports.my_car }}
+    </p>
   </div>
 </div>
-
