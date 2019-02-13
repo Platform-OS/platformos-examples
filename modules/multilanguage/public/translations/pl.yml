@@ -1,3 +1,9 @@
 pl:
+  personal:
+    hello: 'Czesc %{name}. Zerknij na moja strone www: %{url}'
   general:
     greeting: Witaj świecie!
+    cars:
+      - Polonez
+      - Maluch
+      - Tarpan

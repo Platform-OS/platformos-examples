@@ -1,3 +1,9 @@
 en:
+  personal:
+    hello: 'Hello %{name}. Take a look at my website: %{url}'
   general:
     greeting: Hello world!
+    cars:
+      - Ford Mustang
+      - Corvette
+      - Gran Torino

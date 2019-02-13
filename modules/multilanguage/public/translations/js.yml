@@ -1,3 +1,9 @@
 js:
+  personal:
+    hello: '%{name} - %{url}'
   general:
     greeting: 'console.log("Hello world!")'
+    cars:
+      - Promise
+      - reduce
+      - module
