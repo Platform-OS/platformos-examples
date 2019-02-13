@@ -3,9 +3,7 @@ import LayoutPage from '../page-objects/Layout';
 
 const layoutPage = new LayoutPage();
 
-const url = 'https://examples.staging.oregon.platform-os.com';
-// fixture('Multilanguage page - translations').page(`${layoutPage.URL.staging}`);
-fixture('Multilanguage page - translations').page(url);
+fixture('Multilanguage page - translations').page(`${layoutPage.URL.staging}`);
 
 test('Default - no language - en fallback', async t => {
   await t.navigateTo('/multilanguage?name=John&url=https://documentation.platform-os.com');
