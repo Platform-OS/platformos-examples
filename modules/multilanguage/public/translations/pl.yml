@@ -1,4 +1,6 @@
 pl:
+  access: 
+    fail: Nie masz dostępu do tej strony.
   personal:
     hello: 'Cześć %{name}. Zerknij na moją stronę www: %{url}'
   general:
