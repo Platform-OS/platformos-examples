@@ -19,12 +19,11 @@ pipeline {
   stages {
     stage('Staging') {
       environment {
-        MP_URL = "${env.MP_URL}"
         GH_URL = "https://github.com/mdyd-dev/marketplace-nearme-example"
       }
 
       when {
-        anyOf { branch 'release_candidate'; branch 'fixes-for-new-stack' }
+        anyOf { branch 'release_candidate' }
       }
 
       steps {
@@ -36,21 +35,23 @@ pipeline {
           commitInfo = "<${env.GH_URL}/commit/${commitSha}|${commitSha}> - ${commitAuthor} - ${commitMsg}"
         }
 
-        // slackSend (channel: "#notifications-example", message: "STARTED: Deploying to <${env.MP_URL}|staging environment> (<${env.BUILD_URL}|Build #${env.BUILD_NUMBER}>) \n ${commitInfo}")
-
-        sh 'bash -l ./scripts/deploy.sh'
-        sh 'bash -l ./scripts/test-e2e.sh'
+        sh 'bash -l scripts/deploy.sh'
+        sh 'scripts/test-e2e.sh'
       }
 
       post {
         success {
-          slackSend (channel: "#notifications-example", color: '#00FF00', message: "SUCCESS: Deployed new code to staging (<${env.MP_URL}|Preview staging>)")
+          slackSend (channel: "#notifications-example", color: '#00FF00', message: "SUCCESS: Deployed new code to staging after ${currentDurationString()}. (<${env.MP_URL}|Preview staging>)")
         }
 
         failure {
-          slackSend (channel: "#notifications-example", color: '#FF0000', message: "FAILED: Build failed (<${env.BUILD_URL}|Open build details>)")
+          slackSend (channel: "#notifications-example", color: '#FF0000', message: "FAILED: Build failed after ${currentDurationString()}. (<${env.BUILD_URL}|Open build details>)")
         }
       }
     }
   }
+}
+
+def currentDurationString() {
+   return hudson.Util.getTimeSpanString(currentBuild.getDuration());
 }

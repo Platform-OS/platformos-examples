@@ -6,7 +6,7 @@ const layoutPage = new LayoutPage();
 export default class UpdateProfile {
   constructor() {
     this.URL = {
-      staging: 'https://nearme-example.staging.oregon.platform-os.com/update_profile'
+      staging: `${process.env.MP_URL}/update_profile`
     };
     this.txt = {
       currentAvatar: 'Current avatar',
