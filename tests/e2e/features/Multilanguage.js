@@ -75,11 +75,11 @@ test.skip('Unknown language has layout - unskip when fixed', async t => {
 test.only('Authorization policy flash_alert translation works', async t => {
   await t.navigateTo('/multilanguage-unauthorized');
 
-  const alertEN = await Selector('.alert');
+  const alertEN = await Selector('.alert.alert-danger');
   await t.expect(await alertEN.textContent).contains('You do not have permission to access this page');
 
   await t.navigateTo('/multilanguage-unauthorized?language=pl');
 
-  const alertPL = await Selector('.alert');
+  const alertPL = await Selector('.alert.alert-danger');
   await t.expect(await alertPL.textContent).contains('Nie masz dostępu do tej strony.');
 });
