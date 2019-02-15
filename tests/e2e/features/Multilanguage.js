@@ -15,7 +15,9 @@ test('Default - no language - en fallback', async t => {
   await t.expect(await layoutPage.getResult(2)).contains('Ford Mustang');
   await t.expect(await layoutPage.getResult(2)).contains('Corvette');
   await t.expect(await layoutPage.getResult(2)).contains('Gran Torino');
-  await t.expect(await layoutPage.getResult(3)).contains('Hello John. Take a look at my website: https://documentation.platform-os.com');
+  await t
+    .expect(await layoutPage.getResult(3))
+    .contains('Hello John. Take a look at my website: https://documentation.platform-os.com');
   await t.expect(await layoutPage.getResult(4)).eql('');
   await t.expect(await layoutPage.getResult(5)).eql('en');
 });
@@ -35,7 +37,9 @@ test('Polish - translate', async t => {
   await t.expect(await layoutPage.getResult(2)).contains('Ford Mustang');
   await t.expect(await layoutPage.getResult(2)).contains('Corvette');
   await t.expect(await layoutPage.getResult(2)).contains('Gran Torino');
-  await t.expect(await layoutPage.getResult(3)).contains('Hello John. Take a look at my website: https://documentation.platform-os.com');
+  await t
+    .expect(await layoutPage.getResult(3))
+    .contains('Hello John. Take a look at my website: https://documentation.platform-os.com');
   await t.expect(await layoutPage.getResult(4)).eql('');
   await t.expect(await layoutPage.getResult(5)).eql('en');
 });
@@ -66,4 +70,16 @@ test.skip('Unknown language has layout - unskip when fixed', async t => {
 
   const footer = await Selector('footer');
   await t.expect(await footer.exists).ok();
+});
+
+test.only('Authorization policy flash_alert translation works', async t => {
+  await t.navigateTo('/multilanguage-unauthorized');
+
+  const alertEN = await Selector('.alert');
+  await t.expect(await alertEN.textContent).contains('You do not have permission to access this page');
+
+  await t.navigateTo('/multilanguage-unauthorized?language=pl');
+
+  const alertPL = await Selector('.alert');
+  await t.expect(await alertPL.textContent).contains('Nie masz dostępu do tej strony.');
 });

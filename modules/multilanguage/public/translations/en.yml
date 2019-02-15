@@ -1,4 +1,6 @@
 en:
+  access:
+    fail: You do not have permission to access this page.
   personal:
     hello: 'Hello %{name}. Take a look at my website: %{url}'
   general:
