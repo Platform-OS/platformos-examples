@@ -72,7 +72,7 @@ test.skip('Unknown language has layout - unskip when fixed', async t => {
   await t.expect(await footer.exists).ok();
 });
 
-test.only('Authorization policy flash_alert translation works', async t => {
+test('Authorization policy flash_alert translation works', async t => {
   await t.navigateTo('/multilanguage-unauthorized');
 
   const alertEN = await Selector('.alert.alert-danger');
