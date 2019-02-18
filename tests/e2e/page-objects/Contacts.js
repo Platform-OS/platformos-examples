@@ -3,7 +3,7 @@ import { Selector } from 'testcafe';
 export default class Contacts {
   constructor() {
     this.URL = {
-      staging: 'https://nearme-example.staging.oregon.platform-os.com/contacts'
+      staging: `${process.env.MP_URL}/contacts`
     };
     this.input = {
       name: Selector('#name'),
