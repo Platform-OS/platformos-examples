@@ -3,23 +3,26 @@
   const $form = $('[data-direct-upload-ajax="form"]');
   const $progress = $form.find('[data-direct-upload-ajax="progress"]');
 
+  // prettier-ignore
   const getXMLText = (data, key) => $(data).find(key).text() || '';
-  const getFileName = () => $form.find('[name="file"]').val().split("/").pop().split("\\").pop();
+
+  // prettier-ignore
+  const getFileName = () => $form.find('[name="file"]').val().split('/').pop().split('\\').pop();
 
   const progressBar = {
     show: () => $progress.removeClass('invisible'),
     hide: () => $progress.addClass('invisible')
-  }
+  };
 
   const logError = data => {
-    const code = getXMLText(data, "Code");
-    const message = getXMLText(data, "Message");
+    const code = getXMLText(data, 'Code');
+    const message = getXMLText(data, 'Message');
 
     console.error(`[${code}] ${message}`);
   };
 
   const updatePreview = data => {
-    const imageUrl = getXMLText(data, "Location");
+    const imageUrl = getXMLText(data, 'Location');
 
     const previewHtml = `
       <figure class="figure mr-3 w-25 mw-25">
@@ -35,8 +38,8 @@
 
   const sendForm = data => {
     return $.ajax({
-      type: "post",
-      url: $form.attr("action"),
+      type: 'post',
+      url: $form.attr('action'),
       contentType: false,
       processData: false,
       beforeSend: progressBar.show,
@@ -45,7 +48,8 @@
   };
 
   const onFileChange = () => {
-    const formData = new FormData($form[0]); // create FormData object and populate it with form element passed into constructor
+    // create FormData object and populate it with form element passed into constructor
+    const formData = new FormData($form[0]);
 
     // Do not try to upload file if no file was selected (prevents broken preview and unnecessary http requests)
     if (getFileName().length === 0) {
@@ -59,7 +63,7 @@
   };
 
   const initialize = () => {
-    $form.find('[name="file"]').on("change", onFileChange);
+    $form.find('[name="file"]').on('change', onFileChange);
   };
 
   initialize();

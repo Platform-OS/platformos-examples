@@ -26,7 +26,7 @@ class FileUpload {
   onFileChange() {
     this.sendForm()
       .done(data => (this.fileUrl.value = getXMLText(data, 'Location'))) // save path to uploaded file in db
-      .done(() => this.fileInput.setAttribute('disabled', 'disabled')) // do not submit files in form, since they are not used
+      .done(() => this.fileInput.setAttribute('disabled', 'disabled')) // do not submit files in form
       .done(this.updatePreview.bind(this)) // update preview to show what has been uploaded to s3
       .always(() => (this.showProgressBar = false));
   }
