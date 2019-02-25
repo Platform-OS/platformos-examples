@@ -19,7 +19,7 @@ test('Recover password', async t => {
   await t
     .click(homePage.link.login)
     .click(logIn.link.recoverPassword)
-    .typeText(recoverPassword.input.email, 'test_user@test.com')
+    .typeText(recoverPassword.input.email, 'test_user@example.com')
     .click(contacts.button.save)
     .expect(notifications.messageType.success.innerText)
     .eql(notifications.text.recoverPassword);
