@@ -4,9 +4,7 @@ import https from 'https';
 export default class Feedback {
   constructor() {
     this.clearDatabase = () => {
-      https.get(`${process.env.MP_URL}/feedback/clean`, () => {
-        console.log('[Feedback] Database cleared.');
-      });
+      https.get(`${process.env.MP_URL}/feedback/clean`);
     };
 
     this.input = {
