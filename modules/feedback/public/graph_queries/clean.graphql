@@ -1,0 +1,5 @@
+mutation clean_feedback {
+  customizations_delete_all(custom_model_type_name: "feedback") {
+    count
+  }
+}

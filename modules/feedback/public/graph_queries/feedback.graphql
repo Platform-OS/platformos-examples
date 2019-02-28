@@ -3,6 +3,7 @@ query feedback($per_page: Int = 10) {
     name: "feedback"
     per_page: $per_page
     sort: { name: "created_at", order: "desc" }
+    is_deleted: false
   ) {
     results {
       id

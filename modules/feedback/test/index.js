@@ -1,25 +1,16 @@
 import 'testcafe';
-import LayoutPage from './page-objects/Layout';
-import Feedback from './page-objects/Feedback';
-import HomePage from './page-objects/Homepage';
+import Feedback from './page-object.js';
 
-const layoutPage = new LayoutPage();
 const feedback = new Feedback();
-const homePage = new HomePage();
 
-fixture('Feedback').page(layoutPage.URL.staging);
+fixture('Feedback - CRUD using Ajax')
+  .page(`${process.env.MP_URL}/feedback`)
+  .before(feedback.clearDatabase);
 
-test('There are no liquid errors on the page', async t => {
-  await t.click(homePage.link.ajax);
-  await layoutPage.checkLiquidErrors();
-  await t.expect(feedback.link.documentation.exists).ok();
-});
-
-test('Create, Read, Update, Delete pattern using AJAX and customization', async t => {
+test('Create, Read', async t => {
   await t
-    .click(homePage.link.ajax)
+    .click(feedback.radio.create.excellent)
     .typeText(feedback.input.create_message, 'Lorem ipsum')
-    .click(feedback.radio.radioExcellent)
     .click(feedback.button.submit)
     .click(feedback.button.refresh)
     .expect(feedback.table.tableRows.count)
@@ -28,9 +19,14 @@ test('Create, Read, Update, Delete pattern using AJAX and customization', async 
     .eql(feedback.txt.createRating)
     .expect(feedback.data.message.innerText)
     .eql(feedback.txt.createMessage);
+});
+
+test('Update, Read', async t => {
   let customization_id = await feedback.data.id.innerText;
-  await t.typeText(feedback.input.update_id, customization_id).click(feedback.radio.radioMeh);
+
   await t
+    .typeText(feedback.input.update_id, customization_id)
+    .click(feedback.radio.update.meh)
     .typeText(feedback.input.update_message, 'Dolor ipsum')
     .click(feedback.button.update)
     .click(feedback.button.refresh)
@@ -38,6 +34,11 @@ test('Create, Read, Update, Delete pattern using AJAX and customization', async 
     .eql(feedback.txt.updatedRating)
     .expect(feedback.data.message.innerText)
     .eql(feedback.txt.updatedMessage);
+});
+
+test('Delete, Read', async t => {
+  let customization_id = await feedback.data.id.innerText;
+
   await t
     .typeText(feedback.input.delete_id, customization_id)
     .click(feedback.button.delete)
