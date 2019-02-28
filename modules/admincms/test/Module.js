@@ -10,7 +10,7 @@ test('There are no liquid errors on the page', async t => {
   await Helpers.checkLiquidErrors(t);
 });
 
-test.only('There is list of Customizations', async t => {
+test('There is list of Customizations', async t => {
   let tableRowsCount = module.table.propertiesRows;
   let count = await tableRowsCount.count;
 
