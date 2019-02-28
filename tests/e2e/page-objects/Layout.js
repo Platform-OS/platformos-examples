@@ -1,4 +1,5 @@
 import { Selector, t } from 'testcafe';
+import { checkLiquidErrors } from './helpers';
 
 export default class LayoutPage {
   constructor() {
@@ -17,15 +18,7 @@ export default class LayoutPage {
   }
 
   async checkLiquidErrors() {
-    const bodyText = await this.Body.textContent;
-    return t
-      .expect(bodyText)
-      .notContains('Liquid Error')
-      .expect(bodyText)
-      .notContains('RenderFormTag Error:')
-      .expect(bodyText)
-      .notContains('QueryGraphTag Error:')
-      .expect(bodyText)
-      .notContains('ExecuteQueryTagError:');
+    const ctx = this;
+    return await checkLiquidErrors(t, ctx);
   }
 }
