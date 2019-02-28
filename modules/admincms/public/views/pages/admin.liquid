@@ -16,7 +16,7 @@ metadata:
       </div>
       <div class="card-body">
         {%- query_graph "modules/admincms/get_customizations", result_name: "c" -%}
-        <table class="table table-compact">
+        <table class="table table-compact" data-result="customizations">
           <thead>
             <tr>
               <th> Name </th>
@@ -43,7 +43,7 @@ metadata:
       
       <div class="card-body">
         {%- query_graph "modules/admincms/get_pages", result_name: "c" -%}
-        <table class="table table-compact">
+        <table class="table table-compact" data-result="pages">
           <thead>
             <tr>
               <th> Slug </th>
@@ -68,7 +68,7 @@ metadata:
   <div class="col-12">
     <h3>Instance assets, including this module</h3>
 
-    <table class="table table-sm table-striped">
+    <table class="table table-sm table-striped" data-result="assets">
       <thead>
         <tr>
           <th>Asset path</th>

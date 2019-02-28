@@ -6,13 +6,13 @@ metadata:
   docs_slug: tutorials/translations/multilanguage-pages
 ---
 
-<h2 class="result-1">{{ 'general.greeting' | t }}</h2>
+<h2 data-result="1">{{ 'general.greeting' | t }}</h2>
 
 <h3>Cars list:</h3>
 
 {% assign cars = 'general.cars' | t | to_hash %}
 
-<div class="result-2">
+<div data-result="2">
   <ul>
   {% for car in cars %}
   <li>{{ car }}</li>
@@ -23,7 +23,7 @@ metadata:
 {% assign my_name = context.params.name | default: "Pawel" %}
 {% assign url = context.params.url | default: "https://example.com" %}
 
-<div class="result-3">
+<div data-result="3">
   <p>{{ 'personal.hello' | t: name: my_name, url: url }}</p>
 </div>
 
@@ -35,10 +35,10 @@ metadata:
   </div>
   <div class="card-body">
     <p>
-      <i>context.params.language</i>: <b class="result-4">{{ context.params.language }}</b>
+      <i>context.params.language</i>: <b data-result="4">{{ context.params.language }}</b>
     </p>
     <p>
-      <i>context.session.language</i>: <b class="result-5">{{ context.session.language }}</b>
+      <i>context.session.language</i>: <b data-result="5">{{ context.session.language }}</b>
     </p>
   </div>
 </div>
