@@ -1,0 +1,25 @@
+mutation migration_add_user(
+  $email: String!
+  $password: String!
+) {
+  user_create(
+    user: {
+      email:$email,
+      password:$password
+      first_name: "Some developer"
+      profiles: [
+        {
+          name: "developer",
+          values: {
+            properties: [
+              { name: "mobile_number", value: "1234456" }
+            ]
+          }
+        }
+      ]
+    }
+    form_configuration_name: "developer_sign_up"
+  ) {
+    id
+  }
+}
