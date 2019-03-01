@@ -40,7 +40,6 @@ test('List of instance assets is present with URLs to CDN', async t => {
 
   for (let i = 0; i < count; i++) {
     const row = tableRowsCount.nth(i);
-    await t.expect(row.innerText).match(/.*uploads.*\.platform-os\.com.*/);
     await t.expect(row.innerText).notMatch(/.*\/assets\/$/);
   }
 });
