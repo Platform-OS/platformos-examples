@@ -13,9 +13,9 @@ const recoverPassword = new RecoverPassword();
 const homePage = new HomePage();
 const contacts = new Contacts();
 
-fixture('Log in').page(layoutPage.URL.staging);
+fixture('Recover password').page(layoutPage.URL.staging);
 
-test('Recover password', async t => {
+test('Is showing success after form submit', async t => {
   await t
     .click(homePage.link.login)
     .click(logIn.link.recoverPassword)

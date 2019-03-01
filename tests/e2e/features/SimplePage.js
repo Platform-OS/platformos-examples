@@ -14,11 +14,7 @@ test('There are no liquid errors on the page', async t => {
   await layoutPage.checkLiquidErrors();
 });
 
-test('About us page', async t => {
-  await t
-    .click(homePage.link.simplePage)
-    .expect(simplePage.link.documentation.exists)
-    .ok();
+test('Header and content is correct', async t => {
   await t
     .expect(simplePage.element.headerPage.innerText)
     .eql('About us page')
