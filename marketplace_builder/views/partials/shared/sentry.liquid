@@ -1,4 +1,4 @@
-<script src="https://browser.sentry-cdn.com/4.4.2/bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://browser.sentry-cdn.com/4.6.4/bundle.min.js" crossorigin="anonymous"></script>
 
 {% if context.environment == 'staging' or context.environment == 'production' %}
   <script>
@@ -31,7 +31,7 @@
       var bodyText = document.body.textContent;
 
       if (ERROR_SIGNATURE.test(bodyText)) {
-        captureException(new Error('Liquid/Form/GraphQL error found on the page', location.href));
+        Sentry.captureException(new Error('Liquid/Form/GraphQL error found on the page', location.href));
       }
     });
   </script>
