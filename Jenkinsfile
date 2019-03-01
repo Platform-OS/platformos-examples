@@ -41,7 +41,7 @@ pipeline {
 
       post {
         success {
-          slackSend (channel: "#notifications-example", color: '#00FF00', message: "SUCCESS: Deployed new code to staging after ${currentDurationString()}. (<${env.MP_URL}|Preview staging>)")
+          slackSend (channel: "#notifications-example", color: '#00FF00', message: "SUCCESS: Deployed new code to staging after ${currentDurationString()}. <${env.BUILD_URL}|Build #${env.BUILD_NUMBER}> - (<${env.MP_URL}|Preview staging>)")
         }
 
         failure {
