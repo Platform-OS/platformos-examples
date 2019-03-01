@@ -2,10 +2,14 @@
 slug: feedback/clean
 layout_name: ''
 ---
-{% log 'Cleaning feedback' %}
-
 {% execute_query 'modules/feedback/clean' %}
 
 {% assign count = g.customizations_delete_all.count | json %}
 
-Deleted objects: {{ count }}
+{% capture message -%}
+Deleted {{ count }} objects
+{%- endcapture %}
+
+{% log message, type: 'Feedback' %}
+
+{{ message}}
