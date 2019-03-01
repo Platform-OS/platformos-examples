@@ -5,3 +5,11 @@
 2. Add environment for url https://nearme-example.staging.oregon.platform-os.com using your partner portal credentials
 
 3. Start syncing
+
+## Tests
+
+In portal setup:
+- stripe
+- recaptcha
+- set `"include_tag_with_private_scope": false`
+-
