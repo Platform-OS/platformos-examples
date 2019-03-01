@@ -8,6 +8,7 @@ fixture('Feedback - CRUD using Ajax')
   .before(feedback.clearDatabase);
 
 test('Database is cleared by customizations_delete_all', async t => {
+  await t.wait(500); // QA needs more time to clear database?
   await t.expect(feedback.table.tableRows.count).eql(0);
 });
 
