@@ -1,16 +1,13 @@
 import 'testcafe';
 import LayoutPage from '../page-objects/Layout';
 import SimplePage from '../page-objects/SimplePage';
-import HomePage from '../page-objects/Homepage';
 
 const layoutPage = new LayoutPage();
 const simplePage = new SimplePage();
-const homePage = new HomePage();
 
-fixture('Simple page').page(layoutPage.URL.staging);
+fixture('Simple page').page(`${layoutPage.URL.staging}/about`);
 
-test('There are no liquid errors on the page', async t => {
-  await t.click(homePage.link.simplePage);
+test('There are no liquid errors on the page', async () => {
   await layoutPage.checkLiquidErrors();
 });
 
