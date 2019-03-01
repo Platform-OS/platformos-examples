@@ -1,5 +1,5 @@
 import { Selector, t } from 'testcafe';
-import { checkLiquidErrors, getResult } from '../helpers';
+import Helpers from '../helpers';
 
 export default class LayoutPage {
   constructor() {
@@ -14,10 +14,10 @@ export default class LayoutPage {
     };
     this.Body = Selector('body');
     this.Content = this.Body.find('main');
-    this.getResult = getResult;
+    this.getResult = Helpers.getResult;
   }
 
   async checkLiquidErrors() {
-    return await checkLiquidErrors(t);
+    return await Helpers.checkLiquidErrors(t);
   }
 }

@@ -1,12 +1,12 @@
 import 'testcafe';
 import LayoutPage from '../page-objects/Layout';
 import HomePage from '../page-objects/Homepage';
-import Module from '../page-objects/Module';
+// import Module from '../page-objects/Module';
 import Documentation from '../page-objects/Documentation';
 
 const layoutPage = new LayoutPage();
 const homePage = new HomePage();
-const module = new Module();
+// const module = new Module();
 const documentation = new Documentation();
 
 fixture('Module').page(layoutPage.URL.staging);
