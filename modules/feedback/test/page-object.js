@@ -1,12 +1,7 @@
 import { Selector } from 'testcafe';
-import https from 'https';
 
 export default class Feedback {
   constructor() {
-    this.clearDatabase = () => {
-      https.get(`${process.env.MP_URL}/feedback/clean`);
-    };
-
     this.input = {
       create_message: Selector('#create_message'),
       update_message: Selector('#update_message'),

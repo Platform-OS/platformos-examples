@@ -3,15 +3,15 @@ import Feedback from './page-object.js';
 
 const feedback = new Feedback();
 
-fixture('Feedback - CRUD using Ajax')
-  .page(`${process.env.MP_URL}/feedback`)
-  .before(feedback.clearDatabase);
+fixture('Feedback - CRUD using Ajax').page(`${process.env.MP_URL}/feedback`);
 
-test('Database is cleared by customizations_delete_all', async t => {
-  await t
-    .wait(500)
-    .expect(feedback.table.tableRows.count)
-    .eql(0);
+test('customizations_delete_all cleans feedback correctly', async t => {
+  await t.expect(feedback.table.tableRows.count).gte(1);
+
+  // clean database
+  await t.navigateTo(`${process.env.MP_URL}/feedback/clean`).wait(500);
+
+  await t.expect(feedback.table.tableRows.count).eql(0);
 });
 
 test('Create, Read', async t => {
