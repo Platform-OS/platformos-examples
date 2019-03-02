@@ -1,10 +1,11 @@
 import { Selector } from 'testcafe';
-import Helpers from './helpers';
+
+import { checkLiquidErrors } from '@platform-os/testcafe-helpers';
 
 fixture('Simple page').page(`${process.env.MP_URL}/about`);
 
 test('There are no liquid errors on the page', async t => {
-  await Helpers.checkLiquidErrors(t);
+  await checkLiquidErrors({ t, Selector });
 });
 
 test('Header is correct', async t => {

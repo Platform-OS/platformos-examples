@@ -1,23 +1,23 @@
-import 'testcafe';
-import LayoutPage from '../page-objects/Layout';
+import { Selector } from 'testcafe';
+
 import LogIn from '../page-objects/Login';
 import Notifications from '../page-objects/Notifications';
 import UpdateProfile from '../page-objects/UpdateProfile';
 import HomePage from '../page-objects/Homepage';
+import { checkLiquidErrors } from '@platform-os/testcafe-helpers';
 
 const logIn = new LogIn();
-const layoutPage = new LayoutPage();
 const notifications = new Notifications();
 const updateProfile = new UpdateProfile();
 const homePage = new HomePage();
 
-fixture('Update profile').page(layoutPage.URL.staging);
+fixture('Update profile').page(process.env.MP_URL);
 
 test('There are no liquid errors on the page', async t => {
   await logIn.login('test_user@test.com', 'password');
   await t.expect(notifications.messageType.success.innerText).eql(notifications.text.login);
   await t.click(homePage.link.uploadFiles);
-  await layoutPage.checkLiquidErrors();
+  await checkLiquidErrors({ t, Selector });
 });
 
 test('Direct upload using AJAX', async t => {

@@ -1,4 +1,4 @@
-import 'testcafe';
+import { Selector } from 'testcafe';
 import LayoutPage from '../page-objects/Layout';
 import LogIn from '../page-objects/Login';
 import Register from '../page-objects/Register';
@@ -11,7 +11,7 @@ const layoutPage = new LayoutPage();
 const notifications = new Notifications();
 const homePage = new HomePage();
 
-fixture('Log in').page(layoutPage.URL.staging);
+fixture('Log in').page(process.env.MP_URL);
 
 test('Display error message on invalid password', async t => {
   await logIn.login('test@placek.com', 'wrongpassword');
