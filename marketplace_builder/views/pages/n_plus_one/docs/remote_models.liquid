@@ -76,7 +76,7 @@ slug: api/community/profiles
 format: json
 ---
 
-{% query_graph 'community-user-profiles', result_name: g, emails: params.ids %}
+{% query_graph 'community-user-profiles', result_name: 'g', emails: context.params.ids %}
 {% assign users = g.people.results  %}
 
 {% assign profileList = "[]" | parse_json %}
@@ -99,7 +99,7 @@ for the sake of clarity it the json page as well
 slug: marketplace/profiles
 format: json
 ---
-{% query_graph 'markeplace-users', result_name: g %}
+{% query_graph 'markeplace-users', result_name: 'g' %}
 {% assign users = g.people.results  %}
 {{ users | json }}
 #+END_SRC

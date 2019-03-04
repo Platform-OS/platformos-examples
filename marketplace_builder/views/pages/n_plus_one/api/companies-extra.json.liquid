@@ -5,10 +5,10 @@ authorization_policies:
 - authenticated_api_request
 ---
 {% assign _start = "now" | to_time  %}
-{% assign limit = params.ids | size  %}
+{% assign limit = context.params.ids | size  %}
 {% if limit == 0 %} {% assign limit = 50 %} {% endif %}
 
-{% query_graph 'rr_companies_extra', result_name: "g", ids: params.ids, limit: limit %}
+{% query_graph 'rr_companies_extra', result_name: "g", ids: context.params.ids, limit: limit %}
 {% assign _query = "now" | to_time  %}
 
 {% assign companies = g.companies.results %}
