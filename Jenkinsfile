@@ -23,7 +23,7 @@ pipeline {
     stage('Deploy') {
       agent { docker { image 'platformos/marketplace-kit:2.0' } }
 
-      when { anyOf { branch 'jenkins-2.0' } }
+      when { anyOf { branch 'master' } }
 
       steps {
         sh 'marketplace-kit deploy'
@@ -33,7 +33,7 @@ pipeline {
     stage('Test') {
       agent { docker { image "platformos/testcafe" } }
 
-      when { anyOf { branch 'jenkins-2.0' } }
+      when { anyOf { branch 'master' } }
 
       steps {
         sh 'scripts/test-e2e.sh'
