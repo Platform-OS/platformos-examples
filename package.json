@@ -4,7 +4,7 @@
   "description": "Examples repository for features described at https://documentation.platform-os.com",
   "scripts": {
     "deploy": "marketplace-kit deploy -f",
-    "test": "docker run -v $PWD:/MP -e \"MP_URL=$MP_URL\" -it platformos/testcafe \"chromium:headless --no-sandbox\" /MP/tests/e2e/features \"/MP/modules/**/test/*.js\"",
+    "test": "docker run -v $PWD:/MP -e \"MP_URL=$MP_URL\" -it platformos/testcafe 'npx testcafe \"chromium:headless --no-sandbox\" /MP/tests/e2e/features \"/MP/modules/**/test/*.js\"'",
     "test-ci": "./scripts/test-e2e.sh",
     "test-local": "npx testcafe \"chrome:headless\" tests/e2e \"modules/**/test/*.js\""
   },
@@ -12,6 +12,6 @@
   "license": "ISC",
   "homepage": "https://examples.platform-os.com",
   "devDependencies": {
-    "@platform-os/testcafe-helpers": "^2.0.1"
+    "@platform-os/testcafe-helpers": "^2.1.1"
   }
 }

@@ -1,7 +1,7 @@
 <h2>Recent contacts</h2>
 
 {% if contacts == blank %}
-  There is no contacts yet. Use the form below to add some.
+  <p>There is no contacts yet. Use the form below to add some.</p>
 {% else %}
   <table class="table table-striped">
     <tr>
@@ -17,7 +17,7 @@
       <td>{{ contact.email }}</td>
       <td><a href="/contacts/{{ contact.id }}" class="btn btn-link">Details</a></td>
       <td><a href="/contacts/edit/{{ contact.id }}" class="btn btn-link">Edit</a></td>
-      <td>{% include_form "delete_contact_form", id: contact.id %}</td>
+      <td>{% include_form "modules/contacts/delete_contact_form", id: contact.id %}</td>
     </tr>
     {% endfor %}
   </table>
@@ -25,4 +25,4 @@
 
 <hr class="hr">
 
-{% include_form 'contact_form' %}
+{% include_form 'modules/contacts/contact_form' %}

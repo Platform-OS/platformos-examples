@@ -1,5 +1,5 @@
 import { Selector } from 'testcafe';
-import { getResultText as getTxt } from '@platform-os/testcafe-helpers';
+import { getResultText as getTxt, getBtAlertText } from '@platform-os/testcafe-helpers';
 
 fixture('Multilanguage page - translations').page(`${process.env.MP_URL}`);
 
@@ -72,11 +72,11 @@ test.skip('Unknown language has layout - unskip when fixed', async t => {
 test('Authorization policy flash_alert translation works', async t => {
   await t.navigateTo('/multilanguage-unauthorized');
 
-  const alertEN = await Selector('.alert.alert-danger');
-  await t.expect(await alertEN.textContent).contains('You do not have permission to access this page');
+  await t
+    .expect(await getBtAlertText({ type: 'warning', Selector }))
+    .contains('You do not have permission to access this page');
 
   await t.navigateTo('/multilanguage-unauthorized?language=pl');
 
-  const alertPL = await Selector('.alert.alert-danger');
-  await t.expect(await alertPL.textContent).contains('Nie masz dostępu do tej strony.');
+  await t.expect(await getBtAlertText({ type: 'warning', Selector })).contains('Nie masz dostępu do tej strony.');
 });

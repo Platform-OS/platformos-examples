@@ -1,27 +1,18 @@
 import { Selector } from 'testcafe';
-import LayoutPage from '../page-objects/Layout';
-import HomePage from '../page-objects/Homepage';
 import Register from '../page-objects/Register';
 import LogIn from '../page-objects/Login';
-import Notifications from '../page-objects/Notifications';
-import { checkLiquidErrors } from '@platform-os/testcafe-helpers';
+import { checkLiquidErrors, getBtAlertText } from '@platform-os/testcafe-helpers';
 
-const homePage = new HomePage();
-const layoutPage = new LayoutPage();
 const register = new Register();
 const logIn = new LogIn();
-const notifications = new Notifications();
 
 const userData = {
-  NAME: 'test_client_user',
-  USER_EMAIL: `test+${+new Date()}@example.com`,
-  PASSWORD: 'password',
-  TELEPHONE_NUMBER: '00123456789'
+  name: 'test_client_user',
+  user_email: `test+${+new Date()}@example.com`,
+  password: 'password'
 };
 
-const userName = userData.NAME;
-const userEmail = userData.USER_EMAIL;
-const userPass = userData.PASSWORD;
+const { name, user_email, password } = userData;
 
 fixture('Register as client').page(process.env.MP_URL);
 
@@ -30,32 +21,32 @@ test('There are no liquid errors on the page', async t => {
 });
 
 test('Create client account', async t => {
-  await t
-    .click(homePage.link.register)
-    .click(register.link.clienRegister)
-    .typeText(register.input.firstname, userName)
-    .typeText(register.input.email, userEmail)
-    .typeText(register.input.password, userPass)
-    .click(register.button.submit);
-  await t.expect(notifications.messageType.success.innerText).eql(notifications.text.register);
-});
+  await t.navigateTo('/client/sign-up');
 
-test('Log in as a client', async t => {
-  await t.click(homePage.link.login);
-  await logIn.login(userEmail, userPass);
-  await t.expect(notifications.messageType.success.innerText).eql(notifications.text.login);
+  await t
+    .typeText(register.input.firstname, name)
+    .typeText(register.input.email, user_email)
+    .typeText(register.input.password, password)
+    .click(register.button.submit);
+
+  await t.expect(await getBtAlertText({ Selector })).contains(register.alerts.success);
+}).after(async t => {
+  // Check if login works. In After hook to not throw off tests when running concurrently
+
+  await logIn.login(user_email, password);
+  await t.expect(await getBtAlertText({ Selector })).contains(register.text.login);
 });
 
 test('Display errors message on the form', async t => {
-  await t
-    .click(homePage.link.register)
-    .click(register.link.clienRegister)
-    .click(register.button.submit);
+  await t.navigateTo('/sign-up');
+
+  await t.click(register.link.clientRegister).click(register.button.submit);
+
   await t
     .expect(register.error.firstname.innerText)
-    .eql(layoutPage.formErrors.errorText)
+    .eql(register.formErrors.errorText)
     .expect(register.error.email.innerText)
-    .eql(layoutPage.formErrors.errorText)
+    .eql(register.formErrors.errorText)
     .expect(register.error.password.innerText)
-    .eql(layoutPage.formErrors.errorIsTooShort);
+    .eql(register.formErrors.errorIsTooShort);
 });

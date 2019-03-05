@@ -1,22 +1,34 @@
 import { Selector } from 'testcafe';
-import HomePage from '../page-objects/Homepage';
 import RelatedModels from '../page-objects/RelatedModels';
 import { checkLiquidErrors } from '@platform-os/testcafe-helpers';
 
-const homePage = new HomePage();
 const relatedModels = new RelatedModels();
 
-fixture('Loading related models while avoiding n+1 queries').page(process.env.MP_URL);
+fixture('Measuring execution time of liquid code fragments').page(process.env.MP_URL);
 
 test('There are no liquid errors on the page', async t => {
-  await t.click(homePage.link.models);
+  await t.navigateTo('/companies/index');
+  await checkLiquidErrors({ t, Selector });
+  await t.navigateTo('/programmers/index');
+  await checkLiquidErrors({ t, Selector });
+  await t.navigateTo('/programmers/with_companies_1');
+  await checkLiquidErrors({ t, Selector });
+  await t.navigateTo('/programmers/with_companies_2');
   await checkLiquidErrors({ t, Selector });
 });
 
-test('Loading related models while avoiding n+1 queries. Increase speed 10x', async t => {
-  await t.click(homePage.link.models).click(relatedModels.link.programmersCompaniesSlow);
+test.before(async t => {
+  await t.navigateTo('/companies/index');
+})('Measuring execution time of liquid code fragments (time_diff)', async t => {
+  await t.click(relatedModels.link.programmersCompaniesSlow);
   let msSlow = await relatedModels.data.result.innerText;
+
   await t.click(relatedModels.link.programmersCompaniesCorrect);
   let msCorrect = await relatedModels.data.result.innerText;
-  await t.expect(parseInt(msCorrect)).lt(parseInt(msSlow));
+
+  /*
+    I know i know, this is not performance tetsing,
+    but maybe it will detect some tragic performance regression one day. 
+  */
+  await t.expect(parseInt(msCorrect)).lt(parseInt(msSlow * 2));
 });

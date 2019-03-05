@@ -2,15 +2,17 @@ import { Selector } from 'testcafe';
 
 export default class LogInRecaptcha {
   constructor() {
-    this.URL = {
-      staging: `${process.env.MP_URL}/sign-in-recaptcha`
+    this.button = {
+      login: Selector('.btn').withText('Log In')
     };
+
+    this.alerts = {
+      info: 'Recaptcha will appear after 3 failed login attempts.'
+    };
+
     this.reCaptcha = {
-      iframe: Selector('iframe:nth-of-type(1)'),
+      iframe: Selector('iframe:first-of-type'),
       checkBoxRecaptcha: Selector('#recaptcha-anchor')
-    };
-    this.link = {
-      documentation: Selector('a').withText('Adding reCaptcha Spam Protection')
     };
   }
 }

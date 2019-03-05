@@ -1,13 +1,7 @@
 import { Selector } from 'testcafe';
-import LayoutPage from './Layout';
-
-const layoutPage = new LayoutPage();
 
 export default class UpdateProfile {
   constructor() {
-    this.URL = {
-      staging: `${process.env.MP_URL}/update_profile`
-    };
     this.txt = {
       currentAvatar: 'Current avatar',
       currentBanner: 'Current banner',
@@ -22,11 +16,8 @@ export default class UpdateProfile {
     this.files = {
       name: Selector('figcaption.figure-caption'),
       currentImgName: Selector('p.text-muted'),
-      imgAWS: layoutPage.Content.find('img[src*="amazonaws.com/uploads'),
-      img: layoutPage.Content.find('img[src*="uploads/image"]')
-    };
-    this.link = {
-      documentation: Selector('a').withText('Uploading files directly to Amazon S3 using AJAX')
+      imgAWS: Selector('img[src*="amazonaws.com/uploads'),
+      img: Selector('img[src*="uploads/image"]')
     };
   }
 }

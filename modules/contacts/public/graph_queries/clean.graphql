@@ -1,0 +1,5 @@
+mutation clean_contacts {
+  customizations_delete_all(custom_model_type_name: "contact") {
+    count
+  }
+}
