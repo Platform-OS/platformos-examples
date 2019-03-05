@@ -15,8 +15,8 @@ pipeline {
 
   options {
     disableConcurrentBuilds()
-    timeout(time: 30, unit: 'MINUTES')
-    buildDiscarder(logRotator(daysToKeepStr: '365', artifactDaysToKeepStr: '30'))
+    timeout(time: 10, unit: 'MINUTES')
+    buildDiscarder(logRotator(daysToKeepStr: '1', artifactDaysToKeepStr: '1'))
   }
 
   stages {
@@ -36,7 +36,6 @@ pipeline {
       when { anyOf { branch 'master' } }
 
       steps {
-        sh 'npm ci'
         sh 'scripts/test-e2e.sh'
       }
     }
