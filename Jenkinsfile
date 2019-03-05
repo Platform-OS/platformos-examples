@@ -1,16 +1,14 @@
 @Library('pipeline-utils')_  // it's not a typo
 
+def staging_url = "https://nearme-example.staging.oregon.platform-os.com"
+def production_url = "https://examples.platform-os.com"
+
 pipeline {
   agent none
 
   environment {
     MPKIT_TOKEN = credentials('POS_TOKEN')
     MPKIT_EMAIL = "darek+ci@near-me.com"
-    MPKIT_URL    = "${env.MP_URL}"
-  }
-
-  parameters {
-    string(defaultValue: "https://nearme-example.staging.oregon.platform-os.com", description: 'nearme-example marketplace URL', name: 'MP_URL')
   }
 
   options {
@@ -20,9 +18,13 @@ pipeline {
   }
 
   stages {
-    stage('Deploy') {
+    stage('Deploy staging') {
       agent { docker { image 'platformos/marketplace-kit:2.0' } }
-
+      
+      environment {
+        MPKIT_URL = "${staging_url}"
+      }
+      
       when { anyOf { branch 'master' } }
 
       steps {
@@ -30,19 +32,38 @@ pipeline {
       }
     }
 
-    stage('Test') {
+    stage('Test Staging') {
       agent { docker { image "platformos/testcafe" } }
-
+      
+      environment {
+        MP_URL = "${staging_url}"
+      }
+      
       when { anyOf { branch 'master' } }
 
       steps {
-        sh 'scripts/test-e2e.sh'
+        sh 'npm run test-ci'
+      }
+    }
+    
+    stage('Deploy production') {
+      agent { docker { image 'platformos/marketplace-kit:2.0' } }
+      
+      environment {
+        MPKIT_URL = "${production_url}"
+      }
+      
+      when { anyOf { branch 'master' } }
+
+      steps {
+        sh 'marketplace-kit deploy'
       }
     }
   }
+  
   post {
     success {
-      slackSend (channel: "#notifications-example", color: '#00FF00', message: "SUCCESS: Deployed new code to staging after ${buildDuration()}. <${env.BUILD_URL}|Build #${env.BUILD_NUMBER}> - (<${env.MP_URL}|Preview staging>)")
+      slackSend (channel: "#notifications-example", color: '#00FF00', message: "SUCCESS: Deployed new code to staging after ${buildDuration()}. <${env.BUILD_URL}|Build #${env.BUILD_NUMBER}> \n ${commitInfo()}")
     }
 
     failure {
