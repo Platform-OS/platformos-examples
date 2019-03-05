@@ -78,7 +78,10 @@ metadata:
 
     {% include 'modules/include/export' %}
     <p data-result="5">
-      Car: {{ context.exports.my_car }}
+      Car: {{ context.exports.my_car }}<br/>
+    </p>
+    <p data-result="6">
+      My car maker: {{ context.exports.my_car.honda.maker }}
     </p>
   </div>
 </div>
