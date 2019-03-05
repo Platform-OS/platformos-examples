@@ -36,6 +36,7 @@ pipeline {
       when { anyOf { branch 'master' } }
 
       steps {
+        sh 'npm ci'
         sh 'scripts/test-e2e.sh'
       }
     }
