@@ -4,7 +4,7 @@ def staging_url = "https://nearme-example.staging.oregon.platform-os.com"
 def production_url = "https://examples.platform-os.com"
 
 pipeline {
-  agent none
+  agent any
 
   environment {
     MPKIT_TOKEN = credentials('POS_TOKEN')
