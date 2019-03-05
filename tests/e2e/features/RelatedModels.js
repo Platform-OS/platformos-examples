@@ -1,17 +1,16 @@
-import 'testcafe';
-import LayoutPage from '../page-objects/Layout';
+import { Selector } from 'testcafe';
 import HomePage from '../page-objects/Homepage';
 import RelatedModels from '../page-objects/RelatedModels';
+import { checkLiquidErrors } from '@platform-os/testcafe-helpers';
 
-const layoutPage = new LayoutPage();
 const homePage = new HomePage();
 const relatedModels = new RelatedModels();
 
-fixture('Loading related models while avoiding n+1 queries').page(layoutPage.URL.staging);
+fixture('Loading related models while avoiding n+1 queries').page(process.env.MP_URL);
 
 test('There are no liquid errors on the page', async t => {
   await t.click(homePage.link.models);
-  await layoutPage.checkLiquidErrors();
+  await checkLiquidErrors({ t, Selector });
 });
 
 test('Loading related models while avoiding n+1 queries. Increase speed 10x', async t => {

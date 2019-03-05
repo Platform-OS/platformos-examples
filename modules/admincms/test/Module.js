@@ -1,5 +1,5 @@
-import 'testcafe';
-import Helpers from './helpers';
+import { Selector } from 'testcafe';
+import { checkLiquidErrors } from '@platform-os/testcafe-helpers';
 import Module from './page-object';
 
 const module = new Module();
@@ -7,7 +7,7 @@ const module = new Module();
 fixture('Module').page(`${process.env.MP_URL}/admincms`);
 
 test('There are no liquid errors on the page', async t => {
-  await Helpers.checkLiquidErrors(t);
+  await checkLiquidErrors({ t, Selector });
 });
 
 test('There is list of Customizations', async t => {

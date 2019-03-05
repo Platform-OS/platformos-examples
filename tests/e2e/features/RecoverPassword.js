@@ -1,5 +1,4 @@
-import 'testcafe';
-import LayoutPage from '../page-objects/Layout';
+import { Selector } from 'testcafe';
 import LogIn from '../page-objects/Login';
 import Notifications from '../page-objects/Notifications';
 import RecoverPassword from '../page-objects/RecoverPassword';
@@ -7,13 +6,12 @@ import Contacts from '../page-objects/Contacts';
 import HomePage from '../page-objects/Homepage';
 
 const logIn = new LogIn();
-const layoutPage = new LayoutPage();
 const notifications = new Notifications();
 const recoverPassword = new RecoverPassword();
 const homePage = new HomePage();
 const contacts = new Contacts();
 
-fixture('Recover password').page(layoutPage.URL.staging);
+fixture('Recover password').page(process.env.MP_URL);
 
 test('Is showing success after form submit', async t => {
   await t
