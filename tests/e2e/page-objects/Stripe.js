@@ -5,12 +5,6 @@ export default class Stripe {
     this.button = {
       submit: Selector('button[type="submit"]')
     };
-    this.link = {
-      documentation: Selector('a').withText('Integrating Stripe payments')
-    };
-    this.stripeModal = {
-      widget: Selector('ModalContainer')
-    };
     this.iframe = {
       iframeStripe: Selector('iframe[name="stripe_checkout_app"]'),
       validation: Selector('.Popover-content')

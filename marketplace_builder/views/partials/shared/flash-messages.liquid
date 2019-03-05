@@ -1,21 +1,32 @@
-{% assign keys = "alert,notice,info,warning,error" | split: ',' %}
+{%- capture _flash -%}
+{
+  "notice": "{% if context.flash.notice %}{{ context.flash.notice }}{% elsif context.params.flash.notice %}{{ context.params.flash.notice }}{% else %}{% endif %}",
+  "alert": "{% if context.flash.alert %}{{ context.flash.alert }}{% elsif context.params.flash.alert %}{{ context.params.flash.alert }}{% else %}{% endif %}",
+  "error": "{% if context.flash.error %}{{ context.flash.error }}{% elsif context.params.flash.error %}{{ context.params.flash.error }}{% else %}{% endif %}",
+  "info": "{% if context.flash.info %}{{ context.flash.info }}{% elsif context.params.flash.info %}{{ context.params.flash.info }}{% else %}{% endif %}"
+}
+{%- endcapture -%}
 
-{% for key in keys %}
-  {% if context.flash[key] != blank %}
+{%- assign flash = _flash | to_hash -%}
 
-    {% assign bootstrap_key_class = key %}
-    {% if key == 'notice' %}
-      {% assign bootstrap_key_class = 'success' %}
-    {% elsif key == 'error' %}
-      {% assign bootstrap_key_class = 'danger' %}
-    {% elsif key == 'alert' %}
-      {% assign bootstrap_key_class = 'danger' %}
-    {% endif %}
+{%- capture _class_map -%}
+{
+  "notice": "success",
+  "alert": "warning",
+  "error": "danger",
+  "info": "info"
+}
+{%- endcapture -%}
 
+{%- assign _class_map_hash = _class_map | to_hash -%}
+{%- assign keys = "notice,alert,error,info" | split: ',' -%}
+
+{%- for key in keys -%}
+  {%- if flash[key] != blank -%}
     <div class="container flash-messages w-100 px-0">
-      <div class="alert alert-{{ bootstrap_key_class }}">
-        {{ context.flash[key] }}
+      <div class="alert alert-{{ _class_map_hash[key] }}">
+        {{ flash[key] }}
       </div>
     </div>
-  {% endif %}
-{% endfor %}
+  {%- endif -%}
+{%- endfor -%}

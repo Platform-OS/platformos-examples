@@ -38,8 +38,5 @@ export default class HomePage {
       documentationWebsite: Selector('a').withText('https://documentation.platform-os.com'),
       exampleCode: Selector('a').withText('https://github.com/mdyd-dev/marketplace-nearme-example')
     };
-    this.button = {
-      logout: Selector('.btn.btn-secondary.btn-sm')
-    };
   }
 }

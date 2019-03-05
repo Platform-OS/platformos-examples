@@ -1,1 +1,12 @@
 This is first partial
+
+{% parse_json company %}
+{
+  "name": "platformOS",
+  "technologies": ["liquid", "graphql"],
+  "countries": { "USA": 5, "Poland": 5, "Romania": 2 }
+}
+{% endparse_json %}
+
+{% export company, namespace: 'data' %}
+

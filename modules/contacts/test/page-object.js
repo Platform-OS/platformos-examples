@@ -2,24 +2,21 @@ import { Selector } from 'testcafe';
 
 export default class Contacts {
   constructor() {
-    this.URL = {
-      staging: `${process.env.MP_URL}/contacts`
-    };
     this.input = {
       name: Selector('#name'),
       email: Selector('#email'),
       description: Selector('#description')
     };
     this.button = {
-      save: Selector('button.btn.btn-primary')
+      save: Selector('.btn').withText('Save'),
+      delete: Selector('button').withText('Delete')
     };
     this.link = {
       details: Selector('a').withText('Details'),
-      edit: Selector('a').withText('Edit'),
-      delete: Selector('.btn.btn-link').withText('Delete'),
-      documentation: Selector('a').withText('Building a contact form with customization')
+      edit: Selector('a').withText('Edit')
     };
     this.table = {
+      tableRows: Selector('tbody > tr'),
       email: Selector('tbody > tr:nth-of-type(2) > td:nth-of-type(2)')
     };
     this.data = {
@@ -27,14 +24,21 @@ export default class Contacts {
       email: Selector('main > p:nth-of-type(2)'),
       description: Selector('main > p:nth-of-type(3)')
     };
-    this.text = {
-      title: Selector('main > h2:nth-of-type(2)'),
-      info: Selector('main')
-    };
     this.error = {
       name: Selector('#name + p'),
       email: Selector('#email + p'),
       description: Selector('#description + p')
+    };
+    this.formErrors = {
+      errorInvalidPassText: 'Invalid email or password',
+      errorText: "can't be blank",
+      errorIsNotValidEmailText: 'is not a valid email address',
+      errorIsTooShort: 'is too short (minimum is 6 characters)'
+    };
+    this.alerts = {
+      saved: 'Contact was successfully created.',
+      updated: 'Contact was successfully updated.',
+      removed: 'Contact was successfully deleted.'
     };
   }
 }
