@@ -1,5 +1,5 @@
 query get_contacts($id: ID) {
-  customizations(name: "modules/contacts/csontact", id: $id) {
+  customizations(name: "modules/contacts/contact", id: $id) {
     results {
       id
       name: property(name: "name")
