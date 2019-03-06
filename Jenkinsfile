@@ -22,7 +22,7 @@ pipeline {
       agent { docker { image 'platformos/marketplace-kit:2.0' } }
 
       environment {
-        MPKIT_URL = "https://nearme-example.staging.oregon.platform-os.com"
+        MPKIT_URL = "${staging_url}"
       }
 
       when { anyOf { branch 'master' } }
