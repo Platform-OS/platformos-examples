@@ -20,11 +20,11 @@ pipeline {
   stages {
     stage('Deploy staging') {
       agent { docker { image 'platformos/marketplace-kit:2.0' } }
-      
+
       environment {
-        MPKIT_URL = "${staging_url}"
+        MPKIT_URL = "https://nearme-example.staging.oregon.platform-os.com"
       }
-      
+
       when { anyOf { branch 'master' } }
 
       steps {
@@ -34,25 +34,25 @@ pipeline {
 
     stage('Test Staging') {
       agent { docker { image "platformos/testcafe" } }
-      
+
       environment {
         MP_URL = "${staging_url}"
       }
-      
+
       when { anyOf { branch 'master' } }
 
       steps {
         sh 'npm run test-ci'
       }
     }
-    
+
     stage('Deploy production') {
       agent { docker { image 'platformos/marketplace-kit:2.0' } }
-      
+
       environment {
         MPKIT_URL = "${production_url}"
       }
-      
+
       when { anyOf { branch 'master' } }
 
       steps {
@@ -60,7 +60,7 @@ pipeline {
       }
     }
   }
-  
+
   post {
     success {
       slackSend (channel: "#notifications-example", color: '#00FF00', message: "SUCCESS: Deployed new code to staging after ${buildDuration()}. <${env.BUILD_URL}|Build #${env.BUILD_NUMBER}> \n ${commitInfo()}")
