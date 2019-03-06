@@ -11,8 +11,7 @@ fields:
     number:
       validation: { presence: true }
 redirect_to: /companies/index
-resource: Customization
-resource_owner: anyone
+resource: modules/n_plus_one/company
 async_callback_actions: {}
 ---
 {% form -%}
