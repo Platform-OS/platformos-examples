@@ -1,5 +1,5 @@
 query companies($ids: [ID], $limit: Int = 200) {
-  companies: customizations(name: "company", per_page: $limit, ids: $ids){
+  companies: customizations(name: "modules/n_plus_one/company", per_page: $limit, ids: $ids) {
     total_entries
     results {
       properties

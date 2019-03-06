@@ -8,7 +8,7 @@ authorization_policies:
 {% assign limit = context.params.ids | size  %}
 {% if limit == 0 %} {% assign limit = 200 %} {% endif %}
 
-{% query_graph 'rr_programmers', result_name: "g", emails: context.params.ids, limit: limit %}
+{% query_graph 'modules/n_plus_one/rr_programmers', result_name: "g", emails: context.params.ids, limit: limit %}
 
 {% assign _query = "now" | to_time  %}
 

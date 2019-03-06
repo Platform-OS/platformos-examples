@@ -4,11 +4,11 @@ layout_name: application
 metadata:
   full_width: true
 ---
-{% include 'n_plus_one/menu' %}
+{% include 'modules/n_plus_one/menu' %}
 
 {% assign _start = "now" | to_time %}
 
-{% query_graph 'n1_programmers' %}
+{% query_graph 'modules/n_plus_one/n1_programmers' %}
 
 {% assign _graph = "now" | to_time %}
 
@@ -44,4 +44,4 @@ metadata:
 {% log _graph_duration, type: "benchmark-graph-model-on-demand" %}
 {% log _render_duration, type: "benchmark-render-model-on-demand" %}
 
-{% include 'n_plus_one/benchmark-report' %}
+{% include 'modules/n_plus_one/benchmark-report' %}

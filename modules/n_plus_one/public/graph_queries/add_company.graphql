@@ -1,0 +1,16 @@
+mutation addCompany($name: String, $email: String, $url: String, $number: String) {
+  customization_create(
+    form_configuration_name: "modules/n_plus_one/create_company"
+    customization: {
+      custom_model_type_name: "modules/n_plus_one/company"
+      properties: [
+        { name: "url", value: $url }
+        { name: "name", value: $name }
+        { name: "email", value: $email }
+        { name: "number", value: $number }
+      ]
+    }
+  ) {
+    id
+  }
+}

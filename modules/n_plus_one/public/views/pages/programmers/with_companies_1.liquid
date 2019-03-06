@@ -1,20 +1,18 @@
 ---
-slug: programmers/with_companies_2
+slug: programmers/with_companies_1
 layout_name: application
 metadata:
   full_width: true
-  description: Measuring execution time of liquid code fragments (time_diff)
-  docs_slug: tutorials/performance/measuring-execution-time-liquid-time-diff
 ---
-{% include 'n_plus_one/menu' %}
+{% include 'modules/n_plus_one/menu' %}
 
 {% assign _start = "now" | to_time %}
 
-{% query_graph 'n1_programmers_with_companies' %}
+{% query_graph 'modules/n_plus_one/n1_programmers' %}
 
 {% assign _graph = "now" | to_time %}
 
-<h2>Programmers + Companies: Correct</h2>
+<h2>Programmers + Companies: Slow</h2>
 
 <table class="table table-bordered table-striped scroll">
   <thead>
@@ -33,8 +31,11 @@ metadata:
         <td> {{ programmer.id }} </td>
         <td> {{ programmer.properties.email }} </td>
         <td> {{ programmer.properties.title }} </td>
-        <td>{{ programmer.company.properties.name }} </td>
-        <td>{{ programmer.company.properties.url }} </td>
+        {% if programmer.properties.company_id %}
+          {% query_graph "modules/n_plus_one/n1_company", id: programmer.properties.company_id, result_name: 'company' %}
+          <td> {{ company.companies.results.first.properties.name }} </td>
+          <td> {{ company.companies.results.first.properties.url }} </td>
+        {% endif  %}
       </tr>
     {% endfor %}
   </tbody>
@@ -45,7 +46,7 @@ metadata:
 {% assign _graph_duration = _start | time_diff: _graph | round %}
 {% assign _render_duration = _start | time_diff: _render | round %}
 
-{% log _graph_duration, type: "[MODEL ON DEMAND] benchmark-graph" %}
-{% log _render_duration, type: "[MODEL ON DEMAND] benchmark-render" %}
+{% log _graph_duration, type: "[N+1] benchmark-graph" %}
+{% log _render_duration, type: "[N+1] benchmark-render" %}
 
-{% include 'n_plus_one/benchmark-report' %}
+{% include 'modules/n_plus_one/benchmark-report' %}

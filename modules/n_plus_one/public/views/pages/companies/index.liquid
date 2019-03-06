@@ -6,11 +6,11 @@ metadata:
   description: Loading related models while avoiding n+1 queries. Increase speed 10x
   docs_slug: tutorials/custom-model-types/loading-related-models
 ---
-{% include 'n_plus_one/menu' %}
+{% include 'modules/n_plus_one/menu' %}
 
 {% assign _start = "now" | to_time %}
 
-{% query_graph 'n1_companies' %}
+{% query_graph 'modules/n_plus_one/n1_companies' %}
 
 {% assign _graph = "now" | to_time %}
 
@@ -47,4 +47,4 @@ metadata:
 
 {% log _graph_duration, type: "benchmark-graph" %}
 {% log _render_duration, type: "benchmark-render" %}
-{% include 'n_plus_one/benchmark-report' %}
+{% include 'modules/n_plus_one/benchmark-report' %}

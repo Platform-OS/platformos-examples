@@ -17,7 +17,7 @@ Let's look at this simple snippet. There two suspecious parts:
 
 ```liquid
 {% raw %}
-  {% query_graph 'n1_programmers' %}
+  {% query_graph 'modules/n_plus_one/n1_programmers' %}
 
   {% for programmer in g.programmers.results %}
     <tr>
@@ -35,7 +35,7 @@ Using two simple tags `to_time` and then `time_diff` we can get to know some num
 {% raw %}
 {% assign __start = "now" | to_time %}
 
-{% query_graph 'programmers' %}
+{% query_graph 'modules/n_plus_one/programmers' %}
 
 {% assign __graph = "now" | to_time %}
 

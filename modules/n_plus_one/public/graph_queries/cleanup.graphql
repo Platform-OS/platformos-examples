@@ -1,0 +1,9 @@
+mutation {
+  company_cleanup: customizations_delete_all(custom_model_type_name: "modules/n_plus_one/company") {
+    count
+  }
+
+  programmers_cleanup: customizations_delete_all(custom_model_type_name: "modules/n_plus_one/programmer") {
+    count
+  }
+}

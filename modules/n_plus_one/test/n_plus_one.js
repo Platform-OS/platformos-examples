@@ -1,10 +1,10 @@
 import { Selector } from 'testcafe';
-import RelatedModels from '../page-objects/RelatedModels';
+import PageObject from './page-object';
 import { checkLiquidErrors } from '@platform-os/testcafe-helpers';
 
-const relatedModels = new RelatedModels();
+const page = new PageObject();
 
-fixture('Measuring execution time of liquid code fragments').page(process.env.MP_URL);
+fixture('n+1 - related models load much faster').page(process.env.MP_URL);
 
 test('There are no liquid errors on the page', async t => {
   await t.navigateTo('/companies/index');
@@ -20,11 +20,11 @@ test('There are no liquid errors on the page', async t => {
 test.before(async t => {
   await t.navigateTo('/companies/index');
 })('Measuring execution time of liquid code fragments (time_diff)', async t => {
-  await t.click(relatedModels.link.programmersCompaniesSlow);
-  let msSlow = await relatedModels.data.result.innerText;
+  await t.click(page.link.programmersCompaniesSlow);
+  let msSlow = await page.data.result.innerText;
 
-  await t.click(relatedModels.link.programmersCompaniesCorrect);
-  let msCorrect = await relatedModels.data.result.innerText;
+  await t.click(page.link.programmersCompaniesCorrect);
+  let msCorrect = await page.data.result.innerText;
 
   /*
     I know i know, this is not performance tetsing,
