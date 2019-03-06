@@ -1,6 +1,6 @@
 query feedback($per_page: Int = 10) {
   customizations(
-    name: "feedback"
+    name: "modules/feedback/feedback"
     per_page: $per_page
     sort: { name: "created_at", order: "desc" }
     is_deleted: false
