@@ -21,7 +21,7 @@ slug: companies/seed
   }
   {% endparse_json %}
 
-  {% execute_query "modules/n_plus_one/add_company", name: company.name, email: company.email, url: company.url, number: company.number, result_name: '_company' %}
+  {% execute_query "modules/n_plus_one/create_company", name: company.name, email: company.email, url: company.url, number: company.number, result_name: '_company' %}
   {% assign company_ids = company_ids | add_to_array: _company.customization_create.id %}
 {% endfor %}
 
@@ -39,7 +39,7 @@ slug: companies/seed
   }
   {% endparse_json %}
 
-  {% execute_query "modules/n_plus_one/add_programmer", company_id: programmer.company_id, email: programmer.email, title: programmer.title %}
+  {% execute_query "modules/n_plus_one/create_programmer", company_id: programmer.company_id, email: programmer.email, title: programmer.title %}
 {% endfor %}
 
 {% assign _step_3 = "now" | to_time %}
