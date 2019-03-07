@@ -1,4 +1,3 @@
-import { Selector } from 'testcafe';
 import Feedback from './page-object.js';
 
 const feedback = new Feedback();
@@ -19,13 +18,11 @@ test('Create, Read', async t => {
     .click(feedback.radio.create.excellent)
     .typeText(feedback.input.create_message, 'Lorem ipsum')
     .click(feedback.button.submit)
-    .click(feedback.button.refresh)
-    .expect(feedback.table.tableRows.count)
-    .eql(1)
-    .expect(feedback.data.rating.innerText)
-    .eql(feedback.txt.createRating)
-    .expect(feedback.data.message.innerText)
-    .eql(feedback.txt.createMessage);
+    .click(feedback.button.refresh);
+
+  await t.expect(feedback.table.tableRows.count).eql(1);
+  await t.expect(feedback.data.rating.innerText).eql(feedback.txt.createRating);
+  await t.expect(feedback.data.message.innerText).eql(feedback.txt.createMessage);
 });
 
 test('Update, Read', async t => {
@@ -36,11 +33,10 @@ test('Update, Read', async t => {
     .click(feedback.radio.update.meh)
     .typeText(feedback.input.update_message, 'Dolor ipsum')
     .click(feedback.button.update)
-    .click(feedback.button.refresh)
-    .expect(feedback.data.rating.innerText)
-    .eql(feedback.txt.updatedRating)
-    .expect(feedback.data.message.innerText)
-    .eql(feedback.txt.updatedMessage);
+    .click(feedback.button.refresh);
+
+  await t.expect(feedback.data.rating.innerText).eql(feedback.txt.updatedRating);
+  await t.expect(feedback.data.message.innerText).eql(feedback.txt.updatedMessage);
 });
 
 test('Delete, Read', async t => {
