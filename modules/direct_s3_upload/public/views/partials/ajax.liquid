@@ -2,10 +2,10 @@
 {% assign avatar = profile.custom_images.avatar %}
 {% assign image_s3_upload = avatar.image.s3_upload %}
 
-<script src="{{ 'DirectUpload.js' | asset_url }}" defer></script>
+<script src="{{ 'modules/direct_s3_upload/DirectUpload.js' | asset_url }}" defer></script>
 
 <h2 id="#direct-upload-using-ajax">Direct upload using AJAX</h2>
-<form action="{{ image_s3_upload.direct_upload_url }}" data-direct-upload-ajax="form">
+<form action="{{ image_s3_upload.direct_upload_url }}" data-direct-upload-ajax="form" data-test="ajax-form">
   {% for input in image_s3_upload.form_data %}
     <input type="hidden" name="{{ input[0] }}" value="{{ input[1] }}">
   {% endfor %}

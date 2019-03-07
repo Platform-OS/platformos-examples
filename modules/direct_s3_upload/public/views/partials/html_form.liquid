@@ -3,7 +3,7 @@
 {% assign image_s3_upload = avatar.image.s3_upload %}
 
 <h2 id="#direct-upload-using-html-form">Direct upload using HTML form</h2>
-<form action="{{ image_s3_upload.direct_upload_url }}" enctype="multipart/form-data" accept-charset="UTF-8" method="post">
+<form action="{{ image_s3_upload.direct_upload_url }}" enctype="multipart/form-data" accept-charset="UTF-8" method="post" data-test="html-form">
   {% for input in image_s3_upload.form_data %}
     <input type="hidden" name="{{ input[0] }}" value="{{ input[1] }}">
   {% endfor %}
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="col-12 col-md-8">
-      {% include 'inputs/s3_debug_info', type: 'image', field: avatar %}
+      {% include 'modules/direct_s3_upload/inputs/s3_debug_info', type: 'image', field: avatar %}
     </div>
   </div>
 </form>
