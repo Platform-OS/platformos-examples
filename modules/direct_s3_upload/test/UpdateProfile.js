@@ -22,19 +22,19 @@ test('There are no liquid errors on the page', async t => {
 
 // Testcafe cant understand AWS response, so its failing.
 // Dont know how to work around that, yet.
-test.skip('Normal form upload works', async t => {
-  await t.setFilesToUpload(updateProfile.input.html, [`${uploads}/hero.png`]).click(await updateProfile.submit.html);
+// test.skip('Normal form upload works', async t => {
+//   await t.setFilesToUpload(updateProfile.input.html, [`${uploads}/hero.png`]).click(await updateProfile.submit.html);
 
-  const currentUrl = updateProfile.getPageUrl();
+//   const currentUrl = updateProfile.getPageUrl();
 
-  await t.expect(currentUrl).contains('amazonaws.com');
+//   await t.expect(currentUrl).contains('amazonaws.com');
 
-  const body = Selector('body');
-  const bodyText = await body.textContent;
+//   const body = Selector('body');
+//   const bodyText = await body.textContent;
 
-  await t.expect(bodyText).contains('platform-os.com');
-  await t.expect(bodyText).contains('ETag');
-});
+//   await t.expect(bodyText).contains('platform-os.com');
+//   await t.expect(bodyText).contains('ETag');
+// });
 
 test('Direct upload using AJAX', async t => {
   await t.setFilesToUpload(updateProfile.input.ajax, [`${uploads}/hero.png`]);
@@ -43,53 +43,41 @@ test('Direct upload using AJAX', async t => {
   await t.expect(updateProfile.files.ajaxImage.count).eql(1);
 });
 
-test('AJAX + update profile - avatar', async t => {
-  const current = await updateProfile.current.avatar;
-  const newImage = await updateProfile.new.avatar;
-
-  await t.expect(await current.getAttribute('src')).contains('pos-logo.png');
-  await t.expect(await current.getAttribute('src')).contains('platform-os.com');
+test('AJAX + update profile', async t => {
+  const currentAvatar = await updateProfile.current.avatar;
+  const newAvatar = await updateProfile.new.avatar;
+  const currentBanner = await updateProfile.current.banner;
+  const newBanner = await updateProfile.new.banner;
 
   await t.setFilesToUpload(updateProfile.input.avatar, [`${uploads}/hero.png`]);
-  await t.expect(newImage.textContent).contains('hero.png');
-
-  await t.click(updateProfile.submit.profile);
-  await t.expect(current.getAttribute('src')).contains('hero.png');
-}).after(async t => {
-  // Bring back default
-  await t.setFilesToUpload(updateProfile.input.avatar, [`${uploads}/pos-logo.png`]);
-  await t.click(updateProfile.submit.profile);
-});
-
-test('AJAX + update profile - banner', async t => {
-  const current = await updateProfile.current.banner;
-  const newImage = await updateProfile.new.banner;
+  await t.expect(newAvatar.textContent).contains('hero.png');
 
   await t.setFilesToUpload(updateProfile.input.banner, [`${uploads}/bug.png`]);
-  await t.expect(newImage.textContent).contains('bug.png');
+  await t.expect(newBanner.textContent).contains('bug.png');
 
-  await t.click(updateProfile.submit.profile);
-  await t.expect(await current.getAttribute('src')).contains('bug.png');
-}).after(async t => {
-  const current = await updateProfile.current.banner;
-
-  // Bring back default
-  await t.setFilesToUpload(updateProfile.input.banner, [`${uploads}/pos-logo.png`]);
-  await t.click(updateProfile.submit.profile);
-
-  await t.expect(await current.getAttribute('src')).contains('pos-logo.png');
-  await t.expect(await current.getAttribute('src')).contains('platform-os.com');
-});
-
-test('AJAX + update profile - updating profile bio', async t => {
   await t.typeText(updateProfile.input.bio, 'My custom bio', { replace: true });
+
   await t.click(updateProfile.submit.profile);
 
+  await t.expect(currentAvatar.getAttribute('src')).contains('hero.png');
+  await t.expect(currentBanner.getAttribute('src')).contains('bug.png');
   await t.expect(updateProfile.input.bio.textContent).eql('My custom bio');
 }).after(async t => {
   // Bring back default
+  const avatar = await updateProfile.current.avatar;
+  const banner = await updateProfile.current.banner;
+
+  await t.setFilesToUpload(updateProfile.input.avatar, [`${uploads}/pos-logo.png`]);
+  await t.setFilesToUpload(updateProfile.input.banner, [`${uploads}/pos-logo.png`]);
   await t.typeText(updateProfile.input.bio, 'Default bio', { replace: true });
+
   await t.click(updateProfile.submit.profile);
+
+  await t.expect(await avatar.getAttribute('src')).contains('pos-logo.png');
+  await t.expect(await avatar.getAttribute('src')).contains('platform-os.com');
+
+  await t.expect(await banner.getAttribute('src')).contains('pos-logo.png');
+  await t.expect(await banner.getAttribute('src')).contains('platform-os.com');
 
   await t.expect(updateProfile.input.bio.textContent).eql('Default bio');
 });
