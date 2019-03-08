@@ -28,7 +28,7 @@ pipeline {
       when { anyOf { branch 'master' } }
 
       steps {
-        sh 'echo "executing marketplace-kit deploy'
+        sh 'echo "executing marketplace-kit deploy"'
         sh 'marketplace-kit deploy'
       }
     }
