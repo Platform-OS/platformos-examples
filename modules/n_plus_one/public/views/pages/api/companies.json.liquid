@@ -2,7 +2,7 @@
 slug: api/companies
 format: json
 authorization_policies:
-- authenticated_api_request
+- modules/n_plus_one/authenticated_api_request
 ---
 {% assign _start = "now" | to_time  %}
 {% assign limit = context.params.ids | size  %}
