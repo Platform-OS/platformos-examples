@@ -1,15 +1,13 @@
 import { Selector } from 'testcafe';
-import LogIn from '../page-objects/Login';
-import Stripe from '../page-objects/Stripe';
+import Stripe from './page-object';
 import { checkLiquidErrors, getBtAlertElement } from '@platform-os/testcafe-helpers';
 
-const logIn = new LogIn();
 const stripe = new Stripe();
 
 fixture('Stripe')
   .page(process.env.MP_URL)
   .beforeEach(async t => {
-    await logIn.login('test_user@test.com', 'password');
+    await stripe.login('test_user@test.com', 'password');
     await t.navigateTo('/payments');
   });
 
@@ -30,9 +28,9 @@ test('Pay by using valid credit card', async t => {
 
   /*
     Im pretty sure its not testing what its supposed to test, but i give up on trying to test 
-    this stripe-iframe-js-async magic.
+    this stripe-iframe-js-async-magic-mumbo-jumbo.
     
-    How i know it doesnt test anything? :-)
+    How do I know it doesnt test anything? :-)
       `await getBtAlertElement({ Selector }).count === undefined`
   */
   await t.expect(await getBtAlertElement({ Selector })).ok();

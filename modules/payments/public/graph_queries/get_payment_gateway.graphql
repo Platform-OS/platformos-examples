@@ -1,8 +1,5 @@
 query get_payment_gateway {
-  payment_gateways(
-    mode: test
-    for_current_mode: false
-  ) {
+  payment_gateways(mode: test, for_current_mode: false) {
     id
     payment_methods {
       id

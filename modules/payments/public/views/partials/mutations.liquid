@@ -1,10 +1,14 @@
-{% query_graph "get_credit_cards", user_id: context.current_user.id %}
+---
+handler: liquid
+---
+
+{% query_graph "modules/payments/get_credit_cards", user_id: context.current_user.id %}
 {% assign cc = g.credit_cards.last %}
 
-{% execute_query "create_invoice", amount: "10", result_name: "i" %}
+{% execute_query "modules/payments/create_invoice", amount: "10", result_name: "i" %}
 {% assign invoice = i.customization_create %}
 
-{% execute_query "create_payment",
+{% execute_query "modules/payments/create_payment",
   credit_card_id: cc.id,
   payment_method_id: cc.payment_method_id,
   payable_id: invoice.id,
@@ -15,5 +19,5 @@
 %}
 
 {% assign payment_id = p.payment_create.result.id %}
-{% execute_query "charge_payment", result_name: "p", id: payment_id %}
+{% execute_query "modules/payments/charge_payment", result_name: "p", id: payment_id %}
 {{ p }}

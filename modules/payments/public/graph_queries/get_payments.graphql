@@ -1,10 +1,8 @@
 query get_payments {
-  payments(
-  per_page: 5
-  ) {
-    results { 
-      id 
-      state 
+  payments(per_page: 5) {
+    results {
+      id
+      state
       total_amount_cents
       payer {
         id

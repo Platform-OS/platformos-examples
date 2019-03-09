@@ -1,11 +1,11 @@
 ---
 slug: payments
 authorization_policies:
-- require_user
+- modules/payments/require_user
 metadata:
   description: Integrating Stripe payments
   docs_slug: tutorials/payments/integrating-stripe
 ---
-{% include_form 'simple_payment_form' %}
+{% include_form 'modules/payments/simple_payment_form' %}
 
-{% include 'payments/list' %}
+{% include 'modules/payments/list' %}

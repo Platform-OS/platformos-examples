@@ -1,4 +1,4 @@
-import { Selector } from 'testcafe';
+import { Selector, t } from 'testcafe';
 
 export default class Stripe {
   constructor() {
@@ -11,6 +11,7 @@ export default class Stripe {
     };
     this.input = {
       email: Selector('input[type="email"]'),
+      password: Selector('input[type="password"]'),
       cardNumber: Selector(
         '.Fieldset-childLeftRight > .Textbox-inputRow > input[type="tel"].Fieldset-input.Textbox-control'
       ),
@@ -20,5 +21,16 @@ export default class Stripe {
         '.Fieldset-childLeftRight.Fieldset-childBottom > .Textbox-inputRow > input[type="tel"].Fieldset-input.Textbox-control'
       )
     };
+  }
+
+  async login(username, password) {
+    const submitButton = Selector('button.btn.btn-primary');
+
+    await t.navigateTo('/sign-in');
+
+    await t
+      .typeText(this.input.email, username, { replace: true })
+      .typeText(this.input.password, password, { replace: true })
+      .click(submitButton);
   }
 }

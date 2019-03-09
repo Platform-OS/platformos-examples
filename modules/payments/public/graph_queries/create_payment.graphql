@@ -6,14 +6,11 @@ mutation create_payment(
   $payable_type: String = "Order"
   $payer_id: ID!
   $total_amount: Float!
-  $form_configuration_name: String = "create_payment_form"
+  $form_configuration_name: String = "modules/payments/create_payment_form"
 ) {
   payment_create(
     payment: {
-      amount: {
-        currency: "USD"
-        total_amount: $total_amount
-      }
+      amount: { currency: "USD", total_amount: $total_amount }
       credit_card_id: $credit_card_id
       credit_card_token: $credit_card_token
       payment_method_id: $payment_method_id
