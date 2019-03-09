@@ -11,10 +11,7 @@ export default class HomePage {
       'https://amp-demo-travel.prod01.oregon.platform-os.com/',
       'https://amp-demo-lune.prod01.oregon.platform-os.com/',
       'https://amp-demo-gallery.prod01.oregon.platform-os.com/gallery',
-      'https://amp-demo-blog.prod01.oregon.platform-os.com/',
-      'https://github.com/mdyd-dev/amp-demo-pages',
-      'https://github.com/mdyd-dev/marketplace-nearme-example',
-      'https://documentation.platform-os.com/'
+      'https://amp-demo-blog.prod01.oregon.platform-os.com/'
     ];
 
     this.LINKS = [
