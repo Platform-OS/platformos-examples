@@ -1,0 +1,11 @@
+---
+slug: client/projects/edit
+---
+{% query_graph 'modules/users/get_project', result_name: 'graph_project', slug: context.params.slugs, creator_id: context.current_user.id %}
+{% if graph_project %}
+  <h1>Edit {{ project.name }}</h1>
+  {% include_form 'modules/users/project', id: graph_project.project.id %}
+{% else %}
+  <p>Unfortunately we could not find this project.
+{% endif %}
+

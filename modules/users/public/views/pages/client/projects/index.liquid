@@ -1,0 +1,33 @@
+---
+slug: client/projects
+---
+
+{% if g.current_user.client_profile %}
+  <h1>Projects</h1>
+  {% assign page = context.params.page | default: 1 | plus: 0 %}
+  <a href="/client/projects/new">Create project</a>
+
+  {% query_graph 'modules/users/client_projects', result_name: 'g', creator_id: context.current_user.id, per_page: 20, page: page %}
+
+  {% if g.projects.total_entries > 0 %}
+    <ul>
+      {% for project in g.projects.results %}
+        <li>{{ project.name }} ({{ project.state }}) - <a href="/client/projects/edit/{{project.slug}}">edit</a>
+        {% include_form 'modules/users/destroy_project', id: project.id %}</li>
+      {% endfor %}
+    </ul>
+    {% assign pages = g.projects.total_pages %}
+    {% assign current_page = g.projects.current_page %}
+    {% if pages > 1 %}
+      <div class="pager">
+        {% for page in (1..pages) %}
+          <a href="{{ current_path }}?page={{ page }}">{{ page }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% else %}
+    <p>You have not created any projects yet.</p>
+  {% endif %}
+{% else %}
+  <p>You are not logged in as client. There is nothing we can show you here.</p>
+{% endif %}

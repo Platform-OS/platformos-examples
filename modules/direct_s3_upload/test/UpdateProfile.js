@@ -1,18 +1,16 @@
 import { Selector } from 'testcafe';
 import path from 'path';
-import LogIn from '../../../tests/e2e/page-objects/Login';
 import UpdateProfile from './page-object';
 import { checkLiquidErrors } from '@platform-os/testcafe-helpers';
 
 const uploads = path.join(process.cwd(), 'tests', 'e2e', 'uploads');
 
-const logIn = new LogIn();
 const updateProfile = new UpdateProfile();
 
 fixture('Update profile')
   .page(process.env.MP_URL)
   .beforeEach(async t => {
-    await logIn.login('test_user@test.com', 'password');
+    await updateProfile.login('test_user@test.com', 'password');
     await t.navigateTo('/update_profile');
   });
 

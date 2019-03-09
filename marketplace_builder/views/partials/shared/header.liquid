@@ -7,7 +7,7 @@
       {% if context.current_user.id %}
         {{ context.current_user.email }}
         <br>
-        {% include_form 'log_out_form' %}
+        {% include_form 'modules/users/log_out_form' %}
       {% else %}
         <a href="/sign-up">Register</a>
         |

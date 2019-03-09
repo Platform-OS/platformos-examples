@@ -1,0 +1,14 @@
+name: Project
+properties:
+- name: workplace_onsite
+  type: boolean
+- name: workplace_online
+  type: boolean
+- name: deadline
+  type: date
+- name: budget
+  type: float
+- name: state
+  type: string
+- name: description
+  type: string

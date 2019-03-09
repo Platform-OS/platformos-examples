@@ -1,6 +1,0 @@
-query get_user($email: String!) {
-  user(email: $email) {
-    id
-    first_name
-  }
-}

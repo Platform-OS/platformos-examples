@@ -1,4 +1,0 @@
-name: application_files
-properties:
-  - name: application_file
-    type: file

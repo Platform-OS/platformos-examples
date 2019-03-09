@@ -1,0 +1,22 @@
+query client_projects($page: Int, $creator_id: ID!) {
+  projects: listings(
+    per_page: 20
+    page: $page
+    sort: [{ name: "created_at", order: "desc" }]
+    listing: { creator_id: $creator_id, is_deleted: false }
+  ) {
+    total_entries
+    has_next_page
+    has_previous_page
+    current_page
+    total_pages
+
+    results {
+      id
+      name
+      slug
+      state: property(name: "state")
+      description: property(name: "description")
+    }
+  }
+}
