@@ -1,7 +1,3 @@
----
-handler: liquid
----
-
 {% query_graph "modules/payments/get_credit_cards", user_id: context.current_user.id %}
 {% assign cc = g.credit_cards.last %}
 
