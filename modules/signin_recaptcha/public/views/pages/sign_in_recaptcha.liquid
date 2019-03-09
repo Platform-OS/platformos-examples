@@ -6,13 +6,14 @@ metadata:
 ---
 <h2>Log in</h2>
 
-<div class="alert alert-info">Recaptcha will appear after 3 failed login attempts.</div>
-
 {% assign signin_failed_attempts = context.session.failed_attempts | plus: 0 %}
+<p class="text-muted">Failed login attempts: {{ signin_failed_attempts }}</p>
+
 {% if signin_failed_attempts > 3 %}
-  {% include_form 'sign_in_with_recaptcha' %}
+  {% include_form 'modules/signin_recaptcha/sign_in_with_recaptcha' %}
 {% else %}
-  {% include_form 'sign_in_without_recaptcha' %}
+  <div class="alert alert-info">Recaptcha will appear after 3 failed login attempts.</div>
+  {% include_form 'modules/signin_recaptcha/sign_in_without_recaptcha' %}
 {% endif %}
 
 <hr class="hr">

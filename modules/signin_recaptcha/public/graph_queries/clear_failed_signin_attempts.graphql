@@ -1,0 +1,3 @@
+mutation clear_failed_signin_attempts {
+  session_delete_field(name: "failed_attempts")
+}

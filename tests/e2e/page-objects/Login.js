@@ -30,8 +30,8 @@ export default class LogIn {
     await t.navigateTo('/sign-in');
 
     await t
-      .typeText(this.input.email, username)
-      .typeText(this.input.password, password)
+      .typeText(this.input.email, username, { replace: true })
+      .typeText(this.input.password, password, { replace: true })
       .click(this.button.submit);
   }
 

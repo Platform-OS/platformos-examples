@@ -1,6 +1,6 @@
 import { Selector } from 'testcafe';
-import LogInRecaptcha from '../page-objects/LoginRecaptcha';
-import { checkLiquidErrors, getBtAlertText } from '@platform-os/testcafe-helpers';
+import LogInRecaptcha from './page-object';
+import { checkLiquidErrors, getBtAlertElement } from '@platform-os/testcafe-helpers';
 
 const logInRecaptcha = new LogInRecaptcha();
 
@@ -11,9 +11,14 @@ test('There are no liquid errors on the page', async t => {
 });
 
 test('Log in to the Dashboard with Recaptcha', async t => {
-  await t.expect(await getBtAlertText({ type: 'info', Selector })).contains(logInRecaptcha.alerts.info);
+  const alert = await getBtAlertElement({ type: 'info', Selector });
+
   for (let i = 0; i < 4; i++) {
-    await t.click(logInRecaptcha.button.login);
+    await t.expect(await alert.count).eql(1);
+    await logInRecaptcha.login('x@x.com', 'x');
   }
+
+  await t.expect(await alert.count).eql(0);
+
   await t.switchToIframe(logInRecaptcha.reCaptcha.iframe).click(logInRecaptcha.reCaptcha.checkBoxRecaptcha);
 });

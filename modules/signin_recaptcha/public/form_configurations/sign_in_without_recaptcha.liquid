@@ -5,12 +5,16 @@ fields:
   email:
   password:
 callback_actions: >
-  {% execute_query "clear_failed_signin_attempts" %}
+  {% execute_query "modules/signin_recaptcha/clear_failed_signin_attempts" %}
 ---
 {% form html-class: 'w-50' %}
   <div class="form-group">
     <label for="form_email">Email</label>
-    <input class="form-control" name="{{ form_builder.fields.email.name }}" value="{{ form_builder.fields.email.value}}" id="form_email" type="email">
+    <input class="form-control"
+      name="{{ form_builder.fields.email.name }}"
+      value="{{ form_builder.fields.email.value }}"
+      id="form_email"
+      type="email">
   </div>
 
   <div class="form-group">
@@ -23,7 +27,7 @@ callback_actions: >
 
   {% if form_builder.errors != empty %}
     {% assign attempts = context.session.failed_attempts | default: 1 | plus: 1 %}
-    {% execute_query "set_failed_signin_attempts", attempts: attempts %}
+    {% execute_query "modules/signin_recaptcha/set_failed_signin_attempts", attempts: attempts %}
   {% endif %}
 
   <button class="btn btn-primary">Log In</button>
