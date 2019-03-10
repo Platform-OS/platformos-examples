@@ -1,7 +1,8 @@
 import { Selector } from 'testcafe';
+import faker from 'faker';
 import { getResultText as getTxt, getBtAlertText } from '@platform-os/testcafe-helpers';
 
-fixture('Multilanguage page - translations').page(`${process.env.MP_URL}`);
+fixture('Multilanguage page - translations').page(process.env.MP_URL);
 
 test('Default - no language - en fallback', async t => {
   await t.navigateTo('/multilanguage?name=John&url=https://documentation.platform-os.com');
@@ -12,9 +13,8 @@ test('Default - no language - en fallback', async t => {
   await t.expect(await getTxt({ name: 2, Selector })).contains('Ford Mustang');
   await t.expect(await getTxt({ name: 2, Selector })).contains('Corvette');
   await t.expect(await getTxt({ name: 2, Selector })).contains('Gran Torino');
-  await t
-    .expect(await getTxt({ name: 3, Selector }))
-    .contains('Hello John. Take a look at my website: https://documentation.platform-os.com');
+  await t.expect(await getTxt({ name: 3, Selector })).contains('Hello John');
+  await t.expect(await getTxt({ name: 3, Selector })).contains('https://documentation.platform-os.com');
   await t.expect(await getTxt({ name: 4, Selector })).eql('');
   await t.expect(await getTxt({ name: 5, Selector })).eql('en');
 });
@@ -28,17 +28,15 @@ test('English - forced by query param', async t => {
 });
 
 test('Polish - translate', async t => {
-  await t.navigateTo('/multilanguage?name=John&url=https://documentation.platform-os.com');
+  await t.navigateTo('/multilanguage?language=pl&url=https://nask.pl');
 
-  await t.expect(await getTxt({ name: 1, Selector })).contains('Hello world!');
-  await t.expect(await getTxt({ name: 2, Selector })).contains('Ford Mustang');
-  await t.expect(await getTxt({ name: 2, Selector })).contains('Corvette');
-  await t.expect(await getTxt({ name: 2, Selector })).contains('Gran Torino');
-  await t
-    .expect(await getTxt({ name: 3, Selector }))
-    .contains('Hello John. Take a look at my website: https://documentation.platform-os.com');
-  await t.expect(await getTxt({ name: 4, Selector })).eql('');
-  await t.expect(await getTxt({ name: 5, Selector })).eql('en');
+  await t.expect(await getTxt({ name: 1, Selector })).contains('Witaj świecie!');
+  await t.expect(await getTxt({ name: 2, Selector })).contains('Polonez');
+  await t.expect(await getTxt({ name: 2, Selector })).contains('Maluch');
+  await t.expect(await getTxt({ name: 2, Selector })).contains('Tarpan');
+  await t.expect(await getTxt({ name: 3, Selector })).contains('https://nask.pl');
+  await t.expect(await getTxt({ name: 4, Selector })).eql('pl');
+  await t.expect(await getTxt({ name: 5, Selector })).eql('pl');
 });
 
 test('Unknown language - translate', async t => {
@@ -54,10 +52,12 @@ test('Unknown language - translate', async t => {
   await t.expect(await getTxt({ name: 5, Selector })).eql('js');
 });
 
-test('Japanese - UTF-8 works', async t => {
-  await t.navigateTo('/multilanguage?language=jp&name=おっす&url=https://documentation.platform-os.com');
+test('Japanese - UTF-8, emoji works', async t => {
+  await t.navigateTo('/multilanguage?language=jp&name=おっす&url=https://🇯🇵.com');
 
   await t.expect(await getTxt({ name: 1, Selector })).contains('今日は!');
+  await t.expect(await getTxt({ name: 3, Selector })).contains('おっす');
+  await t.expect(await getTxt({ name: 3, Selector })).contains('🇯🇵');
   await t.expect(await getTxt({ name: 4, Selector })).eql('jp');
   await t.expect(await getTxt({ name: 5, Selector })).eql('jp');
 });
