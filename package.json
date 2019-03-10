@@ -12,6 +12,7 @@
   "license": "ISC",
   "homepage": "https://examples.platform-os.com",
   "devDependencies": {
-    "@platform-os/testcafe-helpers": "^2.1.1"
+    "@platform-os/testcafe-helpers": "^2.1.1",
+    "faker": "^4.1.0"
   }
 }

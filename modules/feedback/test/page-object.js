@@ -29,9 +29,7 @@ export default class Feedback {
     };
     this.txt = {
       createRating: 'Excellent',
-      createMessage: 'Lorem ipsum',
-      updatedRating: 'Meh',
-      updatedMessage: 'Dolor ipsum'
+      updatedRating: 'Meh'
     };
     this.data = {
       id: Selector('tr > td:nth-of-type(1)'),

@@ -1,5 +1,5 @@
+import faker from 'faker';
 import Feedback from './page-object.js';
-
 const feedback = new Feedback();
 
 fixture('Feedback - CRUD using Ajax').page(`${process.env.MP_URL}/feedback`);
@@ -14,29 +14,31 @@ test('customizations_delete_all cleans feedback correctly', async t => {
 });
 
 test('Create, Read', async t => {
+  const lorem = faker.lorem.sentence();
   await t
     .click(feedback.radio.create.excellent)
-    .typeText(feedback.input.create_message, 'Lorem ipsum')
+    .typeText(feedback.input.create_message, lorem)
     .click(feedback.button.submit)
     .click(feedback.button.refresh);
 
   await t.expect(feedback.table.tableRows.count).eql(1);
   await t.expect(feedback.data.rating.innerText).eql(feedback.txt.createRating);
-  await t.expect(feedback.data.message.innerText).eql(feedback.txt.createMessage);
+  await t.expect(feedback.data.message.innerText).eql(lorem);
 });
 
 test('Update, Read', async t => {
+  const lorem = faker.lorem.sentence();
   let customization_id = await feedback.data.id.innerText;
 
   await t
     .typeText(feedback.input.update_id, customization_id)
     .click(feedback.radio.update.meh)
-    .typeText(feedback.input.update_message, 'Dolor ipsum')
+    .typeText(feedback.input.update_message, lorem)
     .click(feedback.button.update)
     .click(feedback.button.refresh);
 
   await t.expect(feedback.data.rating.innerText).eql(feedback.txt.updatedRating);
-  await t.expect(feedback.data.message.innerText).eql(feedback.txt.updatedMessage);
+  await t.expect(feedback.data.message.innerText).eql(lorem);
 });
 
 test('Delete, Read', async t => {

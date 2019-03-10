@@ -1,16 +1,15 @@
 import { Selector } from 'testcafe';
+import faker from 'faker';
 import Contacts from './page-object';
 import { checkLiquidErrors, getBtAlertText } from '@platform-os/testcafe-helpers';
 
 const contacts = new Contacts();
 
-const contactData = {
-  name: 'Tester',
-  email: `test+${+new Date()}@example.com`,
-  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
+const { name, email, description } = {
+  email: faker.internet.exampleEmail(),
+  name: faker.name.firstName(),
+  description: faker.lorem.sentence()
 };
-
-const { name, email, description } = contactData;
 
 fixture('Contacts').page(`${process.env.MP_URL}/contacts`);
 
@@ -48,15 +47,16 @@ test('Details page contains correct', async t => {
 });
 
 test('Update record works', async t => {
+  const newName = faker.name.firstName();
   await t
     .click(contacts.link.edit)
-    .typeText(contacts.input.name, 'Tester 2', { replace: true })
+    .typeText(contacts.input.name, newName, { replace: true })
     .click(contacts.button.save);
 
   await t.expect(await getBtAlertText({ Selector })).contains(contacts.alerts.updated);
 
   await t.click(contacts.link.details);
-  await t.expect(contacts.data.name.withText(name).exists).ok();
+  await t.expect(contacts.data.name.withText(newName).exists).ok();
 });
 
 test('Remove contact works', async t => {
