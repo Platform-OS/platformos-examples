@@ -43,7 +43,6 @@ pipeline {
       when { anyOf { branch 'master' } }
 
       steps {
-        sh 'npm ci'
         sh 'npm run test-ci'
       }
     }
