@@ -64,11 +64,11 @@ pipeline {
 
   post {
     success {
-      slackSend (channel: "#notifications-example", color: '#00FF00', message: "SUCCESS: Deployed new code to staging after ${buildDuration()}. <${env.BUILD_URL}|Build #${env.BUILD_NUMBER}> \n ${commitInfo()}")
+      slackSend (channel: "#notifications-example", color: '#00FF00', message: "SUCCESS: <${env.BUILD_URL}|Build #${env.BUILD_NUMBER}> - ${buildDuration()}. ${commitInfo()}")
     }
 
     failure {
-      slackSend (channel: "#notifications-example", color: '#FF0000', message: "FAILED: Build failed after ${buildDuration()}. (<${env.BUILD_URL}|Open build details>)")
+      slackSend (channel: "#notifications-example", color: '#FF0000', message: "FAILED: <${env.BUILD_URL}|Open build details> - ${buildDuration()}")
     }
   }
 }
@@ -77,8 +77,8 @@ def commitInfo() {
   GH_URL = "https://github.com/mdyd-dev/marketplace-nearme-example"
 
   def commitSha = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-  def commitAuthor = sh(returnStdout: true, script: 'git log --no-merges --format="%an" -1').trim()
+  // def commitAuthor = sh(returnStdout: true, script: 'git log --no-merges --format="%an" -1').trim()
   def commitMsg = sh(returnStdout: true, script: 'git log --no-merges --format="%B" -1 ${commitSha}').trim()
 
-  return "<${GH_URL}/commit/${commitSha}|${commitSha}> - ${commitAuthor} - ${commitMsg}"
+  return "<${GH_URL}/commit/${commitSha}|${commitSha} ${commitMsg}>"
 }
