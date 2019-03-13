@@ -43,16 +43,13 @@ test('Direct upload using AJAX', async t => {
 
 test
   .before(async t => {
-    const avatar = await updateProfile.current.avatar;
-    const banner = await updateProfile.current.banner;
-
-    await t.expect(await avatar.getAttribute('src')).contains('pos-logo.png');
-    await t.expect(await avatar.getAttribute('src')).contains('platform-os.com');
-
-    await t.expect(await banner.getAttribute('src')).contains('pos-logo.png');
-    await t.expect(await banner.getAttribute('src')).contains('platform-os.com');
-
-    await t.expect(updateProfile.input.bio.textContent).eql('Default bio');
+    // const avatar = await updateProfile.current.avatar;
+    // const banner = await updateProfile.current.banner;
+    // await t.expect(await avatar.getAttribute('src')).contains('pos-logo.png');
+    // await t.expect(await avatar.getAttribute('src')).contains('platform-os.com');
+    // await t.expect(await banner.getAttribute('src')).contains('pos-logo.png');
+    // await t.expect(await banner.getAttribute('src')).contains('platform-os.com');
+    // await t.expect(updateProfile.input.bio.textContent).eql('Default bio');
   })('AJAX + update profile', async t => {
     const currentAvatar = await updateProfile.current.avatar;
     const newAvatar = await updateProfile.new.avatar;
