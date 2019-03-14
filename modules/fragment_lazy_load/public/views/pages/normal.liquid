@@ -1,0 +1,47 @@
+---
+slug: fragment-lazy-load
+enable_profiler: true
+metadata:
+  full_width: true
+---
+
+<div class="row">
+  <div class="col-8">
+    <div class="card">
+      <div class="card-header">Fast part of the page</div>
+      <div class="card-body">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi dolores quisquam obcaecati illum eum assumenda recusandae soluta adipisci eligendi. Repudiandae quae, ut architecto odit ad error nulla pariatur perspiciatis magni.  
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-4">
+    <div class="card">
+      <div class="card-header">Slow part of the page</div>
+      <div class="card-body" style="max-height: 150px; overflow: scroll;">
+        {% include 'modules/fragment_lazy_load/slow-code' %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-5">
+  <div class="col-8">
+    <div class="card">
+      <div class="card-header">Slow part of the page</div>
+      <div class="card-body" style="max-height: 150px; overflow: scroll;">
+        {% include 'modules/fragment_lazy_load/slow-code' %}
+      </div>
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-header">Fast part of the page</div>
+      <div class="card-body">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi dolores quisquam obcaecati illum eum assumenda recusandae soluta adipisci eligendi. Repudiandae quae, ut architecto odit ad error nulla pariatur perspiciatis magni.  
+      </div>
+    </div>
+  </div>
+</div>
+
+

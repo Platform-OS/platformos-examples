@@ -1,0 +1,4 @@
+{%- for i in (1..2000) %}
+  {%- assign r = 15 | random_string -%}
+  <span class="{{ r }}">{{ i }}</span>
+{%- endfor -%}

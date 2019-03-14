@@ -1,0 +1,57 @@
+---
+slug: fragment-lazy-load/lazy-inline
+enable_profiler: true
+metadata:
+  full_width: true
+---
+
+{% include 'modules/fragment_lazy_load/spinner' %}
+
+<div class="row">
+  <div class="col-8">
+    <div class="card">
+      <div class="card-header">Fast part of the page</div>
+      <div class="card-body">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi dolores quisquam obcaecati illum eum assumenda recusandae soluta adipisci eligendi. Repudiandae quae, ut architecto odit ad error nulla pariatur perspiciatis magni.  
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-4">
+    <div class="card">
+      <div class="card-header">Slow part of the page</div>
+      <div class="card-body" style="max-height: 150px; overflow: scroll;" data-remote-content="sidebar">
+        <div class="spinner">
+          <div class="bounce1"></div>
+          <div class="bounce2"></div>
+          <div class="bounce3"></div>
+        </div>
+      </div>
+      {% include 'modules/fragment_lazy_load/lazy-inline/js', contentName: "sidebar" %}
+    </div>
+  </div>
+</div>
+
+<div class="row mt-5">
+  <div class="col-8">
+    <div class="card">
+      <div class="card-header">Slow part of the page</div>
+      <div class="card-body" style="max-height: 150px; overflow: scroll;" data-remote-content="components">
+        <div class="spinner">
+          <div class="bounce1"></div>
+          <div class="bounce2"></div>
+          <div class="bounce3"></div>
+        </div>
+      </div>
+      {% include 'modules/fragment_lazy_load/lazy-inline/js', contentName: "components" %}      
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="card-header">Fast part of the page</div>
+      <div class="card-body">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi dolores quisquam obcaecati illum eum assumenda recusandae soluta adipisci eligendi. Repudiandae quae, ut architecto odit ad error nulla pariatur perspiciatis magni.  
+      </div>
+    </div>
+  </div>
+</div>

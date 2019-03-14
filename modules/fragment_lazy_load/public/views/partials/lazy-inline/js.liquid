@@ -1,0 +1,9 @@
+<script>
+  fetch('/fragment-lazy-load/slow-code')
+    .then(function(res) {
+      return res.text();
+    }).then(function(html) {
+      var el = document.querySelector('[data-remote-content="{{ contentName }}"]');
+      el.innerHTML = html;
+    });            
+</script>
