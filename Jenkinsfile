@@ -23,23 +23,18 @@ pipeline {
 
   stages {
     stage('Deploy to URL') {
-      when {
-        expression { return !params.MP_URL.isEmpty() }
-      }
+      when { expression { return !params.MP_URL.isEmpty() } }
       environment { MPKIT_URL = "${params.MP_URL}" }
       agent { docker { image 'platformos/marketplace-kit:2.0' } }
       steps {
-        sh 'echo "executing marketplace-kit deploy"'
         sh 'marketplace-kit deploy'
       }
     }
 
     stage('Test on URL') {
-      when {
-        expression { return !params.MP_URL.isEmpty() }
-      }
+      when { expression { return !params.MP_URL.isEmpty() } }
       agent { docker { image "platformos/testcafe" } }
-      environment { MPKIT_URL = "${params.MP_URL}" }
+      environment { MP_URL = "${params.MP_URL}" }
       steps {
         sh 'npm run test-ci'
       }
@@ -58,7 +53,6 @@ pipeline {
       }
 
       steps {
-        sh 'echo "executing marketplace-kit deploy"'
         sh 'marketplace-kit deploy'
       }
     }
