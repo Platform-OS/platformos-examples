@@ -25,34 +25,35 @@ test('Direct upload using AJAX', async t => {
   await t.expect(updateProfile.files.ajaxImage.count).eql(1);
 });
 
-test('AJAX + update profile', async t => {
-  const currentAvatar = await updateProfile.current.avatar;
-  const currentBanner = await updateProfile.current.banner;
+test
+  .only('AJAX + update profile', async t => {
+    const currentAvatar = await updateProfile.current.avatar;
+    const currentBanner = await updateProfile.current.banner;
 
-  await t.setFilesToUpload(updateProfile.input.avatar, `${uploads}/hero.png`);
-  await t.setFilesToUpload(updateProfile.input.banner, `${uploads}/bug.png`);
-  await t.typeText(updateProfile.input.bio, 'My custom bio', { replace: true });
+    await t.setFilesToUpload(updateProfile.input.avatar, `${uploads}/hero.png`);
+    await t.setFilesToUpload(updateProfile.input.banner, `${uploads}/bug.png`);
+    await t.typeText(updateProfile.input.bio, 'My custom bio', { replace: true });
 
-  await t.click(updateProfile.submit.profile);
+    await t.click(updateProfile.submit.profile);
 
-  await t.expect(currentAvatar.getAttribute('src')).contains('hero.png');
-  await t.expect(currentBanner.getAttribute('src')).contains('bug.png');
-  await t.expect(updateProfile.input.bio.textContent).eql('My custom bio');
-}).after(async t => {
-  // Bring back default
-  await t.setFilesToUpload(updateProfile.input.avatar, `${uploads}/pos-logo.png`);
-  await t.setFilesToUpload(updateProfile.input.banner, `${uploads}/pos-logo.png`);
-  await t.typeText(updateProfile.input.bio, 'Default bio', { replace: true });
+    await t.expect(currentAvatar.getAttribute('src')).contains('hero.png');
+    await t.expect(currentBanner.getAttribute('src')).contains('bug.png');
+    await t.expect(updateProfile.input.bio.textContent).eql('My custom bio');
+  })
+  .after(async t => {
+    // Bring back default
+    await t.setFilesToUpload(updateProfile.input.avatar, `${uploads}/pos-logo.png`);
+    await t.setFilesToUpload(updateProfile.input.banner, `${uploads}/pos-logo.png`);
+    await t.typeText(updateProfile.input.bio, 'Default bio', { replace: true });
 
-  await t.click(updateProfile.submit.profile);
+    await t.click(updateProfile.submit.profile);
 
-  // Check if defaults have been saved successfully
-  const avatar = await updateProfile.current.avatar;
-  const banner = await updateProfile.current.banner;
+    // Check if defaults have been saved successfully
+    const avatar = await updateProfile.current.avatar;
+    const banner = await updateProfile.current.banner;
 
-  await t.expect(await avatar.getAttribute('src')).contains('pos-logo.png');
-  await t.expect(await avatar.getAttribute('src')).contains('platform-os.com');
-  await t.expect(await banner.getAttribute('src')).contains('pos-logo.png');
-  await t.expect(await banner.getAttribute('src')).contains('platform-os.com');
-  await t.expect(updateProfile.input.bio.textContent).eql('Default bio');
-});
+    await t.expect(await avatar.getAttribute('src')).match(/https.*pos-logo.png$/);
+    await t.expect(await banner.getAttribute('src')).match(/https.*pos-logo.png$/);
+
+    await t.expect(updateProfile.input.bio.textContent).eql('Default bio');
+  });
