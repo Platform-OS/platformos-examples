@@ -11,6 +11,10 @@ pipeline {
     MPKIT_EMAIL = "darek+ci@near-me.com"
   }
 
+  parameters {
+    string(description: 'Instance URL. When empty then we deploy on staging and production', name: 'MP_URL', defaultValue: '')
+  }
+
   options {
     disableConcurrentBuilds()
     timeout(time: 10, unit: 'MINUTES')
@@ -18,6 +22,29 @@ pipeline {
   }
 
   stages {
+    stage('Deploy to URL') {
+      when {
+        expression { return !params.MP_URL.isEmpty() }
+      }
+      environment { MPKIT_URL = "${params.MP_URL}" }
+      agent { docker { image 'platformos/marketplace-kit:2.0' } }
+      steps {
+        sh 'echo "executing marketplace-kit deploy"'
+        sh 'marketplace-kit deploy'
+      }
+    }
+
+    stage('Test on URL') {
+      when {
+        expression { return !params.MP_URL.isEmpty() }
+      }
+      agent { docker { image "platformos/testcafe" } }
+      environment { MPKIT_URL = "${params.MP_URL}" }
+      steps {
+        sh 'npm run test-ci'
+      }
+    }
+
     stage('Deploy staging') {
       agent { docker { image 'platformos/marketplace-kit:2.0' } }
 
@@ -25,7 +52,10 @@ pipeline {
         MPKIT_URL = "${staging_url}"
       }
 
-      when { anyOf { branch 'master' } }
+      when {
+        expression { return params.MP_URL.isEmpty() }
+        anyOf { branch 'master' }
+      }
 
       steps {
         sh 'echo "executing marketplace-kit deploy"'
@@ -40,7 +70,10 @@ pipeline {
         MP_URL = "${staging_url}"
       }
 
-      when { anyOf { branch 'master' } }
+      when {
+        expression { return params.MP_URL.isEmpty() }
+        anyOf { branch 'master' }
+      }
 
       steps {
         sh 'npm run test-ci'
@@ -54,7 +87,10 @@ pipeline {
         MPKIT_URL = "${production_url}"
       }
 
-      when { anyOf { branch 'master' } }
+      when {
+        expression { return params.MP_URL.isEmpty() }
+        anyOf { branch 'master' }
+      }
 
       steps {
         sh 'marketplace-kit deploy'
