@@ -16,18 +16,18 @@ metadata:
       </div>
       <div class="card-body">
         {%- query_graph "modules/admincms/get_customizations", result_name: "c" -%}
-        <table class="table table-compact" data-result="customizations">
+        <table class="table table-sm" data-result="customizations">
           <thead>
             <tr>
-              <th> Name </th>
-              <th> Properties </th>
+              <th>Name</th>
+              <th>Properties</th>
             </tr>
           </thead>
           <tbody>
             {% for customization in c.customizations.results %}
               <tr>
-                <td> {{ customization.human_name }} </td>
-                <td> {{ customization.properties }} </td>
+                <td>{{ customization.human_name }}</td>
+                <td>{{ customization.properties }}</td>
               </tr>
             {% endfor %}
           </tbody>
@@ -38,23 +38,23 @@ metadata:
   <div class="col-xs-12 col-lg-6">
     <div class="card">
       <div class="card-header">
-        <h3> Pages </h3>
+        <h3>Pages</h3>
       </div>
       
       <div class="card-body">
         {%- query_graph "modules/admincms/get_pages", result_name: "c" -%}
-        <table class="table table-compact" data-result="pages">
+        <table class="table table-sm" data-result="pages">
           <thead>
             <tr>
-              <th> Slug </th>
-              <th> Format </th>
+              <th>Slug</th>
+              <th>Format</th>
             </tr>
           </thead>
           <tbody>
             {% for page in c.admin_pages.results %}
               <tr>
-                <td> {{ page.slug }} </td>
-                <td> {{ page.format }} </td>
+                <td>{{ page.slug }}</td>
+                <td>{{ page.format }}</td>
               </tr>
             {% endfor %}
           </tbody>

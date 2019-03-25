@@ -1,5 +1,5 @@
 query get_pages {
-  admin_pages(per_page: 10, filter: { format: { value: html } }) {
+  admin_pages(per_page: 15, filter: { format: { value: html } }) {
     results {
       format
       slug
