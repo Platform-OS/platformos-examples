@@ -1,5 +1,7 @@
 name: programmer
 properties:
+  - name: name
+    type: string
   - name: title
     type: string
   - name: email
@@ -8,3 +10,6 @@ properties:
     type: array
   - name: company_id
     type: string
+    belongs_to: modules/n_plus_one/company
+  - name: specialties
+    type: array

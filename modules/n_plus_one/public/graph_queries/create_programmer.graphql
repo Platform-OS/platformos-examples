@@ -1,4 +1,4 @@
-mutation addProgrammer($title: String, $email: String, $company_id: String) {
+mutation addProgrammer($title: String, $email: String, $company_id: String, $city: String, $geopoint: JSONPayload) {
   customization_create(
     form_configuration_name: "modules/n_plus_one/create_programmer"
     customization: {
@@ -7,6 +7,8 @@ mutation addProgrammer($title: String, $email: String, $company_id: String) {
         { name: "company_id", value: $company_id }
         { name: "title", value: $title }
         { name: "email", value: $email }
+        { name: "city", value: $city }
+        { name: "geopoint", value_json: $geopoint }
       ]
     }
   ) {

@@ -1,0 +1,21 @@
+query companies($ids: [ID!], $limit: Int = 200, $timezone: String, $city: String) {
+  companies: customizations(
+    per_page: $limit
+    name: "modules/n_plus_one/company"
+    ids:  $ids
+    properties: [
+      { name: "timezone", value: $timezone }
+      { name: "city",  value: $city }
+    ]
+  ) {
+    total_entries
+    results {
+      id
+      name: property(name: "name")
+      description: property(name: "description")
+      city: property(name: "city")
+      timezone: property(name: "timezone")
+      location: property_json(name: "location")
+    }
+  }
+}

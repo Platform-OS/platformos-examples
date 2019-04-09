@@ -21,9 +21,9 @@ Let's look at this simple snippet. There two suspecious parts:
 
   {% for programmer in g.programmers.results %}
     <tr>
-      <td> {{ programmer.properties.email }} </td>
-      <td> {{ programmer.properties.title }} </td>
-      <td>{{ programmer.company.properties.name }} </td>
+      <td> {{ programmer.email }} </td>
+      <td> {{ programmer.title }} </td>
+      <td>{{ programmer.company.name }} </td>
     </tr>
  {% endfor %}
 {% endraw %}
@@ -41,9 +41,9 @@ Using two simple tags `to_time` and then `time_diff` we can get to know some num
 
   {% for programmer in g.programmers.results %}
     <tr>
-      <td> {{ programmer.properties.email }} </td>
-      <td> {{ programmer.properties.title }} </td>
-      <td>{{ programmer.company.properties.name }} </td>
+      <td> {{ programmer.email }} </td>
+      <td> {{ programmer.title }} </td>
+      <td>{{ programmer.company.name }} </td>
     </tr>
  {% endfor %}
 

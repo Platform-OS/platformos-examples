@@ -1,8 +1,13 @@
 <ul class="list-inline inline">
-  <li class="list-inline-item btn btn-link"><a href="/companies/index">Only Companies</a></li> |
-  <li class="list-inline-item btn btn-link"><a href="/programmers/index">Only Programmers</a></li> |
-  <li class="list-inline-item btn btn-link"><a href="/programmers/with_companies_1">Programmers + Companies: Slow</a></li> |
-  <li class="list-inline-item btn btn-link"><a href="/programmers/with_companies_2">Programmers + Companies: Correct</a></li>
+  <li class="list-inline-item "><a class="btn btn-secondary" href="/companies/search">Search</a></li>
+  <li class="list-inline-item "><a class="btn btn-secondary" href="/companies/index">Only Companies</a></li>
+  <li class="list-inline-item "><a class="btn btn-secondary" href="/programmers/index">Only Programmers</a></li>
+  Programmers + Companies:
+  <li class="list-inline-item "><a class="btn btn-secondary" href="/programmers/with_companies_1">Slow</a></li>
+  <li class="list-inline-item "><a class="btn btn-secondary" href="/programmers/with_companies_2">Fast</a></li>
+  Companies + Programmers:
+  <li class="list-inline-item "><a class="btn btn-secondary" href="/companies/with_programmers_1">Slow</a></li>
+  <li class="list-inline-item "><a class="btn btn-secondary" href="/companies/with_programmers_2">Fast</a></li>
 </ul>
 
 <hr/>
@@ -13,12 +18,49 @@
     height: 250px;
     overflow: auto;
   }
+
+  .scroll-search tbody {
+    display: block;
+    height: 500px;
+    overflow: auto;
+  }
   thead, tbody tr {
     display: table;
     width: 100%;
     table-layout: fixed;/* even columns width , fix width of table too*/
   }
+
   thead {
     width: calc(100% - 1em + 2px);/* scrollbar is average 1em/16px width, remove it from thead width */
   }
+
+  .table td {
+    padding: 2px;
+    padding-left: 4px;
+  }
+
+  span.selected { font-weight: bold; border-bottom: solid 1px #999 }
+  .matched { border: solid 1px  #aaa; color: #000}
+  .missed { color: #aaa }
+  .choices__item { font-size: 30px }
+
+  .search-container {
+  }
+
+  .filter-box {
+  }
+
+  .contentContainer {
+    height: 100%;
+    display: flex;
+  }
+
+  .map-box {
+    width: 50%;
+  }
+
+  .results-box {
+    width: 50%;
+  }
+
 </style>

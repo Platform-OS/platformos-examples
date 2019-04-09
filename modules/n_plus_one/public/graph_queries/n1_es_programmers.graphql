@@ -1,0 +1,17 @@
+query programmers($company_id: String) {
+  programmers: customizations(
+    name: "modules/n_plus_one/programmer"
+    properties: [ {name: "company_id", value: $company_id}]
+    per_page: 200
+  ) {
+    total_entries
+    results {
+      id
+      email: property(name: "email")
+      title: property(name: "title")
+      name: property(name: "name")
+      company_id: property(name: "company_id")
+      specialties: property_array(name: "specialties")
+    }
+  }
+}

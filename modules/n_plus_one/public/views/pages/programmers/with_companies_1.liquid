@@ -8,7 +8,7 @@ metadata:
 
 {% assign _start = "now" | to_time %}
 
-{% graphql g = 'modules/n_plus_one/n1_programmers' %}
+{% graphql g = 'modules/n_plus_one/n1_es_programmers' %}
 
 {% assign _graph = "now" | to_time %}
 
@@ -16,25 +16,27 @@ metadata:
 
 <table class="table table-bordered table-striped scroll">
   <thead>
-    <tr><th colspan="5"> programmers [{{g.programmers.total_entries}}] </th></tr>
+    <tr><th colspan="5"> programmers [{{ g.programmers.results | size }}/{{ g.programmers.total_entries }}] </th> </tr>
     <tr>
       <th>id</th>
+      <th>name</th>
       <th>email</th>
       <th>title</th>
       <th>company_name</th>
-      <th>company_url</th>
+      <th>company_description</th>
     </tr>
   </thead>
   <tbody>
     {% for programmer in g.programmers.results %}
       <tr>
         <td> {{ programmer.id }} </td>
-        <td> {{ programmer.properties.email }} </td>
-        <td> {{ programmer.properties.title }} </td>
-        {% if programmer.properties.company_id %}
-          {% graphql company = "modules/n_plus_one/n1_company", id: programmer.properties.company_id %}
-          <td> {{ company.companies.results.first.properties.name }} </td>
-          <td> {{ company.companies.results.first.properties.url }} </td>
+        <td> {{ programmer.name }} </td>
+        <td> {{ programmer.email }} </td>
+        <td> {{ programmer.title }} </td>
+        {% if programmer.company_id %}
+          {% graphql company = "modules/n_plus_one/n1_company", id: programmer.company_id %}
+          <td> {{ programmer.company_id }} {{ company.companies.results.first.name }} </td>
+          <td> {{ company.companies.results.first.description }} </td>
         {% endif  %}
       </tr>
     {% endfor %}

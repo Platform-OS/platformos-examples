@@ -6,33 +6,43 @@ fields:
       validation: { presence: true }
     name:
       validation: { presence: true }
-    url:
+    city:
       validation: { presence: true }
-    number:
+    timezone:
       validation: { presence: true }
+    location:
+      validation: { geometry: true }
 redirect_to: /companies/index
 resource: modules/n_plus_one/company
 async_callback_actions: {}
 ---
-{% form -%}
 
+{{ form_builder.errors | json }}
+
+{% form %}
   <div class="row">
     <div class="col-xs-12 col-md-4">
       <div class="form-group">
         <label for="name">Name</label>
-        <input required="true" name="{{ form_builder.fields.properties.name.name }}" id="name" type="text" class="form-control" required>
+        <input required="true" value="{{ form_builder.fields.properties.name.value }}" name="{{ form_builder.fields.properties.name.name }}" id="name" type="text" class="form-control" required>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input required="true" name="{{ form_builder.fields.properties.email.name }}" id="email" type="email" class="form-control" required>
+        <input required="true" value="{{ form_builder.fields.properties.email.value }}" name="{{ form_builder.fields.properties.email.name }}" id="email" type="email" class="form-control" required>
       </div>
       <div class="form-group">
-        <label for="url">URL</label>
-        <input required="true" name="{{ form_builder.fields.properties.url.name }}" id="url" type="url" class="form-control" required>
+      <label for="timezone">Timezone</label>
+      <input required="true" value="{{ form_builder.fields.properties.timezone.value }}" name="{{ form_builder.fields.properties.timezone.name }}" id="timezone" type="text" class="form-control" required>
       </div>
       <div class="form-group">
-        <label for="number">Number</label>
-        <input required="true" name="{{ form_builder.fields.properties.number.name }}" id="number" type="number" class="form-control" required>
+      <label for="city">City</label>
+      <input required="true" value="{{ form_builder.fields.properties.city.value }}" name="{{ form_builder.fields.properties.city.name }}" id="city" type="text" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label for="location">Location</label>
+        <textarea required="true" name="{{ form_builder.fields.properties.location.name }}" id="location" class="form-control" cols="200" required>
+          {{- context.params.form.properties_attributes.location }}
+        </textarea>
       </div>
       <div class="form-group">
         <button class="btn btn-primary">Add company</button>

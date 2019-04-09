@@ -1,0 +1,67 @@
+<link rel="stylesheet" href="https://raw.githack.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css">
+<div id="map" class="map"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+<script src="https://raw.githack.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+<script>
+  var center = new ol.proj.fromLonLat( {{center | json }} )
+
+  var image = new ol.style.Circle({
+    radius: 5,
+    fill: new ol.style.Fill({
+      color: 'rgba(100,100,100,0.5)'
+    }),
+    stroke: new ol.style.Stroke({color: 'red', width: 0.5})
+  });
+
+  var styles = {
+    'Point': new ol.style.Style({
+      image: image
+    }),
+    'Circle': new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        color: '#000',
+        width: 1
+      }),
+      fill: new ol.style.Fill({
+        color: 'rgba(100,100,100,0.05)'
+      })
+    })
+  };
+
+  var styleFunction = function(feature) {
+    return styles[feature.getGeometry().getType()];
+  };
+
+  var vectorSource = new ol.source.Vector();
+  vectorSource.addFeature(new ol.Feature(new ol.geom.Circle(center, {{ distance }} * 1000)));
+
+  {% for point in points %}
+  var point = new ol.proj.fromLonLat( {{point | json }} )
+  vectorSource.addFeature(
+    new ol.Feature({geometry: new ol.geom.Point(point), name: "pinpoint"})
+  );
+  {% endfor %}
+
+  var vectorLayer = new ol.layer.Vector({
+    source: vectorSource,
+    style: styleFunction
+  });
+
+  /* zoom: (-Math.log({{ distance }})+10.3)*1.5 */
+
+  var map = new ol.Map({
+    layers: [
+      new ol.layer.Tile({
+        source: new ol.source.OSM()
+      }),
+      vectorLayer
+    ],
+    target: 'map',
+    view: new ol.View({
+      center: center,
+      zoom: (-Math.log({{ distance }})+10.3)*1.43
+    })
+  });
+</script>

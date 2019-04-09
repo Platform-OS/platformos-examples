@@ -1,0 +1,25 @@
+query companies($ids: [ID], $limit: Int = 500) {
+  companies: customizations(
+    name: "modules/n_plus_one/company"
+    per_page: $limit
+    ids: $ids
+    properties: [ { name: "name" exists: true } ]
+  ) {
+    total_entries
+    results {
+      id
+      type: name
+      name: property(name: "name")
+      description: property(name: "description")
+      city: property(name: "city")
+      timezone: property(name: "timezone")
+      #                        company.id == programmer.properties.company_id
+      programmers: models(join_on_property: "id" model_name: "modules/n_plus_one/programmer" foreign_property: "company_id") {
+        id
+        type: name
+        email: property(name: "email")
+        name: property(name: "name")
+      }
+    }
+  }
+}

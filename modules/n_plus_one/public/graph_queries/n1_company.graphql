@@ -2,10 +2,12 @@ query company($id: ID) {
   companies: customizations(name: "modules/n_plus_one/company", per_page: 200, id: $id) {
     total_entries
     results {
-      name
       id
+      type: name
       deleted_at
       properties
+      name: property(name: "name")
+      description: property(name: "description")
     }
   }
 }
