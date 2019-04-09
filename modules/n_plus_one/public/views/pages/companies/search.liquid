@@ -1,0 +1,98 @@
+---
+slug: companies/search
+layout_name: application
+metadata:
+  full_width: true
+enable_profiler: true
+---
+{% include 'modules/n_plus_one/menu' %}
+{% include 'modules/n_plus_one/data' %}
+
+<div style="width: 100%; height: 600px">
+  <div style="width: 50%; height: 100%; float: left; padding: 0 5px">
+    {% include 'modules/n_plus_one/map',
+      center: context.exports.map.selected.location.coordinates,
+      points: context.exports.map.points,
+      distance: context.exports.map.distance
+    %}
+  </div>
+  <div style="width: 50%; float: left">
+
+    <form action="/companies/search" name="search">
+      <table class="table table-bordered table-striped scroll">
+        <thead>
+          <tr>
+            <td>
+              <strong>{{context.exports.data.companies.total_entries }}</strong> companies within
+
+              <select name="distance">
+                {% for d in context.exports.filters.distances %}
+                  <option value="{{d}}" {%if context.exports.map.distance == d %}selected{%endif%}>{{d}}</option>
+                {% endfor %}
+              </select>
+              km from
+              <select name="q">
+                {% for location in  context.exports.filters.locations %}
+                  <optgroup label="{{location.key}}">
+                    {% for place in location.centric.buckets %}
+                      <option value="{{location.key}}-{{place.key}}" {%if context.exports.map.selected.state == location.key and context.exports.map.selected.city == place.key %}selected{%endif%}>{{place.key}} [{{place.doc_count}}]</option>
+                    {% endfor %}
+                  </optgroup>
+                {% endfor %}
+              </select>
+              <input type="submit" value="search" class="btn btn-primary" />
+              <hr />
+              <select name="specialties[]" multiple class="multiple">
+                {% for spec in  context.exports.filters.specialties %}
+                <option value="{{spec.key}}" {%if context.params.specialties contains spec.key %}selected{%endif%}>{{spec.key}} [{{spec.doc_count}}]</option>
+              {% endfor %}
+              </select>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for company in context.exports.data.companies.results %}
+            <tr>
+              <td>
+                <h4>{{company.id}}-{{company.name}}</h4>
+                <dl>
+                  <dt>Address:</dt>
+                  <dd>
+                    <button class="btn btn-link btn-default" type="submit" name="q" value="{{company.properties.state}}-{{company.properties.city}}">
+                      {{ company.properties.city }}, {{ company.properties.state }}
+                    </button>
+                  </dd>
+                  <dt>Description:</dt>
+                  <dd> {{ company.properties.description }}</dd>
+                </dl>
+              </td>
+              <td>
+                {% for p in company.programmers %}
+                  <span class="{% if p.properties.specialties contains context.params.specialties.first  %}selected{% endif %}">
+                    {{ p.properties.name }}</span>
+                  <small>{{p.properties.title}}</small>
+                  <br/>
+                  <small>
+                    {% for specialty in p.properties.specialties %}
+                      <span class="specialty {% if context.params.specialties contains specialty %}selected{% endif %}">
+                        {{ specialty }} &#183;
+                      </span>
+                    {% endfor %}
+                  </small>
+                  <br/>
+                  <br/>
+                {% endfor %}
+
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </form>
+  </div>
+</div>
+
+<script>
+  window.onload = function() {
+    const choices = new Choices('select.multiple', {placeholderValue: 'Select programmer specialties'});
+    };
+</script>

@@ -1,8 +1,13 @@
-query programmers {
-  programmers: customizations(name: "modules/n_plus_one/programmer", per_page: 200) {
+query programmers($company_id: String) {
+  programmers: customizations(
+    name: "modules/n_plus_one/programmer"
+    per_page: 200
+    properties: [ {name: "company_id", value: $company_id}]
+  ) {
     total_entries
     results {
       id
+      email: property(name: "email")
       properties
     }
   }

@@ -1,4 +1,4 @@
-mutation addCompany($name: String, $email: String, $url: String, $number: String) {
+mutation addCompany($name: String, $email: String, $url: String, $number: String, $geopoint: JSONPayload, $city: String) {
   customization_create(
     form_configuration_name: "modules/n_plus_one/create_company"
     customization: {
@@ -8,6 +8,8 @@ mutation addCompany($name: String, $email: String, $url: String, $number: String
         { name: "name", value: $name }
         { name: "email", value: $email }
         { name: "number", value: $number }
+        { name: "city", value: $city }
+        { name: "geopoint", value_json: $geopoint }
       ]
     }
   ) {

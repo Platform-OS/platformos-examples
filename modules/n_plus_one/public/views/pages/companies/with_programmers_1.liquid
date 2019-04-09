@@ -1,5 +1,5 @@
 ---
-slug: companies/index
+slug: companies/with_programmers_1
 layout_name: application
 metadata:
   full_width: true
@@ -10,7 +10,7 @@ metadata:
 
 {% assign _start = "now" | to_time %}
 
-{% graphql g = 'modules/n_plus_one/n1_companies' %}
+{% query_graph 'modules/n_plus_one/n1_companies' %}
 
 {% assign _graph = "now" | to_time %}
 
@@ -18,12 +18,12 @@ metadata:
 
 <table class="table table-bordered table-striped scroll">
   <thead>
-    <tr> <th colspan="4">companies [{{ g.companies.total_entries }}] </th> </tr>
+    <tr> <th colspan="4"> companies [{{ g.companies.total_entries }}] </th> </tr>
     <tr>
       <th>id</th>
       <th>name</th>
       <th>description</th>
-      <th>location</th>
+      <th>programmers</th>
     </tr>
   </thead>
   <tbody>
@@ -32,12 +32,10 @@ metadata:
         <td> {{ company.id }} </td>
         <td> {{ company.properties.name }} </td>
         <td> {{ company.properties.description }} </td>
-        <td>
-          {{ company.properties.city }} {{ company.properties.state }} <br/>
-          <small>
-            {{ company.properties.location }}
-          </small>
-        </td>
+
+        {% query_graph "modules/n_plus_one/n1_programmers", company_id: company.id, result_name: 'company_results' %}
+        <td> {{ company_results.programmers.results | map: "email" | join: "<br/>" }} </td>
+
       </tr>
     {% endfor %}
   </tbody>

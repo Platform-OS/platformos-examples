@@ -1,5 +1,17 @@
-query companies($ids: [ID], $limit: Int = 200) {
-  companies: customizations(name: "modules/n_plus_one/company", per_page: $limit, ids: $ids) {
+query companies($ids: [ID!], $limit: Int = 200, $state: String, $city: String) {
+  companies: models(
+    per_page: $limit
+    filter: {
+      name: {
+        value: "modules/n_plus_one/company"
+      }
+      id: { value_in: $ids }
+      properties: [
+        { name: "state", value: $state }
+        { name: "city",  value: $city }
+      ]
+    }
+  ) {
     total_entries
     results {
       properties

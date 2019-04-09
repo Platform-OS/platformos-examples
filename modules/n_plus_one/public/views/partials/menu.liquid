@@ -1,8 +1,11 @@
 <ul class="list-inline inline">
+  <li class="list-inline-item btn btn-link"><a href="/companies/search">Search</a></li> |
   <li class="list-inline-item btn btn-link"><a href="/companies/index">Only Companies</a></li> |
   <li class="list-inline-item btn btn-link"><a href="/programmers/index">Only Programmers</a></li> |
   <li class="list-inline-item btn btn-link"><a href="/programmers/with_companies_1">Programmers + Companies: Slow</a></li> |
-  <li class="list-inline-item btn btn-link"><a href="/programmers/with_companies_2">Programmers + Companies: Correct</a></li>
+  <li class="list-inline-item btn btn-link"><a href="/programmers/with_companies_2">Correct</a></li> |
+  <li class="list-inline-item btn btn-link"><a href="/companies/with_programmers_1">Companies + Programmers: Slow</a></li>  |
+  <li class="list-inline-item btn btn-link"><a href="/companies/with_programmers_2">Correct</a></li>
 </ul>
 
 <hr/>
@@ -10,7 +13,7 @@
 <style>
   .scroll tbody {
     display: block;
-    height: 250px;
+    height: 550px;
     overflow: auto;
   }
   thead, tbody tr {
@@ -21,4 +24,6 @@
   thead {
     width: calc(100% - 1em + 2px);/* scrollbar is average 1em/16px width, remove it from thead width */
   }
+
+  span.selected { font-weight: bold; border-bottom: solid 1px #999 }
 </style>
