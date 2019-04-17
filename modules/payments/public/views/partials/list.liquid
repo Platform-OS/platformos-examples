@@ -1,6 +1,6 @@
 <div class="mt-4">
   <h4>List of last five test payments:</h4>
-  {% query_graph "modules/payments/get_payments" %}
+  {% graphql g = "modules/payments/get_payments" %}
   <table>
       <tr>
         <th>ID</th>

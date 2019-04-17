@@ -27,7 +27,7 @@ default_payload: |-
     "with_charge": true
   }
 ---
-{%- query_graph 'modules/payments/get_payment_gateway', result_name: "p" -%}
+{%- graphql p = 'modules/payments/get_payment_gateway' -%}
 
 {% assign pub_key = p.payment_gateways.first.test_publishable_key %}
 {% assign amount = 5.99 %}
