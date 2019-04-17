@@ -18,7 +18,7 @@ test('There are no liquid errors on the page', async t => {
   await checkLiquidErrors({ t, Selector });
 });
 
-test('Direct upload using AJAX', async t => {
+test.skip('Direct upload using AJAX', async t => {
   await t.setFilesToUpload(updateProfile.input.ajax, [`${uploads}/hero.png`]);
 
   await t.expect(updateProfile.files.ajax.textContent).contains('hero.png');
