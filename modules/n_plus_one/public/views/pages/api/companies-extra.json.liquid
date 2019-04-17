@@ -8,7 +8,7 @@ authorization_policies:
 {% assign limit = context.params.ids | size  %}
 {% if limit == 0 %} {% assign limit = 50 %} {% endif %}
 
-{% query_graph 'modules/n_plus_one/rr_companies_extra', result_name: "g", ids: context.params.ids, limit: limit %}
+{% graphql g = 'modules/n_plus_one/rr_companies_extra', ids: context.params.ids, limit: limit %}
 {% assign _query = "now" | to_time  %}
 
 {% assign companies = g.companies.results %}

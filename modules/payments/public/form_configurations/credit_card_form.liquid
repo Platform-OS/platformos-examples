@@ -7,7 +7,7 @@ default_payload: "{}"
 callback_actions:
 ---
 
-{%- query_graph 'modules/payments/get_payment_gateway', result_name: 'p' -%}
+{%- graphql p = 'modules/payments/get_payment_gateway' -%}
 {% assign pub_key = p.payment_gateways.first.test_publishable_key %}
 {% assign pub_key = p.payment_gateways.first.current_mode_publishable_key %}
 {%- form -%}

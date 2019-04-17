@@ -15,7 +15,7 @@ metadata:
         <h3> Customizations </h3>
       </div>
       <div class="card-body">
-        {%- query_graph "modules/admincms/get_customizations", result_name: "c" -%}
+        {%- graphql c = "modules/admincms/get_customizations" -%}
         <table class="table table-sm" data-result="customizations">
           <thead>
             <tr>
@@ -42,7 +42,7 @@ metadata:
       </div>
       
       <div class="card-body">
-        {%- query_graph "modules/admincms/get_pages", result_name: "c" -%}
+        {%- graphql c = "modules/admincms/get_pages" -%}
         <table class="table table-sm" data-result="pages">
           <thead>
             <tr>

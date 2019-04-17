@@ -8,7 +8,7 @@ metadata:
 
 {% assign _start = "now" | to_time %}
 
-{% query_graph 'modules/n_plus_one/n1_programmers' %}
+{% graphql g = 'modules/n_plus_one/n1_programmers' %}
 
 {% assign _graph = "now" | to_time %}
 

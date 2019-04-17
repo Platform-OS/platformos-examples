@@ -11,6 +11,6 @@ properties:
 - name: banner
   type: photo
 - name: cv
-  type: custom_attachment
+  type: file
 - name: mobile_number
   type: string
