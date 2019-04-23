@@ -1,15 +1,16 @@
 ---
-name: sign_in_with_recaptcha
+name: sign_in_with_recaptcha_v3
 resource: Session
 spam_protection:
-  recaptcha_v2:
+  recaptcha_v3:
+    action: signup
+    minimum_score: 0.9
 fields:
   email:
   password:
-callback_actions: >
-  {% execute_query "modules/signin_recaptcha/clear_failed_signin_attempts" %}
 ---
 {% form html-class: 'w-50' %}
+  {% spam_protection "recaptcha_v3", action: "signup" %}
   <div class="form-group">
     <label for="form_email">Email</label>
     <input class="form-control" name="{{ form_builder.fields.email.name }}" value="{{ form_builder.fields.email.value}}" id="form_email" type="email">
@@ -25,7 +26,6 @@ callback_actions: >
 
   <div class="form-group">
     {{ form_builder.errors.base }}
-    {% spam_protection "recaptcha_v2" %}
   </div>
 
   <button class="btn btn-primary">Log In</button>
