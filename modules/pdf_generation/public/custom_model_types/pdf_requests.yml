@@ -1,0 +1,8 @@
+name: pdf_requests
+properties:
+  - name: file_name
+    type: string
+  - name: body
+    type: string
+  - name: pdf
+    type: file

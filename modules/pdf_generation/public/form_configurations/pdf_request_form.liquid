@@ -1,0 +1,56 @@
+---
+name: pdf_request_form
+resource: modules/pdf_generation/pdf_requests
+resource_owner: anyone
+redirect_to: /pdf-generation
+fields:
+  properties:
+    file_name:
+      validation:
+        presence: true
+    body:
+      validation:
+        presence: true
+flash_notice: PDF Request has been submitted. After a while you will be able to download PDF.
+async_callback_actions:
+  content: >
+    {% graphql pdf = 'modules/pdf_generation/generate_pdf', $customization_id: form.id, file_name: form.properties.file_name, body: form.properties.body %}
+---
+<h2>PDF Request</h2>
+
+{% form %}
+  <div class="row">
+    <div class="form-group col-6">
+  <div class="row">
+    <div class="form-group col-6">
+      <label for="name">Generated file name:</label>
+      <input name="{{ form_builder.fields.properties.file_name.name }}" value="{{ form_builder.fields.properties.file_name.value | default: 'attachment.pdf'}}" id="name" type="text" class="form-control">
+      {% if form_builder.errors['properties.file_name'] %}
+        <p>{{ form_builder.errors['properties.file_name'] }}</p>
+      {% endif %}
+    </div>
+  </div>
+      <label for="name">PDF Content (html):</label>
+      {% capture default_html %}
+<html lang="en">
+  <body>
+      <main>
+        <h1>Hello World</h1>
+        <p>This is generated pdf.</p>
+      </main>
+      <footer>
+        My footer
+      </footer>
+    </div>
+  </body>
+</html>
+      {% endcapture %}
+      <textarea rows="12" name="{{ form_builder.fields.properties.body.name }}" id="body" type="text" class="form-control">{{ form_builder.fields.properties.body.value | default: default_html | escape }}</textarea>
+      {% if form_builder.errors['properties.body'] %}
+        <p>{{ form_builder.errors['properties.body'] }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <button class="btn btn-primary btn-lg">Save</button>
+{% endform %}
