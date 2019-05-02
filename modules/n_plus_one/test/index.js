@@ -6,23 +6,6 @@ const page = new PageObject();
 
 fixture('n+1 - related models load much faster').page(process.env.MP_URL);
 
-test.before(async t => {
-  await t.navigateTo('/companies/seed');
-  await t.navigateTo('/companies/index');
-})('Measuring execution time of liquid code fragments (time_diff)', async t => {
-  await t.click(page.link.programmersCompaniesSlow);
-  let msSlow = await page.data.result.innerText;
-
-  await t.click(page.link.programmersCompaniesCorrect);
-  let msCorrect = await page.data.result.innerText;
-
-  /*
-    I know i know, this is not performance tetsing,
-    but maybe it will detect some tragic performance regression one day. 
-  */
-  await t.expect(parseInt(msCorrect)).lt(parseInt(msSlow * 2));
-});
-
 test('There are no liquid errors on the page', async t => {
   await t.navigateTo('/companies/index');
   await checkLiquidErrors({ t, Selector });
