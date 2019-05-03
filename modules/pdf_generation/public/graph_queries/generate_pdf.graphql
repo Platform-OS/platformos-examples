@@ -1,0 +1,16 @@
+mutation generate_pdf($customization_id: ID!, $body: String!, $file_name: String!) {
+  custom_attachment_create(
+    custom_attachment: {
+      owner_id: $customization_id
+      owner_type: "Customization"
+      custom_attribute_name: "pdf"
+      generate_file: {
+        strategy: pdf
+        file_name: $file_name
+        body: $body
+      }
+    }
+  ) {
+    id
+  }
+}

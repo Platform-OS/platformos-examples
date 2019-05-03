@@ -1,0 +1,10 @@
+---
+slug: pdf-generation
+metadata:
+  description: Example of generating PDF from html
+---
+{%- graphql g = "modules/pdf_generation/get_pdf_requests" -%}
+
+<h1>PDF Requests</h1>
+
+{% include 'modules/pdf_generation/list', pdf_requests: g.models.results %}

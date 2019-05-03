@@ -1,0 +1,24 @@
+<h2>Recent pdf_requests</h2>
+
+{% if pdf_requests == blank %}
+  <p>There are no pdf_requests yet. Use the form below to add some.</p>
+{% else %}
+  <table class="table table-striped">
+    <tr>
+      <th>ID</th>
+      <th>Actions</th>
+      <th></th>
+    </tr>
+    {% for pdf_request in pdf_requests %}
+    <tr>
+      <td>{{ pdf_request.id }}</td>
+      <td>{% if pdf_request.pdf.url == blank %}PDF is being generated, please reload the page{% else %}<a href="{{ pdf_request.pdf.url }}" download class="btn btn-link">PDF</a>{% endif %}</td>
+      <td>{% include_form "modules/pdf_generation/delete_pdf_request_form", id: pdf_request.id %}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endif %}
+
+<hr class="hr">
+
+{% include_form 'modules/pdf_generation/pdf_request_form' %}

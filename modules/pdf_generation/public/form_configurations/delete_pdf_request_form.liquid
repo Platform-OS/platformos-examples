@@ -1,0 +1,10 @@
+---
+name: delete_pdf_request_form
+resource: modules/pdf_generation/pdf_requests
+resource_owner: anyone
+redirect_to: /pdf-generation
+flash_notice: PDF Request was successfully deleted.
+---
+{% form method: "delete" %}
+  <button class="btn btn-link">Delete</button>
+{% endform %}
