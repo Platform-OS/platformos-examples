@@ -1,6 +1,6 @@
 {% log 'data load start' %}
 
-{% assign distance = context.params.distance | default: 1000 | plus: 0 %}
+{% assign distance = context.params.distance | default: 100 | plus: 0 %}
 
 {% assign q = context.params.q | split: "-" %}
 {% graphql _selected =  'modules/n_plus_one/n1_companies', city: q[1], state: q[0], limit: 1 %}
@@ -19,5 +19,8 @@
 {% assign locations = g.locations.aggs.raw.geo.location.buckets %}
 {% assign specialties = g.specialties.aggs.raw.spec.spec.buckets %}
 {% export distances, locations, specialties, namespace: 'filters' %}
+
+{% assign with_programmers = false %}
+{% export map, with_programmers, namespace: features %}
 
 {% log 'data load end' %}

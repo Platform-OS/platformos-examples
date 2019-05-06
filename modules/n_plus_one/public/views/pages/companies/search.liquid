@@ -19,7 +19,7 @@ enable_profiler: true
   <div style="width: 50%; float: left">
 
     <form action="/companies/search" name="search">
-      <table class="table table-bordered table-striped scroll">
+      <table class="table table-bordered table-striped scroll-search">
         <thead>
           <tr>
             <td>
@@ -42,11 +42,13 @@ enable_profiler: true
               </select>
               <input type="submit" value="search" class="btn btn-primary" />
               <hr />
-              <select name="specialties[]" multiple class="multiple">
-                {% for spec in  context.exports.filters.specialties %}
-                <option value="{{spec.key}}" {%if context.params.specialties contains spec.key %}selected{%endif%}>{{spec.key}} [{{spec.doc_count}}]</option>
-              {% endfor %}
-              </select>
+              {% if context.exports.features.with_programmers %}
+                <select name="specialties[]" multiple class="multiple">
+                  {% for spec in  context.exports.filters.specialties %}
+                    <option value="{{spec.key}}" {%if context.params.specialties contains spec.key %}selected{%endif%}>{{spec.key}} [{{spec.doc_count}}]</option>
+                  {% endfor %}
+                </select>
+              {% endif %}
             </td>
           </tr>
         </thead>
@@ -66,24 +68,27 @@ enable_profiler: true
                   <dd> {{ company.properties.description }}</dd>
                 </dl>
               </td>
-              <td>
-                {% for p in company.programmers %}
-                  <span class="{% if p.properties.specialties contains context.params.specialties.first  %}selected{% endif %}">
-                    {{ p.properties.name }}</span>
-                  <small>{{p.properties.title}}</small>
-                  <br/>
-                  <small>
-                    {% for specialty in p.properties.specialties %}
-                      <span class="specialty {% if context.params.specialties contains specialty %}selected{% endif %}">
-                        {{ specialty }} &#183;
-                      </span>
+                {% if context.exports.features.with_programmers %}
+                  <td>
+                    {% for p in company.programmers %}
+                      <span class="{% if p.properties.specialties contains context.params.specialties.first  %}selected{% endif %}">
+                        {{ p.properties.name }}</span>
+                      <small>{{p.properties.title}}</small>
+                      <br/>
+                      <small>
+                        {% for specialty in p.properties.specialties %}
+                          <span class="specialty {% if context.params.specialties contains specialty %}selected{% endif %}">
+                            {{ specialty }} &#183;
+                          </span>
+                        {% endfor %}
+                      </small>
+                      <br/>
+                      <br/>
                     {% endfor %}
-                  </small>
-                  <br/>
-                  <br/>
-                {% endfor %}
-
+                  </td>
+                {% endif %}
             </tr>
+
           {% endfor %}
         </tbody>
       </table>

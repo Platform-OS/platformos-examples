@@ -1,0 +1,134 @@
+---
+slug: companies/how-to
+converter: markdown
+---
+
+# how to find all models in a max distance of x km from lat ln?
+
+## 1. prepare custom model type definition
+
+`custom_model_types/company.yaml`
+
+```yaml
+name: company
+properties:
+  - name: name
+    type: string
+  - name: state
+    type: string
+  - name: city
+    type: string
+  - name: location
+    type: geojson
+```
+
+#### geojson field type
+*geojson* type is a JSON format for encoding a variety of geographic data structures.
+The following geometry types are supported:
+- Point [long, lan]
+```
+    {
+      "type": "Point",
+      "coordinates": [100.0, 0.0]
+    }
+```
+- LineString [[long, lan], [long, lan]]
+- Polygon [[[long, lan], [long, lan]]]
+```
+    {
+      "type": "Polygon",
+      "coordinates": [[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]]]
+    }
+```
+- MultiPoint [[long, lan], [long, lan]]
+
+More information: https://tools.ietf.org/html/rfc7946
+
+## 2. import some data using graphql mutation
+
+`createCompany.graphql`
+```
+mutation createCompany($location: JSONPayload, $city: String, $state: String, $name: String){
+  customization_create(
+    customization: {
+      custom_model_type_name: "company"
+      properties: [
+        { name: "name" value: $name }
+        { name: "city" value: $city }
+        { name: "state" value: $state }
+        { name: "location" value_json: $location }
+      ]
+    }
+  ) {
+    id
+  }
+}
+```
+`payload`
+```
+{
+  "name": "Company Name",
+    "city": "Boston",
+    "state": "State",
+    "location": {
+      "type": "Point",
+      "coordinates": [-111.89903, 33.50921]
+  }
+}
+```
+
+## 3. prepare graphql query
+
+`graph_queries/search.graphql`
+
+```graphql
+query search($point: GeometryJSON, $distance: Int) {
+  companies: models(
+    per_page: 100
+    filter: {
+      properties: [
+        { name: "location", distance_sphere: {center: $point, distance_in_km: $distance}}
+      ]
+    }) {
+    results {
+      properties
+    }
+  }
+}
+
+```
+
+## 4. wrap it up on liquid page
+
+`views/pages/search.liquid`
+```
+---
+slug: search
+---
+{%- raw %}
+{% parse_json location %}
+{
+  "type": "Point",
+  "coordinates": [
+    -111.89903,
+    33.50921
+  ]
+}
+{% endparse_json %}
+{% assign distance = context.params.distance | default: 100 | plus: 0 %}
+
+{% graphql g = 'search', point: location, distance: distance %}
+
+{% for company in g.companies.results %}
+[...]
+{% endfor %}
+
+{% endraw %}
+```
+
+#### working advanced example can be found:
+- https://alpha.staging.oregon.platform-os.com/companies/search
+#### code samples
+- https://github.com/mdyd-dev/marketplace-nearme-example/blob/model-has-many-models/modules/n_plus_one/public/views/pages/companies/search.liquid
+- https://github.com/mdyd-dev/marketplace-nearme-example/blob/model-has-many-models/modules/n_plus_one/public/custom_model_types/company.yml
+- https://github.com/mdyd-dev/marketplace-nearme-example/blob/model-has-many-models/modules/n_plus_one/public/graph_queries/search.graphql
