@@ -3,7 +3,7 @@
 {% assign distance = context.params.distance | default: 100 | plus: 0 %}
 
 {% assign q = context.params.q | split: "-" %}
-{% graphql _selected =  'modules/n_plus_one/n1_companies', city: q[1], state: q[0], limit: 1 %}
+{% graphql _selected =  'modules/n_plus_one/n1_companies', city: q[1], timezone: q[0], limit: 1 %}
 {% assign selected = _selected.companies.results[0].properties %}
 
 {% graphql g = 'modules/n_plus_one/search', point: selected.location, distance: distance, specialties: context.params.specialties %}

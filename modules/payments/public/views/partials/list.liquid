@@ -4,14 +4,14 @@
   <table>
       <tr>
         <th>ID</th>
-        <th>State</th>
+        <th>Timezone</th>
         <th>Payer</th>
         <th>Amount</th>
       </tr>
     {% for payment in g.payments.results  %}
       <tr>
         <td>{{ payment.id }}</td>
-        <td>{{ payment.state }}</td>
+        <td>{{ payment.timezone }}</td>
         <td>{{ payment.payer.name }}</td>
         <td>{{ payment.total_amount_cents | pricify_cents }}</td>
       </tr>

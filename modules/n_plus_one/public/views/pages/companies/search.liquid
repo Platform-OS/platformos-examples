@@ -35,7 +35,7 @@ enable_profiler: true
                 {% for location in  context.exports.filters.locations %}
                   <optgroup label="{{location.key}}">
                     {% for place in location.centric.buckets %}
-                      <option value="{{location.key}}-{{place.key}}" {%if context.exports.map.selected.state == location.key and context.exports.map.selected.city == place.key %}selected{%endif%}>{{place.key}} [{{place.doc_count}}]</option>
+                      <option value="{{location.key}}-{{place.key}}" {%if context.exports.map.selected.timezone == location.key and context.exports.map.selected.city == place.key %}selected{%endif%}>{{place.key}} [{{place.doc_count}}]</option>
                     {% endfor %}
                   </optgroup>
                 {% endfor %}
@@ -60,8 +60,8 @@ enable_profiler: true
                 <dl>
                   <dt>Address:</dt>
                   <dd>
-                    <button class="btn btn-link btn-default" type="submit" name="q" value="{{company.properties.state}}-{{company.properties.city}}">
-                      {{ company.properties.city }}, {{ company.properties.state }}
+                    <button class="btn btn-link btn-default" type="submit" name="q" value="{{company.properties.timezone}}-{{company.properties.city}}">
+                      {{ company.properties.city }}, {{ company.properties.timezone }}
                     </button>
                   </dd>
                   <dt>Description:</dt>

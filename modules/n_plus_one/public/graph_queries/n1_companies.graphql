@@ -1,4 +1,4 @@
-query companies($ids: [ID!], $limit: Int = 200, $state: String, $city: String) {
+query companies($ids: [ID!], $limit: Int = 200, $timezone: String, $city: String) {
   companies: models(
     per_page: $limit
     filter: {
@@ -7,7 +7,7 @@ query companies($ids: [ID!], $limit: Int = 200, $state: String, $city: String) {
       }
       id: { value_in: $ids }
       properties: [
-        { name: "state", value: $state }
+        { name: "timezone", value: $timezone }
         { name: "city",  value: $city }
       ]
     }

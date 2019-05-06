@@ -1,5 +1,5 @@
 query search($company_id: String, $point: GeometryJSON, $distance: Int) {
-  locations: customizations(name: "modules/n_plus_one/company", aggregations: {name: "geo", fields: [{name: "location", field_name: "properties.state", aggregations: [{name: "centric", type: terms, field_name: "properties.city"}]}]}) {
+  locations: customizations(name: "modules/n_plus_one/company", aggregations: {name: "geo", fields: [{name: "location", field_name: "properties.timezone", aggregations: [{name: "centric", type: terms, field_name: "properties.city"}]}]}) {
     aggs: aggregations {
       raw
     }

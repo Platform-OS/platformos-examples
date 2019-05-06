@@ -1,0 +1,168 @@
+---
+slug: docs-draft/aggregations
+converter: markdown
+---
+
+<style> .well { padding: 20px 30px; background-color: #eee } </style>
+
+# aggregations
+
+platformOS graphql aggregations are built upon Elasticsearch Aggregations Framework.
+
+<div class="well">
+
+**The aggregations framework** helps provide aggregated data based on a search query. It is based on simple building blocks called aggregations, that can be composed in order to build complex summaries of the data.
+
+  An aggregation can be seen as a unit-of-work that builds analytic information over a set of documents. The context of the execution defines what this document set is (e.g. a top-level aggregation executes within the context of the executed query/filters of the search request).
+
+  There are many different types of aggregations, each with its own purpose and output. To better understand these types, it is often easier to break them into four main families:
+
+- **Bucketing**
+  A family of aggregations that build buckets, where each bucket is associated with a key and a document criterion. When the aggregation is executed, all the buckets criteria are evaluated on every document in the context and when a criterion matches, the document is considered to "fall in" the relevant bucket. By the end of the aggregation process, we’ll end up with a list of buckets - each one with a set of documents that "belong" to it.
+- **Metric**
+  Aggregations that keep track and compute metrics over a set of documents.
+
+**Aggregations can be nested**
+Bucketing aggregations can have sub-aggregations (bucketing or metric). The sub-aggregations will be computed for the buckets which their parent aggregation generates.
+</div>
+
+
+## examples
+
+examples are based on data from https://alpha.staging.oregon.platform-os.com/companies/index
+#### code samples:
+- [schema](https://github.com/mdyd-dev/marketplace-nearme-example/tree/model-has-many-models/modules/n_plus_one/public/custom_model_types)
+- downloaded [data](https://raw.githubusercontent.com/mdyd-dev/marketplace-nearme-example/model-has-many-models/modules/n_plus_one/public/views/partials/data/models.json) might be imported with `marketplace-kit data import -p models.json`
+
+#### find 5 most popular company ids within programmers
+- filter programmers only
+- group records by company_id
+- sort by document count descending
+- limit results to 5
+
+```
+{
+  customizations(
+    name: "modules/n_plus_one/programmer"
+    aggregations: {
+      name: "general" # top level aggregations name, could be anything
+      fields: [
+        {
+          name: "by_company"  # aggregation name, anything
+          field_name: "properties.company_id" # field name you want to group by on
+          size: 5 # size of the results bucket
+          sort: {
+            name: _count # sort type
+            order: desc
+          }
+        }
+      ]
+    }
+  ){
+    aggregations { raw }
+  }
+}
+```
+
+result
+
+```
+{
+  "data": {
+    "customizations": {
+      "aggregations": {
+        "raw": {
+          "top": {
+            "doc_count": 1000,
+            "by_company": {
+              "doc_count_error_upper_bound": 0,
+              "sum_other_doc_count": 968,
+              "buckets": [
+                {
+                  "key": "28762",
+                  "doc_count": 7
+                },
+                {
+                  "key": "29073",
+                  "doc_count": 7
+                },
+                {
+                  "key": "28820",
+                  "doc_count": 6
+                },
+                {
+                  "key": "28837",
+                  "doc_count": 6
+                },
+                {
+                  "key": "28983",
+                  "doc_count": 6
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+#### group companies by timezone and then by their city [get only 5 most popular cities]
+
+```
+{
+  customizations(
+    name: "modules/n_plus_one/company"
+    aggregations: {
+      name: "general"
+      fields: [
+        {
+          name: "by_tz" field_name: "properties.timezone" sort: { name: _term order: asc }
+          aggregations: [
+            { name: "by_city" field_name: "properties.city" size: 5 sort: { name: _count order: desc }}
+          ]
+        }
+      ]
+    }
+  ){
+    aggregations { raw }
+  }
+}
+```
+results
+
+```
+[...]
+ {
+  "key": "America/Chicago",
+  "doc_count": 140,
+  "by_city": {
+    "doc_count_error_upper_bound": 0,
+    "sum_other_doc_count": 109,
+    "buckets": [
+      {
+        "key": "Evergreen Park",
+        "doc_count": 8
+      },
+      {
+        "key": "Bourbonnais",
+        "doc_count": 6
+      },
+      {
+        "key": "Crystal Lake",
+        "doc_count": 6
+      },
+      {
+        "key": "New City",
+        "doc_count": 6
+      },
+      {
+        "key": "Greenville",
+        "doc_count": 5
+      }
+    ]
+  }
+}
+[...]
+```

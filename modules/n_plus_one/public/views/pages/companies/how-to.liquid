@@ -48,14 +48,14 @@ More information: https://tools.ietf.org/html/rfc7946
 
 `createCompany.graphql`
 ```
-mutation createCompany($location: JSONPayload, $city: String, $state: String, $name: String){
+mutation createCompany($location: JSONPayload, $city: String, $timezone: String, $name: String){
   customization_create(
     customization: {
       custom_model_type_name: "company"
       properties: [
         { name: "name" value: $name }
         { name: "city" value: $city }
-        { name: "state" value: $state }
+        { name: "timezone" value: $timezone }
         { name: "location" value_json: $location }
       ]
     }
@@ -69,7 +69,7 @@ mutation createCompany($location: JSONPayload, $city: String, $state: String, $n
 {
   "name": "Company Name",
     "city": "Boston",
-    "state": "State",
+    "timezone": "Timezone",
     "location": {
       "type": "Point",
       "coordinates": [-111.89903, 33.50921]
@@ -97,6 +97,48 @@ query search($point: GeometryJSON, $distance: Int) {
 }
 
 ```
+
+## form configuration
+
+alternatively record can be created also with form configuration
+
+```
+---
+name: create_company
+fields:
+  properties:
+    name:
+      validation: { presence: true }
+    city:
+      validation: { presence: true }
+    timezone:
+      validation: { presence: true }
+    location:
+      validation: { geometry: true }
+```
+
+snippet of html field for geometry json - it's just textarea
+
+```
+{% raw %}
+<div class="form-group">
+  <label for="location">Location</label>
+  <textarea required="true" id="location" type="text" class="form-control" name="{{ form_builder.fields.properties.location.name }}">
+      {{- context.params.form.properties_attributes.location }}
+  </textarea>
+</div>
+{% endraw %}
+```
+
+#### note
+this example is for presentation only - in real scenario noone would provide a raw JSON as a location address - there will be a JavaScript function using external geolocation services for getting coordinates and then building required GeometryJSON structure.
+
+#### example
+https://alpha.staging.oregon.platform-os.com/companies/new
+
+#### code samples
+https://github.com/mdyd-dev/marketplace-nearme-example/blob/model-has-many-models/modules/n_plus_one/public/form_configurations/create_company.liquid
+https://github.com/mdyd-dev/marketplace-nearme-example/blob/model-has-many-models/modules/n_plus_one/public/views/pages/companies/new.liquid
 
 ## 4. wrap it up on liquid page
 
@@ -132,3 +174,8 @@ slug: search
 - https://github.com/mdyd-dev/marketplace-nearme-example/blob/model-has-many-models/modules/n_plus_one/public/views/pages/companies/search.liquid
 - https://github.com/mdyd-dev/marketplace-nearme-example/blob/model-has-many-models/modules/n_plus_one/public/custom_model_types/company.yml
 - https://github.com/mdyd-dev/marketplace-nearme-example/blob/model-has-many-models/modules/n_plus_one/public/graph_queries/search.graphql
+
+
+<style>
+  pre { background-color: #fafafa; border: solid 1px #eee; padding: 10px; }
+</style>

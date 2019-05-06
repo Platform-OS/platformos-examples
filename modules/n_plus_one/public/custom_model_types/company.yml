@@ -8,7 +8,7 @@ properties:
     type: string
   - name: number
     type: integer
-  - name: state
+  - name: timezone
     type: string
   - name: city
     type: string

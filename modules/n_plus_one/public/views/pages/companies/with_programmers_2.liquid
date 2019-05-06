@@ -33,7 +33,7 @@ metadata:
         <td>
           {{ company.properties.name }}
           <br />
-          <small>{{ company.properties.city }} {{ company.properties.state }}</small>
+          <small>{{ company.properties.city }} {{ company.properties.timezone }}</small>
         </td>
         <td> {{ company.properties.description }} </td>
         <td> {{ company.programmers | map: "email" | join: "<br/>" }} </td>

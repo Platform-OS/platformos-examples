@@ -33,9 +33,11 @@ metadata:
         <td> {{ company.properties.name }} </td>
         <td> {{ company.properties.description }} </td>
         <td>
-          {{ company.properties.city }} {{ company.properties.state }} <br/>
+          {{ company.properties.city }} {{ company.properties.timezone }} <br/>
           <small>
-            {{ company.properties.location }}
+            {% if company.properties.location %}
+              {{ company.properties.location | json }}
+            {% endif %}
           </small>
         </td>
       </tr>
