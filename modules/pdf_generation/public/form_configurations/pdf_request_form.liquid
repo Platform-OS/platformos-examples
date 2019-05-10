@@ -31,7 +31,7 @@ email_notifications:
       <div class="row">
         <div class="form-group col-6">
           <label for="name">Email to send pdf:</label>
-          <input name="{{ form_builder.fields.properties.email.name }}" value="{{ form_builder.fields.properties.email.value | default: context.current_user.email}}" id="email" type="text" class="form-control">
+          <input name="{{ form_builder.fields.properties.email.name }}" value="{{ form_builder.fields.properties.email.value | default: context.current_user.email | default: 'email@example.com' }}" id="email" type="text" class="form-control">
           {% if form_builder.errors['properties.email'] %}
             <p>{{ form_builder.errors['properties.email'] }}</p>
           {% endif %}
