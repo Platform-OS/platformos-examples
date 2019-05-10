@@ -5,6 +5,10 @@ resource_owner: anyone
 redirect_to: /pdf-generation
 fields:
   properties:
+    email:
+      validation:
+        email: true
+        presence: true
     file_name:
       validation:
         presence: true
@@ -24,15 +28,24 @@ email_notifications:
 {% form %}
   <div class="row">
     <div class="form-group col-6">
-  <div class="row">
-    <div class="form-group col-6">
-      <label for="name">Generated file name:</label>
-      <input name="{{ form_builder.fields.properties.file_name.name }}" value="{{ form_builder.fields.properties.file_name.value | default: 'attachment.pdf'}}" id="name" type="text" class="form-control">
-      {% if form_builder.errors['properties.file_name'] %}
-        <p>{{ form_builder.errors['properties.file_name'] }}</p>
-      {% endif %}
-    </div>
-  </div>
+      <div class="row">
+        <div class="form-group col-6">
+          <label for="name">Email to send pdf:</label>
+          <input name="{{ form_builder.fields.properties.email.name }}" value="{{ form_builder.fields.properties.email.value | default: context.current_user.email}}" id="email" type="text" class="form-control">
+          {% if form_builder.errors['properties.email'] %}
+            <p>{{ form_builder.errors['properties.email'] }}</p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-6">
+          <label for="name">Generated file name:</label>
+          <input name="{{ form_builder.fields.properties.file_name.name }}" value="{{ form_builder.fields.properties.file_name.value | default: 'attachment.pdf'}}" id="name" type="text" class="form-control">
+          {% if form_builder.errors['properties.file_name'] %}
+            <p>{{ form_builder.errors['properties.file_name'] }}</p>
+          {% endif %}
+        </div>
+      </div>
       <label for="name">PDF Content (html):</label>
       {% capture default_html %}
 <html lang="en">

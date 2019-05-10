@@ -1,5 +1,7 @@
 name: pdf_requests
 properties:
+  - name: email
+    type: string
   - name: file_name
     type: string
   - name: body
