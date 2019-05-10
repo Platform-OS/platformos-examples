@@ -1,0 +1,23 @@
+---
+name: email_with_pdf
+to: 'john@example.com'
+delay: 0.1
+enabled: true
+trigger_condition: true
+from: 'PlatformOS Example Project <no-reply@platform-os.com>'
+reply_to: no-reply@example.com
+cc:
+bcc:
+subject: 'Here is your pdf!'
+layout_path: mailer
+attachments: >
+  {% graphql pdf = 'modules/pdf_generation/get_pdf_requests', id: form.id %}
+  {
+    "report.pdf": {
+      "url": "{{ pdf.models.results.first.pdf.url }}"
+    }
+  }
+---
+<h1>Hi!</h1>
+
+<p>The file should be attached :)</p>
