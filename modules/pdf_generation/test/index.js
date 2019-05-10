@@ -13,7 +13,7 @@ test('There are no liquid errors on the page', async t => {
 });
 
 test('Create PDF file', async t => {
-  await t.click(pdfGeneration.button.save).wait(10000); //waiting for generating pdf file;
+  await t.click(pdfGeneration.button.save).wait(11000); //waiting for generating pdf file;
   await t.eval(() => location.reload(true));
   await t
     .expect(await pdfGeneration.button.PDF.getAttribute('href'))
