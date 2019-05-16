@@ -6,11 +6,11 @@ metadata:
   docs_slug: tutorials/translations/multilanguage-pages
 ---
 
-<h2 data-result="1">{{ 'general.greeting' | t }}</h2>
+<h2 data-result="1">{{ 'modules/multilanguage.general.greeting' | t }}</h2>
 
 <h3>Cars list:</h3>
 
-{% assign cars = 'general.cars' | t | to_hash %}
+{% assign cars = 'modules/multilanguage.general.cars' | t | to_hash %}
 
 <div data-result="2">
   <ul>
@@ -24,7 +24,7 @@ metadata:
 {% assign url = context.params.url | default: "https://example.com" %}
 
 <div data-result="3">
-  <p>{{ 'personal.hello' | t: name: my_name, url: url }}</p>
+  <p>{{ 'modules/multilanguage.personal.hello' | t: name: my_name, url: url }}</p>
 </div>
 
 <hr class="hr">
