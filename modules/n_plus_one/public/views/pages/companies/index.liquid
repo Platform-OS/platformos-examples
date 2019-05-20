@@ -31,7 +31,12 @@ metadata:
       <tr>
         <td> {{ company.id }} </td>
         <td> {{ company.properties.name }} </td>
-        <td> {{ company.properties.description }} </td>
+        <td>
+          {{ company.properties.description }}
+          <hr />
+          <strong>product list</strong><br>
+          {{ company.products | map: 'properties' }}
+        </td>
         <td>
           {{ company.properties.city }} {{ company.properties.timezone }} <br/>
           <small>

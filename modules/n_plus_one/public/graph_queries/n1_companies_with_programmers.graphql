@@ -1,4 +1,4 @@
-query companies($ids: [ID], $limit: Int = 200) {
+query companies($ids: [ID], $limit: Int = 500) {
   companies: customizations(name: "modules/n_plus_one/company", per_page: $limit, ids: $ids) {
     total_entries
     results {
@@ -11,6 +11,7 @@ query companies($ids: [ID], $limit: Int = 200) {
         id
         name
         email: property(name: "email")
+        properties
       }
     }
   }

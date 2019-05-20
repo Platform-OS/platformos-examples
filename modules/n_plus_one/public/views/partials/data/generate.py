@@ -10,8 +10,20 @@ titles = json.loads(open("./titles.liquid","r").read())
 
 COMPANY_NUMBER = 500;
 PROGRAMMER_NUMBER = 1000;
+PRODUCT_NUMBER = 2000;
 
 models = []
+
+def generate_products(size):
+  for id in range(size):
+    models.append({
+      "type_name": "modules/n_plus_one/product",
+      "properties": {
+        "name": fake.name(),
+        "tags": sample(specialties, randint(3,7)),
+        "company_id": randint(1, COMPANY_NUMBER-1)
+      }})
+
 
 def generate_programmers(size):
   for id in range(size):
@@ -47,5 +59,6 @@ def generate_companies(size):
 
 generate_companies(COMPANY_NUMBER)
 generate_programmers(PROGRAMMER_NUMBER)
+generate_products(PROGRAMMER_NUMBER)
 
-print json.dumps({ "models": models, "users": [], "transactables": [] })
+print(json.dumps({ "models": models, "users": [], "transactables": [] }))

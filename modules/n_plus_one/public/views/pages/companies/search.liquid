@@ -9,14 +9,14 @@ enable_profiler: true
 {% include 'modules/n_plus_one/data' %}
 
 <div style="width: 100%; height: 600px">
-  <div style="width: 50%; height: 100%; float: left; padding: 0 5px">
+  <div style="width: 30%; height: 100%; float: left; padding: 0 5px">
     {% include 'modules/n_plus_one/map',
       center: context.exports.map.selected.location.coordinates,
       points: context.exports.map.points,
       distance: context.exports.map.distance
     %}
   </div>
-  <div style="width: 50%; float: left">
+  <div style="width: 70%; float: left">
 
     <form action="/companies/search" name="search">
       <table class="table table-bordered table-striped scroll-search">
@@ -31,8 +31,8 @@ enable_profiler: true
                 {% endfor %}
               </select>
               km from
-              <select name="q">
-                {% for location in  context.exports.filters.locations %}
+              <select name="q" class="multiple">
+                {% for location in context.exports.filters.locations %}
                   <optgroup label="{{location.key}}">
                     {% for place in location.centric.buckets %}
                       <option value="{{location.key}}-{{place.key}}" {%if context.exports.map.selected.timezone == location.key and context.exports.map.selected.city == place.key %}selected{%endif%}>{{place.key}} [{{place.doc_count}}]</option>
@@ -43,9 +43,16 @@ enable_profiler: true
               <input type="submit" value="search" class="btn btn-primary" />
               <hr />
               {% if context.exports.features.with_programmers %}
+                <small>selection by programmers' specialties</small>
                 <select name="specialties[]" multiple class="multiple">
-                  {% for spec in  context.exports.filters.specialties %}
+                  {% for spec in context.exports.filters.specialties %}
                     <option value="{{spec.key}}" {%if context.params.specialties contains spec.key %}selected{%endif%}>{{spec.key}} [{{spec.doc_count}}]</option>
+                  {% endfor %}
+                </select>
+                <small>selection by product tag</small>
+                <select name="tags[]" multiple class="multiple">
+                  {% for spec in context.exports.filters.specialties %}
+                    <option value="{{spec.key}}" {%if context.params.tags contains spec.key %}selected{%endif%}>{{spec.key}} [{{spec.doc_count}}]</option>
                   {% endfor %}
                 </select>
               {% endif %}
@@ -66,24 +73,37 @@ enable_profiler: true
                   </dd>
                   <dt>Description:</dt>
                   <dd> {{ company.properties.description }}</dd>
+                  <dt>Products:</dt>
+                  <dd>
+                    <small>
+                      {% for product in company.products %}
+                        <li><span class="product {% if  product.tags contains context.params.tags.first %}selected{% endif %}">
+                          {{ product.name }} ::
+                          {{ product.tags | join: "-" }}
+                        </span> &#183;
+                      {% endfor %}
+                    </small>
+                  </dd>
                 </dl>
               </td>
                 {% if context.exports.features.with_programmers %}
                   <td>
                     {% for p in company.programmers %}
-                      <span class="{% if p.properties.specialties contains context.params.specialties.first  %}selected{% endif %}">
-                        {{ p.properties.name }}</span>
-                      <small>{{p.properties.title}}</small>
-                      <br/>
-                      <small>
-                        {% for specialty in p.properties.specialties %}
-                          <span class="specialty {% if context.params.specialties contains specialty %}selected{% endif %}">
-                            {{ specialty }} &#183;
-                          </span>
-                        {% endfor %}
-                      </small>
-                      <br/>
-                      <br/>
+                      <div class="{% if p.properties.specialties contains context.params.specialties.first  %}matched{%else%}missed{% endif %}">
+                        <span class="{% if p.properties.specialties contains context.params.specialties.first  %}selected{% endif %}">
+                          {{ p.properties.name }}</span>
+                        <span class="{% if context.params.tags contains p.properties.value %}selected{% endif %}">
+                          {{p.properties.value}}
+                        </span>
+                        <br/>
+                        <small>
+                          {% for specialty in p.properties.specialties %}
+                            <span class="specialty {% if context.params.specialties contains specialty %}selected{% endif %}">{{ specialty }}</span> &#183;
+                          {% endfor %}
+                        </small>
+                        <br/>
+                        <br/>
+                      </div>
                     {% endfor %}
                   </td>
                 {% endif %}
@@ -98,6 +118,6 @@ enable_profiler: true
 
 <script>
   window.onload = function() {
-    const choices = new Choices('select.multiple', {placeholderValue: 'Select programmer specialties'});
+    const choices = new Choices('select.multiple', {placeholderValue: ' select ...'});
     };
 </script>

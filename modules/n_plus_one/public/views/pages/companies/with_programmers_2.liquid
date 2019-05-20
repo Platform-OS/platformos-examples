@@ -18,7 +18,7 @@ metadata:
 
 <table class="table table-bordered table-striped scroll">
   <thead>
-    <tr> <th colspan="4"> companies [{{ g.companies.total_entries }}] </th> </tr>
+    <tr> <th colspan="4"> companies [{{ g.companies.results | size }}/{{ g.companies.total_entries }}] </th> </tr>
     <tr>
       <th>id</th>
       <th>name</th>

@@ -17,6 +17,14 @@ query companies($ids: [ID!], $limit: Int = 200, $timezone: String, $city: String
       properties
       id
       name
+
+      products: models(
+        join_on_property: "id"
+        foreign_property: "company_id"
+        model_name: "modules/n_plus_one/product"
+      ){
+        properties
+      }
     }
   }
 }

@@ -1,4 +1,4 @@
-query search($company_id: String, $point: GeometryJSON, $distance: Int) {
+query search($company_id: String, $point: GeometryJSON, $distance: Int, $specialties: [String!], $tags: [String!]) {
   locations: customizations(name: "modules/n_plus_one/company", aggregations: {name: "geo", fields: [{name: "location", field_name: "properties.timezone", aggregations: [{name: "centric", type: terms, field_name: "properties.city"}]}]}) {
     aggs: aggregations {
       raw
@@ -11,15 +11,26 @@ query search($company_id: String, $point: GeometryJSON, $distance: Int) {
   }
   companies: models(
     filter: {
-      # models: {
-      #   join: { join_on_property: "id" foreign_property: "company_id" }
-      #   filter: {
-      #     name: {value: "modules/n_plus_one/programmer"},
-      #     properties: [
-      #       { name: "specialties", value_in: $specialties }
-      #     ]
-      #   }
-      # }
+      models: [
+        {
+          join: { join_on_property: "id" foreign_property: "company_id" }
+          filter: {
+            name: { value: "modules/n_plus_one/programmer" }
+            properties: [
+              { name: "specialties", value_in: $specialties }
+            ]
+          }
+        },
+        {
+          join: { join_on_property: "id" foreign_property: "company_id" }
+          filter: {
+            name: { value: "modules/n_plus_one/product" }
+            properties: [
+              { name: "tags", value_in: $tags }
+            ]
+          }
+        }
+      ]
 
       properties: [
         {name: "company_id", value: $company_id}
@@ -28,7 +39,7 @@ query search($company_id: String, $point: GeometryJSON, $distance: Int) {
       deleted_at: { exists: false }
       name: { value_in: "modules/n_plus_one/company" }
     }
-    per_page: 100
+    per_page: 20
   ) {
     total_entries
     results {
@@ -36,10 +47,14 @@ query search($company_id: String, $point: GeometryJSON, $distance: Int) {
       name: property(name: "name")
       properties
 
-      # programmers: models(join_on_property: "id" foreign_property: "company_id" model_name: "modules/n_plus_one/programmer") {
-      #   email: property(name: "email")
-      #   properties
-      # }
+      programmers: models(join_on_property: "id" foreign_property: "company_id" model_name: "modules/n_plus_one/programmer") {
+        email: property(name: "email")
+        properties
+      }
+      products: models(join_on_property: "id" foreign_property: "company_id" model_name: "modules/n_plus_one/product") {
+        name: property(name: "name")
+        tags: property_array(name: "tags")
+      }
     }
   }
 }

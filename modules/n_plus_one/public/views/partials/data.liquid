@@ -6,7 +6,7 @@
 {% graphql _selected =  'modules/n_plus_one/n1_companies', city: q[1], timezone: q[0], limit: 1 %}
 {% assign selected = _selected.companies.results[0].properties %}
 
-{% graphql g = 'modules/n_plus_one/search', point: selected.location, distance: distance, specialties: context.params.specialties %}
+{% graphql g = 'modules/n_plus_one/search', point: selected.location, distance: distance, specialties: context.params.specialties, tags: context.params.tags %}
 
 {% assign companies = g.companies %}
 {% export companies, namespace: 'data' %}
@@ -18,9 +18,11 @@
 {% assign distances = "1,2,5,10,50,100,150,200,300,400,500,750,1000,2000,3000" | split: "," | map: "to_i" %}
 {% assign locations = g.locations.aggs.raw.geo.location.buckets %}
 {% assign specialties = g.specialties.aggs.raw.spec.spec.buckets %}
-{% export distances, locations, specialties, namespace: 'filters' %}
+{% assign titles = "Newbie,Novice,Rookie,Beginner,Talented,Skilled,Intermediate,Skillful,Seasoned,Proficient,Experienced,Advanced,Senior,Expert" | split: "," %}
 
-{% assign with_programmers = false %}
+{% export distances, locations, specialties, titles, namespace: 'filters' %}
+
+{% assign with_programmers = true %}
 {% export map, with_programmers, namespace: features %}
 
 {% log 'data load end' %}
