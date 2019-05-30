@@ -33,8 +33,8 @@ export default class UpdateProfile {
       ajaxImage: this.form.ajax.find('img[src*="amazonaws.com/uploads')
     };
     this.current = {
-      avatar: this.container.avatar.find('img:first-of-type'),
-      banner: this.container.banner.find('img:first-of-type')
+      avatar: this.container.avatar.find('img:first-of-type').with({ timeout: 10000 }),
+      banner: this.container.banner.find('img:first-of-type').with({ timeout: 10000 })
     };
     this.new = {
       avatar: this.container.avatar.find('figcaption'),
