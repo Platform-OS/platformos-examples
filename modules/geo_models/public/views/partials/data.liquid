@@ -1,0 +1,32 @@
+{% log 'data load start' %}
+
+{% assign distance = context.params.distance | default: 100 | plus: 0 %}
+
+{% assign q = context.params.q | split: "-" %}
+{% graphql _selected =  'modules/geo_models/companies', city: q[1], timezone: q[0], limit: 1 %}
+{% assign selected = _selected.companies.results[0] %}
+
+{% if selected %}
+  {% graphql g = 'modules/geo_models/search', point: selected.location, distance: distance, specialties: context.params.specialties %}
+{% else %}
+  <h1 class="alert">database seems to be empty.</h1>
+{% endif %}
+
+{% assign companies = g.companies %}
+{% export companies, namespace: 'data' %}
+
+{% assign points = g.companies.results | map: "location" | map: "coordinates" %}
+
+{% export distance, selected, points, namespace: 'map' %}
+
+{% assign distances = "1,2,5,10,50,100,150,200,300,400,500,750,1000,2000,3000" | split: "," | map: "to_i" %}
+{% assign locations = g.locations.aggs.raw.geo.location.buckets %}
+{% assign specialties = g.specialties.aggs.raw.spec.spec.buckets %}
+{% assign titles = "Newbie,Novice,Rookie,Beginner,Talented,Skilled,Intermediate,Skillful,Seasoned,Proficient,Experienced,Advanced,Senior,Expert" | split: "," %}
+
+{% export distances, locations, specialties, titles, namespace: 'filters' %}
+
+{% assign with_programmers = true %}
+{% export map, with_programmers, namespace: features %}
+
+{% log 'data load end' %}

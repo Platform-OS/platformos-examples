@@ -1,0 +1,119 @@
+---
+slug: geo/search
+layout_name: application
+metadata:
+  full_width: true
+---
+{% include 'modules/geo_models/menu' %}
+{% include 'modules/geo_models/data' %}
+
+<form action="/geo/search" name="search">
+  <div class="search-container">
+    <div class="filter-box">
+      <select name="q" class="multiple location-select" onchange="this.form.submit()">
+        {% for location in context.exports.filters.locations %}
+          <optgroup label="{{location.key}}">
+            {% for place in location.centric.buckets %}
+              <option value="{{location.key}}-{{place.key}}" {%if context.exports.map.selected.timezone == location.key and context.exports.map.selected.city == place.key %}selected{%endif%}>{{place.key}} [{{place.doc_count}}]</option>
+            {% endfor %}
+          </optgroup>
+        {% endfor %}
+      </select>
+      {% if context.exports.features.with_programmers %}
+        <small>selection by programmers' specialties</small>
+        <select name="specialties[]" multiple class="multiple">
+          {% for spec in context.exports.filters.specialties %}
+            <option value="{{spec.key}}" {%if context.params.specialties contains spec.key %}selected{%endif%}>{{spec.key}} [{{spec.doc_count}}]</option>
+          {% endfor %}
+        </select>
+      {% endif %}
+
+      <input type="submit" value="search" class="btn btn-primary" />
+
+      <div class="status">
+        <strong>{{context.exports.data.companies.total_entries }}</strong> companies within
+
+        <select name="distance">
+          {% for d in context.exports.filters.distances %}
+            <option value="{{d}}" {%if context.exports.map.distance == d %}selected{%endif%}>{{d}}</option>
+          {% endfor %}
+        </select>
+        km from {{ context.exports.map.selected.city }}
+      </div>
+    </div>
+
+    <div class="contentContainer">
+
+      <div class="map-box">
+        {% include 'modules/geo_models/map',
+          center: context.exports.map.selected.location.coordinates,
+          points: context.exports.map.points,
+          distance: context.exports.map.distance
+        %}
+      </div>
+
+      <div class="results-box">
+        <table class="table table-bordered table-striped scroll-search">
+          <thead>
+            <tr>
+              <td>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan=2>
+                <strong> results </strong>
+              </td>
+            </tr>
+            {% for company in context.exports.data.companies.results %}
+              <tr>
+                <td>
+                  <h4>{{company.id}}-{{company.name}}</h4>
+                  <dl>
+                    <dt>Address:</dt>
+                    <dd>
+                      <button class="btn btn-link btn-default" type="submit" name="q" value="{{company.timezone}}-{{company.city}}">
+                        {{ company.city }}, {{ company.timezone }}
+                      </button>
+                    </dd>
+                    <dt>Description:</dt>
+                    <dd> {{ company.description }}</dd>
+                  </dl>
+                </td>
+                {% if context.exports.features.with_programmers %}
+                  <td>
+                    {% for p in company.programmers %}
+                      <div class="{% if p.specialties contains context.params.specialties.first  %}matched{%else%}missed{% endif %}">
+                        <span class="{% if p.specialties contains context.params.specialties.first  %}selected{% endif %}">
+                          {{ p.name }}</span>
+                        <span class="{% if context.params.tags contains p.value %}selected{% endif %}">
+                          {{p.value}}
+                        </span>
+                        <br/>
+                        <small>
+                          {% for specialty in p.specialties %}
+                            <span class="specialty {% if context.params.specialties contains specialty %}selected{% endif %}">{{ specialty }}</span> &#183;
+                          {% endfor %}
+                        </small>
+                        <br/>
+                        <br/>
+                      </div>
+                    {% endfor %}
+                  </td>
+                {% endif %}
+              </tr>
+
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+  window.onload = function() {
+    const choices = new Choices('select.multiple', {placeholderValue: ' select ...'});
+  };
+</script>

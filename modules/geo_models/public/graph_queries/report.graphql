@@ -1,0 +1,24 @@
+query search {
+  companies: models(
+    filter: {
+      deleted_at: { exists: false }
+      name: { value_in: "modules/geo_models/company" }
+    }
+    per_page: 500
+  ) {
+    total_entries
+    results {
+      id
+      name: property(name: "name")
+      location: property(name: "location")
+      timezone: property(name: "timezone")
+      city: property(name: "city")
+
+      programmers: models(join_on_property: "id" foreign_property: "company_id" model_name: "modules/geo_models/programmer") {
+        email: property(name: "email")
+        name: property(name: "name")
+        specialties: property_array(name: "specialties")
+      }
+    }
+  }
+}
