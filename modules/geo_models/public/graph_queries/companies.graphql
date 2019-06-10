@@ -1,0 +1,25 @@
+query companies($ids: [ID!], $limit: Int = 500, $timezone: String, $city: String) {
+  companies: models(
+    per_page: $limit
+    filter: {
+      name: {
+        value: "modules/geo_models/company"
+      }
+      id: { value_in: $ids }
+      properties: [
+        { name: "timezone", value: $timezone }
+        { name: "city",  value: $city }
+      ]
+    }
+  ) {
+    total_entries
+    results {
+      id
+      name: property(name: "name")
+      description: property(name: "description")
+      city: property(name: "city")
+      timezone: property(name: "timezone")
+      location: property_json(name: "location")
+    }
+  }
+}

@@ -1,0 +1,14 @@
+name: company
+properties:
+  - name: name
+    type: string
+  - name: email
+    type: string
+  - name: timezone
+    type: string
+  - name: city
+    type: string
+  - name: location
+    type: geojson
+  - name: description
+    type: string

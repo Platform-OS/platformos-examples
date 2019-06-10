@@ -1,0 +1,57 @@
+---
+slug: geo/companies
+layout_name: application
+metadata:
+  full_width: true
+  description: Loading related models while avoiding n+1 queries. Increase speed 10x
+  docs_slug: tutorials/custom-model-types/loading-related-models
+---
+{% include 'modules/geo_models/menu' %}
+
+{% assign _start = "now" | to_time %}
+
+{% graphql g = 'modules/geo_models/companies' %}
+
+{% assign _graph = "now" | to_time %}
+
+<h2>Only Companies</h2>
+
+<table class="table table-bordered table-striped scroll">
+  <thead>
+    <tr> <th colspan="4">companies [{{ g.companies.total_entries }}] </th> </tr>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>location</th>
+      <th>description</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for company in g.companies.results %}
+      <tr>
+        <td> {{ company.id }} </td>
+        <td> {{ company.name }} </td>
+        <td>
+          {{ company.city }} {{ company.timezone }} <br/>
+          <small>
+            {% if company.location %}
+              {{ company.location | json }}
+            {% endif %}
+          </small>
+        </td>
+        <td>
+          {{ company.description }}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% assign _render = "now" | to_time %}
+
+{% assign _graph_duration = _start | time_diff: _graph | round %}
+{% assign _render_duration = _start | time_diff: _render | round %}
+
+{% log _graph_duration, type: "benchmark-graph" %}
+{% log _render_duration, type: "benchmark-render" %}
+{% include 'modules/geo_models/benchmark-report' %}

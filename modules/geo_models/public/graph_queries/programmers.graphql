@@ -1,0 +1,19 @@
+query programmers($company_id: String) {
+  programmers: models(
+    filter: {
+      name: { value: "modules/geo_models/programmer" }
+      properties: [ {name: "company_id", value: $company_id}]
+    }
+    per_page: 1000
+  ) {
+    total_entries
+    results {
+      id
+      email: property(name: "email")
+      title: property(name: "title")
+      name: property(name: "name")
+      company_id: property(name: "company_id")
+      specialties: property_array(name: "specialties")
+    }
+  }
+}

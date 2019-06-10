@@ -1,0 +1,61 @@
+<ul class="list-inline inline">
+  <li class="list-inline-item "><a class="btn btn-secondary" href="/geo/search">Search</a></li>
+  <li class="list-inline-item "><a class="btn btn-secondary" href="/geo/companies">Companies</a></li>
+  <li class="list-inline-item "><a class="btn btn-secondary" href="/geo/programmers">Only Programmers</a></li>
+  <li class="list-inline-item "><a class="btn btn-secondary" href="/geo/report">Companies with programmers</a></li>
+</ul>
+
+<hr/>
+
+<style>
+  .scroll tbody {
+    display: block;
+    height: 250px;
+    overflow: auto;
+  }
+
+  .scroll-search tbody {
+    display: block;
+    height: 500px;
+    overflow: auto;
+  }
+  thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;/* even columns width , fix width of table too*/
+  }
+
+  thead {
+    width: calc(100% - 1em + 2px);/* scrollbar is average 1em/16px width, remove it from thead width */
+  }
+
+  .table td {
+    padding: 2px;
+    padding-left: 4px;
+  }
+
+  span.selected { font-weight: bold; border-bottom: solid 1px #999 }
+  .matched { border: solid 1px  #aaa; color: #000}
+  .missed { color: #aaa }
+  .choices__item { font-size: 30px }
+
+  .search-container {
+  }
+
+  .filter-box {
+  }
+
+  .contentContainer {
+    height: 100%;
+    display: flex;
+  }
+
+  .map-box {
+    width: 50%;
+  }
+
+  .results-box {
+    width: 50%;
+  }
+
+</style>
