@@ -1,6 +1,0 @@
-mutation charge_payment($id: ID!) {
-  payment_charge(id: $id, form_configuration_name: "modules/payments/charge_payment_form") {
-    id
-    paid_at
-  }
-}

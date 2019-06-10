@@ -1,4 +1,0 @@
-name: Invoice
-properties:
-  - name: amount
-    type: float
