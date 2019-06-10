@@ -1,4 +1,4 @@
-mutation addCompany($name: String, $email: String, $url: String, $timezone: String, $geopoint: JSONPayload, $city: String) {
+mutation addCompany($name: String, $email: String, $timezone: String, $geopoint: JSONPayload, $city: String) {
   customization_create(
     form_configuration_name: "modules/geo_models/create_company"
     customization: {

@@ -15,7 +15,7 @@ async_callback_actions: {}
 {% form %}
     <input required="true" name="{{ form_builder.fields.properties.email.name }}" id="email" type="text" placeholder="email">
     <input required="true" name="{{ form_builder.fields.properties.title.name }}" id="title" type="text" placeholder="title">
-    <input required="true" name="{{ form_builder.fields.properties.expertise.name }}" id="expertise" type="text" placeholder="expertise">
+    <input required="true" name="{{ form_builder.fields.properties.specialties.name }}" id="specialties" type="text" placeholder="specialties">
 
     {% graphql gc = 'modules/geo_models/list_companies' %}
     <select name="{{ form_builder.fields.properties.company_id.name }}">
