@@ -1,0 +1,4 @@
+name: child
+properties:
+  - name: line
+    type: string
