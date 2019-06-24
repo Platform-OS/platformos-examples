@@ -31,18 +31,18 @@ email_notifications:
       <div class="row">
         <div class="form-group col-6">
           <label for="name">Email to send pdf:</label>
-          <input name="{{ form_builder.fields.properties.email.name }}" value="{{ form_builder.fields.properties.email.value | default: context.current_user.email | default: 'email@example.com' }}" id="email" type="text" class="form-control">
-          {% if form_builder.errors['properties.email'] %}
-            <p>{{ form_builder.errors['properties.email'] }}</p>
+          <input name="{{ form.fields.properties.email.name }}" value="{{ form.fields.properties.email.value | default: context.current_user.email | default: 'email@example.com' }}" id="email" type="text" class="form-control">
+          {% if form.errors['properties.email'] %}
+            <p>{{ form.errors['properties.email'] }}</p>
           {% endif %}
         </div>
       </div>
       <div class="row">
         <div class="form-group col-6">
           <label for="name">Generated file name:</label>
-          <input name="{{ form_builder.fields.properties.file_name.name }}" value="{{ form_builder.fields.properties.file_name.value | default: 'attachment.pdf'}}" id="name" type="text" class="form-control">
-          {% if form_builder.errors['properties.file_name'] %}
-            <p>{{ form_builder.errors['properties.file_name'] }}</p>
+          <input name="{{ form.fields.properties.file_name.name }}" value="{{ form.fields.properties.file_name.value | default: 'attachment.pdf'}}" id="name" type="text" class="form-control">
+          {% if form.errors['properties.file_name'] %}
+            <p>{{ form.errors['properties.file_name'] }}</p>
           {% endif %}
         </div>
       </div>
@@ -61,9 +61,9 @@ email_notifications:
   </body>
 </html>
       {% endcapture %}
-      <textarea rows="12" name="{{ form_builder.fields.properties.body.name }}" id="body" type="text" class="form-control">{{ form_builder.fields.properties.body.value | default: default_html | escape }}</textarea>
-      {% if form_builder.errors['properties.body'] %}
-        <p>{{ form_builder.errors['properties.body'] }}</p>
+      <textarea rows="12" name="{{ form.fields.properties.body.name }}" id="body" type="text" class="form-control">{{ form.fields.properties.body.value | default: default_html | escape }}</textarea>
+      {% if form.errors['properties.body'] %}
+        <p>{{ form.errors['properties.body'] }}</p>
       {% endif %}
     </div>
   </div>

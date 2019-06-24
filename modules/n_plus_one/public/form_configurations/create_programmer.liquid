@@ -12,12 +12,12 @@ resource_owner: anyone
 async_callback_actions: {}
 ---
 {% form %}
-    <input required="true" name="{{ form_builder.fields.properties.email.name }}" id="email" type="text" placeholder="email">
-    <input required="true" name="{{ form_builder.fields.properties.title.name }}" id="title" type="text" placeholder="title">
-    <input required="true" name="{{ form_builder.fields.properties.expertise.name }}" id="expertise" type="text" placeholder="expertise">
+    <input required="true" name="{{ form.fields.properties.email.name }}" id="email" type="text" placeholder="email">
+    <input required="true" name="{{ form.fields.properties.title.name }}" id="title" type="text" placeholder="title">
+    <input required="true" name="{{ form.fields.properties.expertise.name }}" id="expertise" type="text" placeholder="expertise">
 
     {% graphql gc = 'modules/n_plus_one/list_companies' %}
-    <select name="{{ form_builder.fields.properties.company_id.name }}">
+    <select name="{{ form.fields.properties.company_id.name }}">
       {% for c in gc.companies.results %}
         {{ c }}
         <option value="{{c.id}}">{{c.properties.name}}</option>

@@ -23,27 +23,27 @@ flash_notice: Contact was successfully updated.
   <div class="row">
     <div class="form-group col-6">
       <label for="name">Name:</label>
-      <input name="{{ form_builder.fields.properties.name.name }}" value="{{ form_builder.fields.properties.name.value }}" id="name" type="text" class="form-control">
-      {% if form_builder.errors['properties.name'] %}
-        <p>{{ form_builder.errors['properties.name'] }}</p>
+      <input name="{{ form.fields.properties.name.name }}" value="{{ form.fields.properties.name.value }}" id="name" type="text" class="form-control">
+      {% if form.errors['properties.name'] %}
+        <p>{{ form.errors['properties.name'] }}</p>
       {% endif %}
     </div>
   </div>
   <div class="row">
     <div class="form-group col-6">
       <label for="email">Email:</label>
-      <input name="{{ form_builder.fields.properties.email.name }}" value="{{ form_builder.fields.properties.email.value }}" id="email" type="email" class="form-control">
-      {% if form_builder.errors['properties.email'] %}
-        <p>{{ form_builder.errors['properties.email'] }}</p>
+      <input name="{{ form.fields.properties.email.name }}" value="{{ form.fields.properties.email.value }}" id="email" type="email" class="form-control">
+      {% if form.errors['properties.email'] %}
+        <p>{{ form.errors['properties.email'] }}</p>
       {% endif %}
     </div>
   </div>
   <div class="row">
     <div class="form-group col-6">
       <label for="description">Description:</label>
-      <textarea name="{{ form_builder.fields.properties.description.name }}" id="description" class="form-control">{{ form_builder.fields.properties.description.value }}</textarea>
-      {% if form_builder.errors['properties.description'] %}
-        <p>{{ form_builder.errors['properties.description'] }}</p>
+      <textarea name="{{ form.fields.properties.description.name }}" id="description" class="form-control">{{ form.fields.properties.description.value }}</textarea>
+      {% if form.errors['properties.description'] %}
+        <p>{{ form.errors['properties.description'] }}</p>
       {% endif %}
     </div>
   </div>
