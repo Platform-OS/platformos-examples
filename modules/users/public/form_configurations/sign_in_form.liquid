@@ -9,14 +9,14 @@ flash_notice: Session was successfully created.
 {% form html-class: "w-50" %}
   <div class="form-group">
     <label for="form_email">Email</label>
-    <input class="form-control" name="{{ form_builder.fields.email.name }}" value="{{ form_builder.fields.email.value }}" id="form_email" type="email">
+    <input class="form-control" name="{{ form.fields.email.name }}" value="{{ form.fields.email.value }}" id="form_email" type="email">
   </div>
 
   <div class="form-group">
     <label for="form_password">Password</label>
-    <input class="form-control" name="{{ form_builder.fields.password.name }}" id="form_password" type="password">
-    {% if form_builder.errors.password %}
-      <p>{{ form_builder.errors.password }}</p>
+    <input class="form-control" name="{{ form.fields.password.name }}" id="form_password" type="password">
+    {% if form.errors.password %}
+      <p>{{ form.errors.password }}</p>
     {% endif %}
   </div>
 
