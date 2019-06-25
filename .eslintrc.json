@@ -9,7 +9,10 @@
       "experimentalObjectRestSpread": true
     }
   },
-  "globals": {},
+  "globals": {
+    "test": true,
+    "fixture": true
+  },
   "env": {
     "es6": true,
     "browser": true,
