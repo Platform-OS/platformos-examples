@@ -4,7 +4,7 @@ import FullFormPage from './page-object';
 
 const form = new FullFormPage();
 
-fixture('FullForm').page(process.env.MP_URL)
+fixture('FullForm').page(`${process.env.MP_URL}/full-form-example`)
   .beforeEach(async t => {
     await t.navigateTo("/full-form-example");
   });
