@@ -13,7 +13,7 @@ const clearDB = async () => {
   });
 };
 
-fixture.only('Feedback - CRUD using Ajax')
+fixture('Feedback - CRUD using Ajax')
   .page(`${process.env.MP_URL}/feedback`)
   .before(clearDB)
   .after(clearDB);
