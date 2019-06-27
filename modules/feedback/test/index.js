@@ -13,7 +13,7 @@ const clearDB = async () => {
   });
 };
 
-fixture('Feedback - CRUD using Ajax')
+fixture('Feedback - CRUD using AJAX')
   .page(`${process.env.MP_URL}/feedback`)
   .before(clearDB)
   .after(clearDB);
@@ -50,6 +50,7 @@ test('Update', async t => {
     .click(feedback.radio.update.meh)
     .typeText(feedback.input.update_message, lorem)
     .click(feedback.button.update)
+    .wait(300)
     .click(feedback.button.refresh);
 
   await t.expect(feedback.data.rating.innerText).eql(feedback.txt.updatedRating);
