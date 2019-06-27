@@ -33,7 +33,7 @@ export default class HomePage {
       'Gallery',
       'Blog',
       'https://github.com/mdyd-dev/amp-demo-pages',
-      'https://documentation.platform-os.com',
+      'https://documentation.platformos.com',
       'https://github.com/mdyd-dev/marketplace-nearme-example'
     ];
   }

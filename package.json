@@ -1,7 +1,7 @@
 {
   "name": "marketplace-example",
   "version": "1.0.0",
-  "description": "Examples repository for features described at https://documentation.platform-os.com",
+  "description": "Examples repository for features described at https://documentation.platformos.com",
   "scripts": {
     "deploy": "marketplace-kit deploy -f",
     "test": "docker run -v $PWD:/MP -e \"MP_URL=$MP_URL\" -it platformos/testcafe 'testcafe \"chromium:headless --no-sandbox\" /MP/tests/e2e/features \"/MP/modules/**/test/*.js\"'",
