@@ -29,21 +29,19 @@ test('Iterating over collection using for', async t => {
   Turning it will break MP and will require migration of MP to flag:true approach
 */
 
-test.skip('Private variables - Demonstration', async t => {
+test('Private variables - Demonstration', async t => {
   const actual = await getResultText({ name: 4, Selector });
 
   await t.expect(actual).notContains('Honda');
 });
 
-test.skip('Private variables - Exporting variable', async t => {
+test('Private variables - Exporting variable', async t => {
   const actual = await getResultText({ name: 5, Selector });
   const expected = 'Car: {"honda"=>{"maker"=>"Honda", "model"=>"CRX", "year"=>"1991"}}';
 
   await t.expect(actual).contains(expected);
 });
 
-test.skip('Nested objects are working inside exports', async t => {
-  const expected = 'Honda';
-
-  await t.expect(await getResult(6)).contains(expected);
+test('Nested objects are working inside exports', async t => {
+  await t.expect(await getResultText({ name: 6, Selector })).contains('Honda');
 });
