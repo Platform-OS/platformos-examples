@@ -1,0 +1,10 @@
+mutation createFeedback($rate: String!, $message: String!) {
+  customization_create(
+    customization: {
+      custom_model_type_name: "modules/feedback/feedback"
+      properties: [{ name: "rate", value: $rate }, { name: "message", value: $message }]
+    }
+  ) {
+    id
+  }
+}

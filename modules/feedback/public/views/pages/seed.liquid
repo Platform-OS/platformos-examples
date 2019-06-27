@@ -1,0 +1,26 @@
+---
+slug: feedback/seed.json
+format: json
+---
+
+{% parse_json feedback %}
+[{
+  "rate": "Meh",
+  "message": "It was mediocre"
+}, {
+  "rate": "Excellent",
+  "message": "Excellento"
+}, {
+  "rate": "Very bad",
+  "message": "I wish it never happened"
+}]
+{% endparse_json %}
+
+{% assign shuffled_feedback = feedback | shuffle_array %}
+
+[
+  {%- for f in shuffled_feedback -%}
+  {%- graphql c = 'modules/feedback/create_feedback', rate: f.rate, message: f.message -%}
+  {{ c.customization_create | json }}{%- unless forloop.last -%},{%- endunless -%}
+  {%- endfor -%}
+]

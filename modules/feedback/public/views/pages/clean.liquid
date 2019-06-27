@@ -1,0 +1,11 @@
+---
+slug: feedback/clean.json
+format: json
+authorization_policies:
+  - is_staging
+---
+{% graphql clean = 'modules/feedback/clean' %}
+
+{
+  "ok": {{ clean.customizations_delete_all.count | default: 0 }}
+}

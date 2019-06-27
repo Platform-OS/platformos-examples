@@ -15,10 +15,10 @@ fields:
   <div class="col-12 col-lg-4">
     <div class="card">
       <div class="card-body">
-        <p>This page is showcasing basic CRUD (Create, Read, Update, Delete) pattern using AJAX and <a href="https://documentation.platform-os.com/reference/custom-model-types/custom-model-types" target="blank">customization</a>.</p>
+        <p>This page is showcasing basic CRUD (Create, Read, Update, Delete) pattern using AJAX and <a href="https://documentation.platformos.com/reference/custom-model-types/custom-model-types" target="blank">customization</a>.</p>
         <p>Data will be saved/updated/deleted using native <a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" target="_blank" rel="noopener">fetch</a>.
         If you need support for legacy browsers, take a look at excellent <a href="http://polyfill.io" target="_blank" rel="noopener">polyfill service</a>.</p>
-        <p>Data retrieval will be done using <a href="https://documentation.platform-os.com/get-started/pages/pages" target="_blank">Liquid page</a> (in <a href="https://documentation.platform-os.com/get-started/pages/pages#formats" target="_blank">JSON format</a>), returning results obtained by GraphQL.</p>
+        <p>Data retrieval will be done using <a href="https://documentation.platformos.com/get-started/pages/pages" target="_blank" rel="noopener">Liquid page</a> (in <a href="https://documentation.platformos.com/get-started/pages/pages#formats" target="_blank" rel="noopener">JSON format</a>), returning results obtained by GraphQL.</p>
 
         <p>Errors and additional debug logs will show up on the right side.</p>
       </div>
@@ -26,8 +26,8 @@ fields:
   </div>
   <div class="col-12 col-lg-8">
     <div class="card">
-      <div class="card-header">Simple console</div>
-      <div class="card-body" style="max-height: 175px; overflow-y: auto;">
+      <div class="card-header">Console</div>
+      <div class="card-body" style="max-height: 250px; overflow-y: scroll;">
         <ul id="logger"></ul>
       </div>
     </div>
@@ -46,11 +46,11 @@ fields:
     <h2 id="create_example">[C]reate</h2>
     {% include 'modules/feedback/create' %}
   </div>
-  <div class="col-12 col-lg-6 col-xl-5 mt-3">
+  <div class="col-12 col-lg-6 col-xl-4 mt-3">
     <h2 id="update_example">[U]pdate</h2>
     {% include 'modules/feedback/update' %}
   </div>
-  <div class="col-12 col-lg-6 col-xl-3 mt-3">
+  <div class="col-12 col-lg-6 col-xl-4 mt-3">
     <h2 id="delete_example">[D]elete</h2>
     {% include 'modules/feedback/delete' %}
   </div>
