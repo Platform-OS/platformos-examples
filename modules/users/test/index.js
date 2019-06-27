@@ -34,14 +34,14 @@ test('Create client account', async t => {
     .typeText(users.input.password, client.password)
     .click(users.button.submit);
 
-  const signUpSuccess = await getBtAlertText({ Selector }); 
+  const signUpSuccess = await getBtAlertText({ Selector });
 
   await t.expect(signUpSuccess).contains(users.alerts.signup);
 
   await users.login(client.email, client.password);
 
-  const loginSuccess = await getBtAlertText({ Selector }); 
-  
+  const loginSuccess = await getBtAlertText({ Selector });
+
   await t.expect(loginSuccess).contains(users.alerts.login);
 });
 
@@ -76,8 +76,8 @@ test('Create developer account', async t => {
     .typeText(users.input.phone, dev.phone)
     .click(users.button.submit);
 
-  await t.expect(await getBtAlertText({ Selector })).contains(users.alerts.success);
-  
+  await t.expect(await getBtAlertText({ Selector })).contains(users.alerts.signup);
+
   await users.login(dev.email, dev.password);
   await users.logout(t);
 
