@@ -5,9 +5,6 @@ import FullFormPage from './page-object';
 const form = new FullFormPage();
 
 fixture('FullForm').page(`${process.env.MP_URL}/full-form-example`)
-  .beforeEach(async t => {
-    await t.navigateTo("/full-form-example");
-  });
 
 test('There are no liquid errors on the page', async t => {
   await checkLiquidErrors({ t, Selector });
