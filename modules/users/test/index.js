@@ -34,12 +34,15 @@ test('Create client account', async t => {
     .typeText(users.input.password, client.password)
     .click(users.button.submit);
 
-  await t.expect(await getBtAlertText({ Selector })).contains(users.alerts.success);
-}).after(async t => {
-  // Check if login works. In After hook to not throw off tests when running concurrently
+  const signUpSuccess = await getBtAlertText({ Selector }); 
+
+  await t.expect(signUpSuccess).contains(users.alerts.signup);
 
   await users.login(client.email, client.password);
-  await t.expect(await getBtAlertText({ Selector })).contains(users.text.login);
+
+  const loginSuccess = await getBtAlertText({ Selector }); 
+  
+  await t.expect(loginSuccess).contains(users.alerts.login);
 });
 
 test('Display errors message on the form', async t => {
@@ -74,13 +77,11 @@ test('Create developer account', async t => {
     .click(users.button.submit);
 
   await t.expect(await getBtAlertText({ Selector })).contains(users.alerts.success);
-}).after(async t => {
-  // Check if login works. In After hook to not throw off tests when running concurrently
+  
   await users.login(dev.email, dev.password);
-
   await users.logout(t);
 
-  await t.expect(await getBtAlertText({ Selector })).contains(users.text.logout);
+  await t.expect(await getBtAlertText({ Selector })).contains(users.alerts.logout);
 });
 
 test('Display errors message on the form', async t => {

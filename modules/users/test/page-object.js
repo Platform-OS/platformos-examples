@@ -9,7 +9,9 @@ export default class Users {
     };
 
     this.alerts = {
-      success: 'You have signed up successfully.',
+      signup: 'You have signed up successfully.',
+      login: 'Session was successfully created.',
+      logout: 'You have been logged out',
       recoverPassword: 'If you provided the right email, we will send you reset password instructions.'
     };
 
@@ -37,11 +39,6 @@ export default class Users {
       errorText: "can't be blank",
       errorIsNotValidEmailText: 'is not a valid email address',
       errorIsTooShort: 'is too short (minimum is 6 characters)'
-    };
-
-    this.text = {
-      login: 'Session was successfully created.',
-      logout: 'You have been logged out'
     };
   }
 
