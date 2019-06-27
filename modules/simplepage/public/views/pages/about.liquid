@@ -12,3 +12,16 @@ metadata:
 <h1>About us page</h1>
 
 <p>A paragraph explaining what we do.</p>
+
+<hr class="hr"/>
+
+{% cache 'example-cache' %}
+
+{% parse_json data %}
+{ "random_string": "{{ 10 | random_string }}" }
+{% endparse_json %}
+<p>
+  Random string: <span data-test="random_string">{{ data.random_string }}</span>
+</p>
+
+{% endcache %}

@@ -19,3 +19,14 @@ test('Content is correct', async t => {
 
   await t.expect(paragraphText).eql('A paragraph explaining what we do.');
 });
+
+test('Cache is working', async t => {
+  const randomString = await Selector('[data-test="random_string"]').textContent;
+  await t.eval(() => location.reload(true));
+  const randomStringNew = await Selector('[data-test="random_string"]').textContent;  
+  
+  await t.expect(randomString.length).eql(10);  
+  await t.expect(randomString).eql(randomStringNew);
+});
+
+
