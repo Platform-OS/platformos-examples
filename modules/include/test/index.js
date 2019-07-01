@@ -24,11 +24,6 @@ test('Iterating over collection using for', async t => {
   await t.expect(actual).contains(expected);
 });
 
-/*
-  PP flag makes this feature not work on this MP.
-  Turning it will break MP and will require migration of MP to flag:true approach
-*/
-
 test('Private variables - Demonstration', async t => {
   const actual = await getResultText({ name: 4, Selector });
 

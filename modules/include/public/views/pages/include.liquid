@@ -4,9 +4,6 @@ metadata:
   description: Include tag
   docs_slug: api-reference/liquid/include
 ---
-
-
-
 <div class="card mb-5">
   <div class="card-header">
     <h3>Simple include</h3>
@@ -71,7 +68,11 @@ metadata:
 
     {% include 'modules/include/variable' %}
     <p data-result="4">
-      This is empty: {{ my_car }}
+      Variable used below is defined inside a partial included below, but not exported.
+      <br/>
+      This means we cannot use it here directly.
+      <br/>
+      This is empty: <pre>{{ my_car }}</pre>
     </p>
   </div>
 
@@ -80,6 +81,8 @@ metadata:
 
     {% include 'modules/include/export' %}
     <p data-result="5">
+      This time variable is exported from partial above. Because of that we can use context.exports to get its value - in this case, a hash.
+      <br/>
       Car: {{ context.exports.my_car }}<br/>
     </p>
     <p data-result="6">
