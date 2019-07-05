@@ -22,6 +22,16 @@ pipeline {
   }
 
   stages {
+    stage('Install dependencies') {
+      when { branch 'master' }
+
+      agent { docker { image 'node:12-alpine'; args '-u root' } }
+
+      steps {
+        sh 'npm ci'
+      }
+    }
+
     stage('Deploy to URL') {
       when { expression { return !params.MP_URL.isEmpty() } }
       environment {
@@ -39,7 +49,6 @@ pipeline {
       agent { docker { image "platformos/testcafe" } }
       environment { MP_URL = "${params.MP_URL}" }
       steps {
-        sh 'npm ci'
         sh 'npm run test-ci'
       }
       post { failure { archiveArtifacts "screenshots/" } }
@@ -76,7 +85,6 @@ pipeline {
       }
 
       steps {
-        sh 'npm ci'
         sh 'npm run test-ci'
       }
       post { failure { archiveArtifacts "screenshots/" } }
