@@ -1,5 +1,4 @@
 import { Selector } from 'testcafe';
-import faker from 'faker';
 import { getResultText as getTxt, getBtAlertText } from '@platform-os/testcafe-helpers';
 
 fixture('Multilanguage page - translations').page(process.env.MP_URL);
@@ -62,7 +61,7 @@ test('Japanese - UTF-8, emoji works', async t => {
   await t.expect(await getTxt({ name: 5, Selector })).eql('jp');
 });
 
-test.skip('Unknown language has layout - unskip when fixed', async t => {
+test('Unknown language has layout - unskip when fixed', async t => {
   await t.navigateTo('/multilanguage?language=js&name=John&url=https://documentation.platformos.com');
 
   const footer = await Selector('footer');
