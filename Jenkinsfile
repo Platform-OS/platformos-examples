@@ -76,6 +76,7 @@ pipeline {
       }
 
       steps {
+        sh 'npm ci'
         sh 'npm run test-ci'
       }
       post { failure { archiveArtifacts "screenshots/" } }
