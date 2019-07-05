@@ -39,6 +39,7 @@ pipeline {
       agent { docker { image "platformos/testcafe" } }
       environment { MP_URL = "${params.MP_URL}" }
       steps {
+        sh 'npm ci'
         sh 'npm run test-ci'
       }
       post { failure { archiveArtifacts "screenshots/" } }
