@@ -11,15 +11,10 @@ test('There are no liquid errors on the page', async t => {
 });
 
 test('AMP links present', async t => {
-  homepage.AMP_PAGES.forEach(async link => {
-    const body = Selector('body');
-    await t.expect(await body.textContent).contains(link);
-  });
-});
+  homepage.AMP_PAGES.forEach(async href => {
+    const body = await Selector('body');
+    const a = await Selector(`a[href=${href}]`);
 
-test('Other links present', async t => {
-  homepage.LINKS.forEach(async linkText => {
-    const link = await Selector('a').withText(linkText);
-    await t.expect(await link.count).gte(1);
+    await t.expect(await body.textContent).contains(await a.textContent);
   });
 });
