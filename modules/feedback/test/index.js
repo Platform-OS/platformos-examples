@@ -6,8 +6,7 @@ const feedback = new Feedback();
 
 const clearDB = () => got(`${process.env.MP_URL}/feedback/clean.json`);
 
-fixture
-  .only('Feedback - CRUD using AJAX')
+fixture('Feedback - CRUD using AJAX')
   .page(`${process.env.MP_URL}/feedback`)
   .before(async () => await clearDB())
   .after(async () => await clearDB());
