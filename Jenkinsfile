@@ -38,15 +38,15 @@ pipeline {
         MPKIT_URL = "${params.MP_URL}"
         DEBUG     = true
       }
-      agent { docker { image 'platformos/marketplace-kit' } }
+      agent { docker { image 'platformos/testcafe-pos-cli' } }
       steps {
-        sh 'marketplace-kit deploy'
+        sh 'pos-cli deploy'
       }
     }
 
     stage('Test on URL') {
       when { expression { return !params.MP_URL.isEmpty() } }
-      agent { docker { image "platformos/testcafe" } }
+      agent { docker { image "platformos/testcafe-pos-cli" } }
       environment { MP_URL = "${params.MP_URL}" }
       steps {
         sh 'npm run test-ci'
@@ -55,7 +55,7 @@ pipeline {
     }
 
     stage('Deploy staging') {
-      agent { docker { image 'platformos/marketplace-kit' } }
+      agent { docker { image 'platformos/testcafe-pos-cli' } }
 
       environment {
         MPKIT_URL = "${staging_url}"
@@ -68,12 +68,12 @@ pipeline {
       }
 
       steps {
-        sh 'marketplace-kit deploy'
+        sh 'pos-cli deploy'
       }
     }
 
     stage('Test Staging') {
-      agent { docker { image "platformos/testcafe" } }
+      agent { docker { image "platformos/testcafe-pos-cli" } }
 
       environment {
         MP_URL = "${staging_url}"
@@ -91,7 +91,7 @@ pipeline {
     }
 
     stage('Deploy production') {
-      agent { docker { image 'platformos/marketplace-kit' } }
+      agent { docker { image 'platformos/testcafe-pos-cli' } }
 
       environment {
         MPKIT_URL = "${production_url}"
@@ -104,7 +104,7 @@ pipeline {
       }
 
       steps {
-        sh 'marketplace-kit deploy'
+        sh 'pos-cli deploy'
       }
     }
   }
