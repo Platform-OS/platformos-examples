@@ -12,7 +12,6 @@ test('There are no liquid errors on the page', async t => {
 
 test('AMP links present', async t => {
   for (var i = 0, len = homepage.AMP_PAGES.length; i < len; i++) {
-    console.log("Checking link:", homepage.AMP_PAGES[i])
     await t.expect(Selector('a').withText(homepage.AMP_PAGES[i]).count).gte(1);
   }
 });

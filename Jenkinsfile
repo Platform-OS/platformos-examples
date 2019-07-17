@@ -37,7 +37,7 @@ pipeline {
       when { expression { return !params.MP_URL.isEmpty() } }
       environment {
         MPKIT_URL = "${params.MP_URL}"
-        DEBUG     = true
+        CI = true
       }
       agent { docker { image 'platformos/pos-cli' } }
       steps {
@@ -60,7 +60,7 @@ pipeline {
 
       environment {
         MPKIT_URL = "${staging_url}"
-        DEBUG     = true
+        CI = true
       }
 
       when {
@@ -96,7 +96,7 @@ pipeline {
 
       environment {
         MPKIT_URL = "${production_url}"
-        DEBUG     = true
+        CI = true
       }
 
       when {
