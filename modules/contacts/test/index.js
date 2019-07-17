@@ -17,7 +17,7 @@ test('There are no liquid errors on the page', async t => {
   await checkLiquidErrors({ t, Selector });
 });
 
-test('customizations_delete_all cleans contacts correctly', async t => {
+test('models_delete_all cleans contacts correctly', async t => {
   await t.expect(contacts.table.tableRows.count).gte(0);
 
   // clean database
