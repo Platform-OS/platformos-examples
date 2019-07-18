@@ -9,11 +9,12 @@ query get_contacts($id: ID) {
       }
     }
     per_page: 100
-  )
-  results {
-    id
-    name: property(name: "name")
-    email: property(name: "email")
-    description: property(name: "description")
+  ) {
+    results {
+      id
+      name: property(name: "name")
+      email: property(name: "email")
+      description: property(name: "description")
+    }
   }
 }

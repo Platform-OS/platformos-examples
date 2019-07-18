@@ -1,9 +1,9 @@
 mutation {
-  company_cleanup: models_delete_all(model_schama_name: "modules/n_plus_one/company") {
+  company_cleanup: models_delete_all(model_schema_name: "modules/n_plus_one/company") {
     count
   }
 
-  programmers_cleanup: models_delete_all(model_schama_name: "modules/n_plus_one/programmer") {
+  programmers_cleanup: models_delete_all(model_schema_name: "modules/n_plus_one/programmer") {
     count
   }
 }
