@@ -18,7 +18,7 @@ test('There is list of Customizations', async t => {
 
   for (let i = 0; i < count; i++) {
     const row = tableRowsCount.nth(i);
-    await t.expect(await row.innerText).match(/("email"=>"|"rate"=>")/);
+    await t.expect(await row.innerText).match(/("email":"|"rate":")/);
   }
 });
 

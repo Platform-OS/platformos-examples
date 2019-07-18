@@ -59,7 +59,7 @@ flash_notice: You have signed up successfully.
     <label for="form_mobile_number">Mobile number</label>
     <input class="form-control" placeholder="Please include country code" name="{{ form.fields.profiles.developer.properties.mobile_number.name }}" value="{{ form.fields.profiles.developer.properties.mobile_number.value }}" id="form_mobile_number" type="text">
     {% if form.fields.profiles.developer.properties.mobile_number.validation.errors %}
-      <p>{{ form.fields.profiles.developer.properties.mobile_number.validation.errors }}</p>
+      <p>{{ form.fields.profiles.developer.properties.mobile_number.validation.errors | join ', '}}</p>
     {% endif %}
   </div>
 
