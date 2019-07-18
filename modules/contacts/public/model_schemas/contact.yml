@@ -1,4 +1,4 @@
-name: Contact
+name: contact
 properties:
   - name: name
     type: string

@@ -5,7 +5,7 @@ slug: companies/seed
 {% assign _start = "now" | to_time %}
 
 {% log "adding companies", type: "[SEED]" %}
-{% execute_query "modules/n_plus_one/cleanup", result_name: "d" %}
+{% graphql d = "modules/n_plus_one/cleanup" %}
 {% log d, type: '[SEED] cleanup-done' %}
 
 {% assign company_ids = "[]" | parse_json %}
@@ -21,7 +21,7 @@ slug: companies/seed
   }
   {% endparse_json %}
 
-  {% execute_query "modules/n_plus_one/create_company", name: company.name, email: company.email, url: company.url, number: company.number, result_name: '_company' %}
+  {% graphql _company = "modules/n_plus_one/create_company", name: company.name, email: company.email, url: company.url, number: company.number %}
   {% assign company_ids = company_ids | add_to_array: _company.customization_create.id %}
 {% endfor %}
 
@@ -39,7 +39,7 @@ slug: companies/seed
   }
   {% endparse_json %}
 
-  {% execute_query "modules/n_plus_one/create_programmer", company_id: programmer.company_id, email: programmer.email, title: programmer.title %}
+  {% graphql g = "modules/n_plus_one/create_programmer", company_id: programmer.company_id, email: programmer.email, title: programmer.title %}
 {% endfor %}
 
 {% assign _step_3 = "now" | to_time %}
