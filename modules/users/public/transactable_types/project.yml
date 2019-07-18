@@ -1,4 +1,4 @@
-name: Project
+name: project
 properties:
 - name: workplace_onsite
   type: boolean

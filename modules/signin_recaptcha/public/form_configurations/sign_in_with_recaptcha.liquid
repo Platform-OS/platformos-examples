@@ -7,7 +7,7 @@ fields:
   email:
   password:
 callback_actions: >
-  {% execute_query "modules/signin_recaptcha/clear_failed_signin_attempts" %}
+  {% graphql g = "modules/signin_recaptcha/clear_failed_signin_attempts" %}
 ---
 {% form html-class: 'w-50' %}
   <div class="form-group">

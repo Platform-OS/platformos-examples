@@ -5,7 +5,7 @@ fields:
   email:
   password:
 callback_actions: >
-  {% execute_query "modules/signin_recaptcha/clear_failed_signin_attempts" %}
+  {% graphql g = "modules/signin_recaptcha/clear_failed_signin_attempts" %}
 ---
 {% form html-class: 'w-50' %}
   <div class="form-group">
@@ -27,7 +27,7 @@ callback_actions: >
 
   {% if form.errors != empty %}
     {% assign attempts = context.session.failed_attempts | default: 1 | plus: 1 %}
-    {% execute_query "modules/signin_recaptcha/set_failed_signin_attempts", attempts: attempts %}
+    {% graphql g = "modules/signin_recaptcha/set_failed_signin_attempts", attempts: attempts %}
   {% endif %}
 
   <button class="btn btn-primary">Log In</button>
