@@ -1,10 +1,19 @@
 query get_contacts($id: ID) {
-  customizations(name: "modules/contacts/contact", id: $id) {
-    results {
-      id
-      name: property(name: "name")
-      email: property(name: "email")
-      description: property(name: "description")
+  models(
+    filter: {
+      name: {
+        value: "modules/contacts/contact"
+      }
+      id: {
+        value: $id
+      }
     }
+    per_page: 100
+  )
+  results {
+    id
+    name: property(name: "name")
+    email: property(name: "email")
+    description: property(name: "description")
   }
 }

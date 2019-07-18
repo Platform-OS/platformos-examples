@@ -5,8 +5,8 @@ export default class Feedback {
     this.input = {
       create_message: Selector('#create_message'),
       update_message: Selector('#update_message'),
-      update_id: Selector('[data-form="update"] [name="customization_id"]'),
-      delete_id: Selector('[data-form="delete"] [name="customization_id"]')
+      update_id: Selector('[data-form="update"] [name="model_id"]'),
+      delete_id: Selector('[data-form="delete"] [name="model_id"]')
     };
     this.button = {
       submit: Selector('button').withText('Create'),

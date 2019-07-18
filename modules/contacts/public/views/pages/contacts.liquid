@@ -8,7 +8,7 @@ metadata:
 {%- graphql g = "modules/contacts/get_contacts", id: id -%}
 
 {%- if id == blank -%}
-  {% include 'modules/contacts/list', contacts: g.customizations.results %}
+  {% include 'modules/contacts/list', contacts: g.models.results %}
 {%- else -%}
-  {% include 'modules/contacts/show', contact: g.customizations.results.first %}
+  {% include 'modules/contacts/show', contact: g.models.results.first %}
 {%- endif -%}

@@ -1,4 +1,4 @@
-query get_customizations {
+query get_models {
   customizations(per_page: 15, sort: [{ name: "id", order: "desc" }]) {
     results {
       human_name

@@ -26,7 +26,7 @@ const Create = event => {
       }
     })
     .then(response => {
-      console.info(`Customization successfully created. Customization id: ${response.id}`);
+      console.info(`Model successfully created. Model id: ${response.id}`);
     });
 };
 
@@ -74,14 +74,14 @@ window.addEventListener('load', Read);
 
 const Update = event => {
   event.preventDefault();
-  const id = event.target.querySelector('[name="customization_id"]').value;
+  const id = event.target.querySelector('[name="model_id"]').value;
 
   request({
     url: `${event.target.getAttribute('action')}/${id}`,
     form: event.target
   }).then(response => {
     if (response.ok) {
-      console.info('Customization successfully updated.');
+      console.info('Model successfully updated.');
     }
   });
 };
@@ -93,14 +93,14 @@ updateForm.addEventListener('submit', Update);
 
 const Delete = event => {
   event.preventDefault();
-  const id = event.target.querySelector('[name="customization_id"]').value;
+  const id = event.target.querySelector('[name="model_id"]').value;
 
   request({
     url: `${event.target.getAttribute('action')}/${id}`,
     form: event.target
   }).then(response => {
     if (response.ok) {
-      console.info(`Customization ${id} successfully deleted.`);
+      console.info(`Model ${id} successfully deleted.`);
     }
   });
 };
