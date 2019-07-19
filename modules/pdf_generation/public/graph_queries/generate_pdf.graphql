@@ -1,8 +1,8 @@
-mutation generate_pdf($customization_id: ID!, $body: String!, $file_name: String!) {
+mutation generate_pdf($model_id: ID!, $body: String!, $file_name: String!) {
   custom_attachment_create(
     custom_attachment: {
-      owner_id: $customization_id
-      owner_type: "Customization"
+      owner_id: $model_id
+      owner_type: "Model"
       custom_attribute_name: "pdf"
       generate_file: {
         # synchronous: true

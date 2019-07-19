@@ -1,8 +1,8 @@
 mutation addProgrammer($title: String, $email: String, $company_id: String, $name: String, $specialties: [String!]) {
-  customization_create(
+  model_create(
     form_configuration_name: "modules/geo_models/create_programmer"
-    customization: {
-      custom_model_type_name: "modules/geo_models/programmer"
+    model: {
+      model_schema_name: "modules/geo_models/programmer"
       properties: [
         { name: "company_id", value: $company_id }
         { name: "title", value: $title }

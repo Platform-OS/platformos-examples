@@ -1,5 +1,16 @@
 query get_contacts($id: ID) {
-  customizations(name: "modules/contacts/contact", id: $id) {
+  models(
+    filter: {
+      name: {
+        value: "modules/contacts/contact"
+      }
+      deleted_at: { exists: false }
+      id: {
+        value: $id
+      }
+    }
+    per_page: 100
+  ) {
     results {
       id
       name: property(name: "name")

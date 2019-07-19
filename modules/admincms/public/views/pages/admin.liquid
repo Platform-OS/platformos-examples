@@ -12,11 +12,11 @@ metadata:
   <div class="col-xs-12 col-lg-6">
     <div class="card">
       <div class="card-header">
-        <h3> Customizations </h3>
+        <h3> Models </h3>
       </div>
       <div class="card-body">
-        {%- graphql c = "modules/admincms/get_customizations" -%}
-        <table class="table table-sm" data-result="customizations">
+        {%- graphql c = "modules/admincms/get_models" -%}
+        <table class="table table-sm" data-result="models">
           <thead>
             <tr>
               <th>Name</th>
@@ -24,23 +24,23 @@ metadata:
             </tr>
           </thead>
           <tbody>
-            {% for customization in c.customizations.results %}
+            {% for model in c.models.results %}
               <tr>
-                <td>{{ customization.human_name }}</td>
-                <td>{{ customization.properties }}</td>
+                <td>{{ model.human_name }}</td>
+                <td>{{ model.properties }}</td>
               </tr>
             {% endfor %}
           </tbody>
         </table>
       </div>
-    </div> 
+    </div>
   </div>
   <div class="col-xs-12 col-lg-6">
     <div class="card">
       <div class="card-header">
         <h3>Pages</h3>
       </div>
-      
+
       <div class="card-body">
         {%- graphql c = "modules/admincms/get_pages" -%}
         <table class="table table-sm" data-result="pages">
