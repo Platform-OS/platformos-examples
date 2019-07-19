@@ -4,7 +4,7 @@ query get_contacts($id: ID) {
       name: {
         value: "modules/contacts/contact"
       }
-      deleted_at: { value: null }
+      deleted_at: { exists: false }
       id: {
         value: $id
       }
