@@ -2,7 +2,7 @@ query feedback($per_page: Int = 10) {
   models(
     filter: {
       name: { value: "modules/feedback/feedback" }
-      deleted_at: { exists: false }
+      deleted_at: { value: null }
     },
     per_page: $per_page,
     sort: { created_at: { order: DESC }}

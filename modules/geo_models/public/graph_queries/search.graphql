@@ -27,7 +27,7 @@ query search($company_id: String, $point: GeometryJSON, $distance: Int, $special
         {name: "company_id", value: $company_id}
         {name: "location", distance_sphere: { center: $point distance_in_km: $distance } }
       ]
-      deleted_at: { exists: false }
+      deleted_at: { value: null }
       name: { value_in: "modules/geo_models/company" }
     }
     per_page: 20
