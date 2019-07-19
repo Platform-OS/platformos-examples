@@ -3,6 +3,7 @@ query get_contacts($id: ID) {
     filter: {
       name: {
         value: "modules/contacts/contact"
+        deleted_at: { exists: false }
       }
       id: {
         value: $id

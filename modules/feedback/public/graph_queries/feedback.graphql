@@ -1,7 +1,7 @@
 query feedback($per_page: Int = 10) {
   models(
     filter: {
-      name: { value: "modules/feedback/feedback" },
+      name: { value: "modules/feedback/feedback" }
       deleted_at: { exists: false }
     },
     per_page: $per_page,
