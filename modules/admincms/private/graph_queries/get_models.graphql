@@ -1,7 +1,11 @@
 query get_models {
-  customizations(per_page: 15, sort: [{ name: "id", order: "desc" }]) {
+  models(
+    per_page: 15,
+    sort: { id: { order: DESC }}
+
+  ) {
     results {
-      human_name
+      name
       properties
     }
   }
