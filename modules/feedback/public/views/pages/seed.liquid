@@ -21,6 +21,6 @@ format: json
 [
   {%- for f in shuffled_feedback -%}
   {%- graphql c = 'modules/feedback/create_feedback', rate: f.rate, message: f.message -%}
-  {{ c.customization_create | json }}{%- unless forloop.last -%},{%- endunless -%}
+  {{ c.model_create | json }}{%- unless forloop.last -%},{%- endunless -%}
   {%- endfor -%}
 ]

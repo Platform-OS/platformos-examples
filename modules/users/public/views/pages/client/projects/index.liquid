@@ -12,7 +12,7 @@ slug: client/projects
   {% if g.projects.total_entries > 0 %}
     <ul>
       {% for project in g.projects.results %}
-        <li>{{ project.name }} ({{ project.state }}) - <a href="/client/projects/edit/{{project.slug}}">edit</a>
+        <li>{{ project.name }} ({{ project.state }}) - <a href="/client/projects/edit/{{project.id}}">edit</a>
         {% include_form 'modules/users/destroy_project', id: project.id %}</li>
       {% endfor %}
     </ul>

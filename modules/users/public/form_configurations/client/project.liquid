@@ -1,11 +1,12 @@
 ---
 name: project
-resource: Transactable
+resource: modules/users/project
+redirect_to: client/projects
 fields:
-  name:
-    validation:
-      presence: true
   properties:
+    name:
+      validation:
+        presence: true
     deadline:
       validation:
         presence: true
@@ -25,9 +26,9 @@ fields:
   <div>
     <label for="form_name"><abbr title="required">*</abbr> Name</label>
     <div>
-      <input class="string required" name="{{ form.fields.name.name }}" value="{{ form.fields.name.value }}" id="form_name" type="text">
-      {% if form.errors.name %}
-        <p>{{ form.errors.name }}</p>
+      <input class="string required" name="{{ form.fields.properties.name.name }}" value="{{ form.fields.properties.name.value }}" id="form_name" type="text">
+      {% if form.errors['properties.name'] %}
+        <p>{{ form.errors['properties.name'] }}</p>
       {% endif %}
     </div>
   </div>
@@ -36,8 +37,8 @@ fields:
     <label for="form_description"><abbr title="required">*</abbr> Description</label>
     <div>
       <textarea class="text required" name="{{ form.fields.properties.description.name }}" id="form_description">{{ form.fields.properties.description.value }}</textarea>
-      {% if form.errors.description %}
-        <p>{{ form.errors.description }}</p>
+      {% if form.errors['properties.description'] %}
+        <p>{{ form.errors['properties.description'] }}</p>
       {% endif %}
     </div>
   </div>

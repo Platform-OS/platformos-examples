@@ -1,5 +1,7 @@
 name: project
 properties:
+- name: name
+  type: string
 - name: workplace_onsite
   type: boolean
 - name: workplace_online

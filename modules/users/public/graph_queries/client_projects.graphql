@@ -1,9 +1,15 @@
 query client_projects($page: Int, $creator_id: ID!) {
-  projects: listings(
+  projects: models(
     per_page: 20
     page: $page
-    sort: [{ name: "created_at", order: "desc" }]
-    listing: { creator_id: $creator_id, is_deleted: false }
+    sort: [
+      { created_at: { order: DESC } }
+    ]
+    filter:{
+      name: { value: "modules/users/project" }
+      user_id: { value: $creator_id }
+      deleted_at: {exists: false }
+    }
   ) {
     total_entries
     has_next_page
@@ -13,8 +19,7 @@ query client_projects($page: Int, $creator_id: ID!) {
 
     results {
       id
-      name
-      slug
+      name: property(name: "name")
       state: property(name: "state")
       description: property(name: "description")
     }

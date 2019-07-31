@@ -1,5 +1,5 @@
 query company($id: ID) {
-  companies: customizations(name: "modules/n_plus_one/company", per_page: 200, id: $id) {
+  companies: models(per_page: 200, filter: { name: { value: "modules/n_plus_one/company" }, id: { value: $id } }){
     total_entries
     results {
       name
