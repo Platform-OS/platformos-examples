@@ -86,7 +86,7 @@ This approach requires two grapqhl queries:
 
 ```graphql
 query programmers {
-  programmers: customizations(name: "programmer"){
+programmers: models(filter: { name: { value: "programmer" } }){
     total_entries
     results {
       properties
@@ -98,7 +98,7 @@ query programmers {
 ##### company.graphql
 ```graphql
 query company($id: ID) {
-  companies: customizations(name: "company", id: $id){
+  companies: models(filter: { name: { value: "company" }, id: { value: $id } }){
     results {
       name
       id
@@ -154,9 +154,10 @@ So what we can do to avoid n+1 queries?
 We are able to load related data at once along with the programmer collection using new graphql field called `model`.
 
 ```graphql
-   model(join_on_property: "company_id") { properties }
+   model(model_name: "modules/n_plus_one/company", join_on_property: "company_id") { properties }
 ```
 
+`model_name` argument is required and is used to configure which model schema should be fetched;
 `join_on_property` argument is required and is used as a foreign key of company collection. In SQL language this could look similarly to:
 
 ```sql
@@ -166,11 +167,11 @@ select * from programmers joins companies on (programmers.company_id = companies
 and after updating our graphql query looks now:
 ```graphql
 query programmers {
-  programmers: customizations(name: "programmer", per_page: 200){
+  programmers: models(filter: { name: { value: "programmer" } }, per_page: 200){
     total_entries
     results {
       properties
-      company: model(join_on_property: "company_id") {
+      company: model(model_name: "modules/n_plus_one/company", join_on_property: "company_id") {
         url: property(name: "url")
         properties
       }
