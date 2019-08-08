@@ -3,11 +3,13 @@
     <a href="/{{ item.slug }}">{{ item.metadata.description }}</a>
   </td>
   <td>
+    {% if item.metadata.docs_slug != blank %}
     <a href="https://documentation.platformos.com/{{ item.metadata.docs_slug }}" target="_blank" rel="noopener">
       Open
       <sup>
         <img src="{{ 'modules/homepage/external.svg' | asset_url }}" width="12">
       </sup>
     </a>
+    {% endif %}
   </td>
 </tr>
