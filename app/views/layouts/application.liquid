@@ -5,7 +5,9 @@
   <link rel="shortcut icon" type="image/x-icon" href="{{ 'favicon.ico' | asset_url }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous" defer></script>
+
   {% include 'shared/sentry' %}
+  {% yield 'head:bottom' %}
 </head>
 
 <body>
@@ -34,5 +36,7 @@
       </p>
     </footer>
   </div>
+
+  {% yield 'body:bottom' %}
 </body>
 </html>

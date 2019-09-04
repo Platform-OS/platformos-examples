@@ -6,12 +6,4 @@ metadata:
   docs_slug: tutorials/user-uploads/uploading-files-directly-amazons3-using-ajax
 ---
 
-{% unless context.current_user.id %}
-  <div class="alert alert-info">
-    <strong>Heads up!</strong> Those examples need you to be logged in as developer.
-    <br/>
-    If you dont have developer account, <a href="/developer/sign-up">create it here</a>.
-  </div>
-{% endunless %}
-
 {% include_form 'modules/direct_s3_upload/update_profile', id: context.current_user.id %}

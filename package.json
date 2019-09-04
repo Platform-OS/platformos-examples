@@ -4,6 +4,7 @@
   "description": "Examples repository for features described at https://documentation.platformos.com",
   "scripts": {
     "deploy": "pos-cli deploy",
+    "bs": "npx browser-sync start --files modules/* --reload-delay 1000 --proxy",
     "test": "docker run -v $PWD:/MP -e \"MP_URL=$MP_URL\" -it platformos/testcafe 'testcafe \"chromium:headless --no-sandbox\" /MP/tests/e2e/features \"/MP/modules/**/test/*.js\"'",
     "test-ci": "testcafe 'chromium:headless --no-sandbox' --screenshots-on-fails --screenshots=screenshots tests/e2e/features/ \"modules/**/test/*.js\"",
     "test-local": "NODE_NO_WARNINGS=1 npx testcafe \"chrome:headless\" tests/e2e \"modules/**/test/*.js\"",
