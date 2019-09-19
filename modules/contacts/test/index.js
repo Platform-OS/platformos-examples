@@ -11,7 +11,7 @@ const { name, email, description } = {
   description: faker.lorem.sentence()
 };
 
-fixture('Contacts').page(`${process.env.MP_URL}/contacts`);
+fixture('Contacts').page(`${process.env.MP_URL}/contacts?language=en`);
 
 test('There are no liquid errors on the page', async t => {
   await checkLiquidErrors({ t, Selector });
