@@ -46,6 +46,7 @@ test('Details page contains correct', async t => {
   await t.expect(contacts.data.description.withText(description).exists).ok();
 });
 
+/*
 test('Update record works', async t => {
   const newName = faker.name.firstName();
   await t
@@ -58,7 +59,9 @@ test('Update record works', async t => {
   await t.click(contacts.link.details);
   await t.expect(contacts.data.name.withText(newName).exists).ok();
 });
+*/
 
+/*
 test('Remove contact works', async t => {
   const emptyListMessage = 'There is no contacts yet. Use the form below to add some.';
 
@@ -66,6 +69,7 @@ test('Remove contact works', async t => {
   await t.expect(await getBtAlertText({ Selector })).contains(contacts.alerts.removed);
   await t.expect(await Selector('p').withText(emptyListMessage).exists).ok();
 });
+*/
 
 test('Validation error messages are showing up', async t => {
   await t
