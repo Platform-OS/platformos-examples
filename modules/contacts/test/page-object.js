@@ -17,7 +17,8 @@ export default class Contacts {
     this.link = {
       details: Selector('a').withText('Details'),
       detailsContact: Selector('td:nth-of-type(3) a'),
-      edit: Selector('a').withText('Edit')
+      edit: Selector('a').withText('Edit'),
+      editContact: Selector('td:nth-of-type(4) a')
     };
     this.table = {
       tableRows: Selector('tbody > tr'),
