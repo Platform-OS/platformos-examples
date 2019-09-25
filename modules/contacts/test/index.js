@@ -63,7 +63,7 @@ test('Details page contains correct', async t => {
 test('Update record works', async t => {
   const newName = faker.name.firstName();
   await t
-    .click(contacts.link.edit)
+    .click(contacts.link.editContact)
     .typeText(contacts.input.name, newName, {
       replace: true
     })
@@ -73,7 +73,7 @@ test('Update record works', async t => {
     Selector
   })).contains(contacts.alerts.updated);
 
-  await t.click(contacts.link.details);
+  await t.click(contacts.link.detailsContact);
   await t.expect(contacts.data.name.withText(newName).exists).ok();
 });
 
