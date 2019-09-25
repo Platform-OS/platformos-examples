@@ -53,7 +53,7 @@ test('Adding new record works', async t => {
 });
 
 test('Details page contains correct', async t => {
-  await t.click(contacts.link.details);
+  await t.click(contacts.link.detailsContact);
 
   await t.expect(contacts.data.name.withText(name).exists).ok();
   await t.expect(contacts.data.email.withText(email).exists).ok();
