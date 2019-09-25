@@ -1,11 +1,20 @@
-import { Selector } from 'testcafe';
+import {
+  Selector
+} from 'testcafe';
 import faker from 'faker';
 import Contacts from './page-object';
-import { checkLiquidErrors, getBtAlertText } from '@platform-os/testcafe-helpers';
+import {
+  checkLiquidErrors,
+  getBtAlertText
+} from '@platform-os/testcafe-helpers';
 
 const contacts = new Contacts();
 
-const { name, email, description } = {
+const {
+  name,
+  email,
+  description
+} = {
   email: faker.internet.exampleEmail(),
   name: faker.name.firstName(),
   description: faker.lorem.sentence()
@@ -14,7 +23,10 @@ const { name, email, description } = {
 fixture('Contacts').page(`${process.env.MP_URL}/contacts?language=en`);
 
 test('There are no liquid errors on the page', async t => {
-  await checkLiquidErrors({ t, Selector });
+  await checkLiquidErrors({
+    t,
+    Selector
+  });
 });
 
 test('models_delete_all cleans contacts correctly', async t => {
@@ -32,7 +44,9 @@ test('Adding new record works', async t => {
     .typeText(contacts.input.description, description)
     .click(contacts.button.save);
 
-  await t.expect(await getBtAlertText({ Selector })).contains(contacts.alerts.saved);
+  await t.expect(await getBtAlertText({
+    Selector
+  })).contains(contacts.alerts.saved);
 
   await t.expect(contacts.table.email.exists).ok();
   await t.expect(await Selector('table tbody td').withText(email).exists).ok();
@@ -50,10 +64,14 @@ test('Update record works', async t => {
   const newName = faker.name.firstName();
   await t
     .click(contacts.link.edit)
-    .typeText(contacts.input.name, newName, { replace: true })
+    .typeText(contacts.input.name, newName, {
+      replace: true
+    })
     .click(contacts.button.save);
 
-  await t.expect(await getBtAlertText({ Selector })).contains(contacts.alerts.updated);
+  await t.expect(await getBtAlertText({
+    Selector
+  })).contains(contacts.alerts.updated);
 
   await t.click(contacts.link.details);
   await t.expect(contacts.data.name.withText(newName).exists).ok();
@@ -62,8 +80,10 @@ test('Update record works', async t => {
 test('Remove contact works', async t => {
   const emptyListMessage = 'There is no contacts yet. Use the form below to add some.';
 
-  await t.click(contacts.button.delete);
-  await t.expect(await getBtAlertText({ Selector })).contains(contacts.alerts.removed);
+  await t.click(contacts.button.deleteContact);
+  await t.expect(await getBtAlertText({
+    Selector
+  })).contains(contacts.alerts.removed);
   await t.expect(await Selector('p').withText(emptyListMessage).exists).ok();
 });
 
