@@ -1,4 +1,6 @@
-import { Selector } from 'testcafe';
+import {
+  Selector
+} from 'testcafe';
 
 export default class Contacts {
   constructor() {
@@ -9,7 +11,8 @@ export default class Contacts {
     };
     this.button = {
       save: Selector('.btn').withText('Save'),
-      delete: Selector('button').withText('Delete')
+      delete: Selector('button').withText('Delete'),
+      deleteContact: Selector('button.btn.btn-link')
     };
     this.link = {
       details: Selector('a').withText('Details'),
