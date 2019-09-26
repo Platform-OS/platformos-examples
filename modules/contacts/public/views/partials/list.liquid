@@ -3,6 +3,7 @@
 {% if contacts == blank %}
   <p>There is no contacts yet. Use the form below to add some.</p>
 {% else %}
+  <h3>Contacts count: {{ contacts.size }}</h3>
   <table class="table table-striped">
     <tr>
       <th>ID</th>
