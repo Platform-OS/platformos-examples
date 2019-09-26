@@ -79,8 +79,9 @@ test('Update record works', async t => {
 
 test('Remove contact works', async t => {
   const emptyListMessage = 'There is no contacts yet. Use the form below to add some.';
+  const countMessage = 'Contacts count: 1';
 
-  await t.expect(await Selector('h3')).contains('Contacts count: 1');
+  await t.expect(await Selector('h3').withText(countMessage).exists).ok();
   await t.click(contacts.button.deleteContact);
   await t.expect(await getBtAlertText({Selector})).contains(contacts.alerts.removed);
   await t.expect(await Selector('p').withText(emptyListMessage).exists).ok();
