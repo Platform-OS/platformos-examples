@@ -18,7 +18,7 @@ export default class Feedback {
       delete: Selector(
         '.row > .mt-3:nth-of-type(3) .simple_form.form > .card > .card-body > button.btn.btn-primary.mt-3'
       ),
-      refresh: Selector('button[type="button"][data-button="refreshRead]')
+      refresh: Selector('button[type="button"].btn.btn-primary.ml-3')
     };
     this.radio = {
       create: {
