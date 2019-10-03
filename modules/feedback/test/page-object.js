@@ -9,10 +9,16 @@ export default class Feedback {
       delete_id: Selector('[data-form="delete"] [name="model_id"]')
     };
     this.button = {
-      submit: Selector('button').withText('Create'),
-      update: Selector('button').withText('Update'),
-      delete: Selector('button').withText('Delete'),
-      refresh: Selector('button').withText('Refresh content from the server')
+      submit: Selector(
+        '.row > .mt-3:nth-of-type(1) .simple_form.form > .card > .card-body > button.btn.btn-primary.mt-3'
+      ),
+      update: Selector(
+        '.row > .mt-3:nth-of-type(2) .simple_form.form > .card > .card-body > button.btn.btn-primary.mt-3'
+      ),
+      delete: Selector(
+        '.row > .mt-3:nth-of-type(3) .simple_form.form > .card > .card-body > button.btn.btn-primary.mt-3'
+      ),
+      refresh: Selector('button[type="button"][data-button="refreshRead]')
     };
     this.radio = {
       create: {
