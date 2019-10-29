@@ -1,0 +1,8 @@
+---
+slug: update_profile/advanced/create_model
+method: post
+---
+{% log context.params, type: 'Trying to create image' %}
+{% graphql model = "modules/direct_s3_upload/create_model", direct_url: context.params.direct_url %}
+
+{{ model }}

@@ -1,0 +1,4 @@
+name: uppy
+properties:
+- name: photo
+  type: photo
