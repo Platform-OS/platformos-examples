@@ -2,97 +2,114 @@
 slug: update_profile/advanced
 metadata:
   full_width: true
-  description: Uploading files directly to Amazon S3 using Uppy
+  description: Direct S3 upload with image processing
 ---
 
 {% unless context.current_user.id %}
   <div class="alert alert-danger">
-    <strong>Heads up!</strong> Example below require you to be logged in as *developer*.
+    <strong>Heads up!</strong> Example below require you to be logged in.
     <br/>
-    If you dont have developer account, <a href="/developer/sign-up">create it here</a>.
+    If you dont have an account, <a href="/developer/sign-up">create your developer account here</a>.
   </div>
-{% endunless %}
+{% else %}
 
-<h2 id="#direct-upload-using-uppy">Direct upload using uppy (<a href="https://uppy.io/" target="_blank" rel="noopener">uppy.io</a>)</h2>
+  <h2 id="#direct-upload-using-uppy">Direct upload using uppy (<a href="https://uppy.io/" target="_blank" rel="noopener">uppy.io</a>)</h2>
 
-{% graphql data = 'modules/direct_s3_upload/image_presign_url' %}
-{% assign data = data.image_presign_url %}
+  {% graphql data = 'modules/direct_s3_upload/image_presign_url' %}
+  {% assign data = data.image_presign_url %}
 
-<form action="{{ data.upload_url }}" hidden data-s3-uppy="form">
-  {% for field in data.upload_url_payload %}
-    <input type="hidden" name="{{ field[0] }}" value='{{ field[1] }}'>
-  {% endfor %}
-</form>
+  <form action="{{ data.upload_url }}" hidden data-s3-uppy="form">
+    {% for field in data.upload_url_payload %}
+      <input type="hidden" name="{{ field[0] }}" value='{{ field[1] }}'>
+    {% endfor %}
+  </form>
 
-<div class="row">
-  <div class="col-5">
-    <div class="card">
-      <div class="card-body">
-        <div id="drag-drop-area"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-7">
-    <div class="card">
-      <div class="card-body">
-        <p>Uppy plugins used:</p>
-        <ol>
-          <li>Dashboard</li>
-          <li>DragDrop</li>
-          <li>GoldenRetriever</li>
-          <li>AwsS3</li>
-        </ol>
-
-        <hr>
-
-        <p>S3 direct_url used to create custom_image:</p>
-        <small>
-          <ol data-s3-uppy="log"></ol>
-        </small>
-      </div>
-    </div>
-  </div>
-</div>
-
-<hr>
-
-<h3>Last 5 processed images:</h3>
-
-{% graphql models = "modules/direct_s3_upload/get_models", per_page: 5 | dig: "models" %}
-
-{% if models.total_entries > 0 %}
-  {% for model in models.results %}
-
-    {% assign imgs = model | dig: "images" | first %}
-
-    <hr class="my-4">
-
-    <div class="row">
-        {% for img in imgs %}
-        <div class="col-sm-2">
-          <h4>{{ img[0] }}</h4>
-          <a href="{{ img[1] }}">
-            <img src="{{ img[1] }}" alt="" width="150">
-          </a><br>
-          <small>{{ img[1] }}</small>
+  <div class="row">
+    <div class="col-5">
+      <div class="card">
+        <div class="card-body">
+          <div id="drag-drop-area"></div>
         </div>
-      {% endfor %}
+      </div>
     </div>
 
-  {% endfor %}
-{% endif %}
+    <div class="col-7">
+      <div class="card">
+        <div class="card-body">
+          <p>Uppy plugins used:</p>
+          <ol>
+            <li>Dashboard</li>
+            <li>DragDrop</li>
+            <li>GoldenRetriever</li>
+            <li>AwsS3</li>
+          </ol>
+
+          <hr>
+
+          <p>URLs to image returned by AWS (input):</p>
+          <small>
+            <ol data-s3-uppy="log"></ol>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% graphql models = "modules/direct_s3_upload/get_models", per_page: 5 | dig: "models" %}
+
+  {% if models.total_entries > 0 %}
+    <hr>
+
+    <div class="row my-2">
+      <div class="col-9">
+        <h3>Last 5 processed images:</h3>
+      </div>
+
+      {% comment %}
+        TODO: Uncomment after #9016 is fixed
+      {% endcomment %}
+      <!-- <div class="col-3">
+        <form action="/update_profile/advanced/delete_all" method="GET">
+          <button class="btn btn-secondary">Delete all images</button>
+        </form>
+      </div> -->
+    </div>
+
+    {% for model in models.results %}
+
+      {% assign imgs = model | dig: "images" | first %}
+
+      <div class="card my-4">
+        <div class="card-body">
+          <div class="row">
+            {% for img in imgs %}
+            <div class="col-sm-2">
+              <h4>{{ img[0] }}</h4>
+              <a href="{{ img[1] }}">
+                <img src="{{ img[1] }}" alt="" width="150">
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  {% endunless %}
 
 <hr>
 
 <p>
   Source code of this example:
   <a href="https://github.com/mdyd-dev/marketplace-nearme-example/blob/master/modules/direct_s3_upload/public/assets/advanced/uploader.js" target="_blank">JS</a>,
-  <a href="https://github.com/mdyd-dev/marketplace-nearme-example/blob/master/modules/direct_s3_upload/public/views/partials/advanced.liquid" target="_blank">HTML</a>
+  <a href="https://github.com/mdyd-dev/marketplace-nearme-example/blob/master/modules/direct_s3_upload/public/views/pages/advanced.liquid" target="_blank">HTML</a>
+  <a href="https://github.com/mdyd-dev/marketplace-nearme-example/blob/master/modules/direct_s3_upload/public/graph_queries" target="_blank">GraphQL</a>
 </p>
 
 {% content_for "head:bottom" %}
 <link href="https://transloadit.edgly.net/releases/uppy/v1.5.2/uppy.css" rel="stylesheet">
 <script src="https://transloadit.edgly.net/releases/uppy/v1.5.2/uppy.js" defer></script>
 <script src="{{ 'modules/direct_s3_upload/advanced/uploader.js' | asset_url }}" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8" defer></script>
 {% endcontent_for %}

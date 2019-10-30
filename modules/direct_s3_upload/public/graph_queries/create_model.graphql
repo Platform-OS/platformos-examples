@@ -3,7 +3,7 @@ mutation model_create($direct_url: String!, $property_name: String = "photo", $m
     custom_model_type_name: $model_schema_name
     custom_images: {
       name: $property_name
-      image: $direct_url
+      direct_url: $direct_url
     }
   }) {
     id

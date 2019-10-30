@@ -45,7 +45,19 @@ uppy.on('upload-success', (file, data) => {
 
 uppy.on('complete', ({ failed, successful }) => {
   Promise.all(successful.map(({ response }) => createImage(response.body.location))).then(() => {
-    window.location.reload();
+    Swal.fire({
+      title: 'Images uploaded',
+      type: 'success',
+      text: 'Press refresh to see the results',
+      confirmButtonText: 'Refresh',
+      showCloseButton: true
+    }).then(result => {
+      if (!result.value) {
+        return;
+      }
+
+      window.location.reload();
+    });
   });
 });
 

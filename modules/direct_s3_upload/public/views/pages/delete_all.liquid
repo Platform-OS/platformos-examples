@@ -1,0 +1,14 @@
+---
+slug: update_profile/advanced/delete_all
+method: get
+redirect_to: /update_profile/advanced?flash[notice]=Images removed
+---
+{% graphql delete_all %}
+mutation delete_all {
+  models_delete_all(model_schema_name: "modules/direct_s3_upload/uppy") {
+    count
+  }
+}
+{% endgraphql %}
+
+{{ delete_all }}
