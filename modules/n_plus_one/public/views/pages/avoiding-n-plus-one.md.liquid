@@ -151,13 +151,13 @@ So what we can do to avoid n+1 queries?
 
 ## approach #2 - request company data within `programmers` graphql query
 
-We are able to load related data at once along with the programmer collection using new graphql field called `model`.
+We are able to load related data at once along with the programmer collection using new graphql field called `related_model`.
 
 ```graphql
-   model(model_name: "modules/n_plus_one/company", join_on_property: "company_id") { properties }
+   related_model(model_schema_name: "modules/n_plus_one/company", join_on_property: "company_id") { properties }
 ```
 
-`model_name` argument is required and is used to configure which model schema should be fetched;
+`model_schema_name` argument is required and is used to configure which model schema should be fetched;
 `join_on_property` argument is required and is used as a foreign key of company collection. In SQL language this could look similarly to:
 
 ```sql
@@ -167,11 +167,11 @@ select * from programmers joins companies on (programmers.company_id = companies
 and after updating our graphql query looks now:
 ```graphql
 query programmers {
-  programmers: models(filter: { name: { value: "programmer" } }, per_page: 200){
+  programmers: models(filter: { model_schema_name: { value: "programmer" } }, per_page: 200){
     total_entries
     results {
       properties
-      company: model(model_name: "modules/n_plus_one/company", join_on_property: "company_id") {
+      company: related_model(model_schema_name: "modules/n_plus_one/company", join_on_property: "company_id") {
         url: property(name: "url")
         properties
       }

@@ -11,11 +11,11 @@ query search($company_id: String, $point: GeometryJSON, $distance: Int, $special
   }
   companies: models(
     filter: {
-      models: [
+      related_models: [
         {
           join: { join_on_property: "id" foreign_property: "company_id" }
           filter: {
-            name: { value: "modules/geo_models/programmer" }
+            model_schema_name: { value: "modules/geo_models/programmer" }
             properties: [
               { name: "specialties", value_in: $specialties }
             ]
@@ -40,7 +40,7 @@ query search($company_id: String, $point: GeometryJSON, $distance: Int, $special
       timezone: property(name: "timezone")
       city: property(name: "city")
 
-      programmers: models(join_on_property: "id" foreign_property: "company_id" model_name: "modules/geo_models/programmer") {
+      programmers: related_models(join_on_property: "id" foreign_property: "company_id" model_schema_name: "modules/geo_models/programmer") {
         email: property(name: "email")
         name: property(name: "name")
         specialties: property_array(name: "specialties")
