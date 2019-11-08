@@ -2,7 +2,7 @@ query search {
   companies: models(
     filter: {
       deleted_at: { exists: false }
-      name: { value_in: "modules/geo_models/company" }
+      model_schema_name: { value_in: "modules/geo_models/company" }
     }
     per_page: 500
   ) {
@@ -14,7 +14,7 @@ query search {
       timezone: property(name: "timezone")
       city: property(name: "city")
 
-      programmers: models(join_on_property: "id" foreign_property: "company_id" model_name: "modules/geo_models/programmer") {
+      programmers: related_models(join_on_property: "id" foreign_property: "company_id" model_schema_name: "modules/geo_models/programmer") {
         email: property(name: "email")
         name: property(name: "name")
         specialties: property_array(name: "specialties")

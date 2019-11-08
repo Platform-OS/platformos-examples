@@ -1,10 +1,10 @@
 query programmers_with_companies {
-  programmers: models(filter: { name: { value: "modules/n_plus_one/programmer" } }, per_page: 200) {
+  programmers: models(filter: { model_schema_name: { value: "modules/n_plus_one/programmer" } }, per_page: 200) {
     total_entries
     results {
       id
       properties
-      company: model(model_name: "modules/n_plus_one/company", join_on_property: "company_id") {
+      company: related_model(model_schema_name: "modules/n_plus_one/company", join_on_property: "company_id") {
         url: property(name: "url")
         properties
       }
