@@ -2,7 +2,7 @@ query get_models($model_name: String = "modules/direct_s3_upload/uppy", $per_pag
   models(
     per_page: $per_page
     sort: { created_at: { order: DESC } }
-    filter: { name: { value: $model_name }, deleted_at: { exists: false } }
+    filter: { model_schema_name: { value: $model_name }, deleted_at: { exists: false } }
   ) {
     total_entries
     results {
@@ -11,10 +11,10 @@ query get_models($model_name: String = "modules/direct_s3_upload/uppy", $per_pag
       deleted_at
       images {
         original: url
-        large_bw: url(version: "large_bw", _extension: ".jpeg")
-        small: url(version: "small", _extension: ".webp")
-        thumb: url(version: "thumb", _extension: ".png")
-        center: url(version: "center", _extension: ".jpeg")
+        large_bw: url(version: "large_bw")
+        small: url(version: "small")
+        thumb: url(version: "thumb")
+        center: url(version: "center")
       }
     }
   }
