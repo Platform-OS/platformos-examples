@@ -4,21 +4,41 @@ properties:
   type: photo
   image_versions:
     large_bw:
-      output: { format: jpeg, quality: 70 }
+      output:
+        format: jpeg
+        quality: 70
       resize:
-        width: 1600,
-        height: 1200,
-        fit: inside,
-        position: top,
+        width: 1600
+        height: 1200
+        fit: inside
+        position: top
         background: "rgba(255, 255, 255, 0.5)"
         without_enlargement: false
-      manipulate: { greyscale: true, blur: 20, flatten: "red" }
+      manipulate:
+        greyscale: true
+        blur: 20
+        flatten: "red"
     small:
-      output: { format: webp, quality: 80 }
-      resize: { width: 640, height: 480, fit: cover, position: top }
+      output:
+        format: webp
+        quality: 80
+      resize:
+        width: 640
+        height: 480
+        fit: cover
+        position: top
     thumb:
-      output: { format: png, quality: 80 }
-      resize: { width: 200, fit: contain }
+      output:
+        format: png
+        quality: 80
+      resize:
+        width: 200
+        fit: contain
     center:
-      output: { format: jpeg, quality: 100 }
-      resize: { height: 400, width: 400, fit: cover }
+      output:
+        format: jpeg
+        quality: 100
+      resize:
+        height: 400
+        width: 400
+        fit: cover
