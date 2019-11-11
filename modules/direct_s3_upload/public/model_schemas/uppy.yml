@@ -17,7 +17,7 @@ properties:
       manipulate:
         greyscale: true
         blur: 20
-        flatten: "red"
+        flatten: red
     small:
       output:
         format: webp
