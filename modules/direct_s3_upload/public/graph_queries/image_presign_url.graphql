@@ -2,36 +2,7 @@ mutation presign {
   image_presign_url(
     options: {
       content_length: { gte: 0, lte: 2048 }
-      versions: [
-        {
-          name: "large_bw"
-          output: { format: jpeg, quality: 70 }
-          resize: {
-            width: 1600
-            height: 1200
-            fit: inside
-            position: top
-            background: "rgba(255, 255, 255, 0.5)"
-            without_enlargement: false
-          }
-          manipulate: { greyscale: true, blur: 20, flatten: "red" }
-        }
-        {
-          name: "small"
-          output: { format: webp, quality: 80 }
-          resize: { width: 640, height: 480, fit: cover, position: top }
-        }
-        {
-          name: "thumb"
-          output: { format: png, quality: 80 }
-          resize: { width: 200, fit: contain }
-        }
-        {
-          name: "center"
-          output: { format: jpeg, quality: 100 }
-          resize: { height: 400, width: 400, fit: cover }
-        }
-      ]
+      model_property: { model_schema_name: "uppy", property_name: "photo" }
     }
   ) {
     upload_url
