@@ -16,11 +16,8 @@ test('Create', async t => {
   await t
     .click(feedback.radio.create.excellent)
     .typeText(feedback.input.create_message, lorem)
-    .click(feedback.button.submit);
-
-  const log = await feedback.data.log.with({
-    visibilityCheck: true
-  })();
+    .click(feedback.button.submit)
+    .wait(2000); //it's a fix for random fails
 
   await t.click(feedback.button.refresh);
 
