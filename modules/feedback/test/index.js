@@ -17,6 +17,7 @@ test('Create', async t => {
     .click(feedback.radio.create.excellent)
     .typeText(feedback.input.create_message, lorem)
     .click(feedback.button.submit)
+    .wait(2000) //it's a fix for random fails
     .click(feedback.button.refresh);
 
   await t.expect(feedback.table.tableRows.count).eql(1);
