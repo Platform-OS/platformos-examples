@@ -18,7 +18,7 @@ metadata:
   {% graphql data = 'modules/direct_s3_upload/image_presign_url' %}
   {% assign data = data.image_presign_url %}
 
-  <form action="{{ data.upload_url }}" hidden data-s3-uppy="form">
+  <form action="{{ data.upload_url }}" hidden data-s3-uppy="form" data-s3-uppy-user-id="{{ context.current_user.id }}">
     {% for field in data.upload_url_payload %}
       <input type="hidden" name="{{ field[0] }}" value='{{ field[1] }}'>
     {% endfor %}
@@ -55,7 +55,7 @@ metadata:
     </div>
   </div>
 
-  {% graphql models = "modules/direct_s3_upload/get_models", per_page: 5 | dig: "models" %}
+  {% graphql models = "modules/direct_s3_upload/get_models", per_page: 5, user_id: context.current_user.id | dig: "models" %}
 
   {% if models.total_entries > 0 %}
     <hr>

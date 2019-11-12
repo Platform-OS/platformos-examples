@@ -1,8 +1,9 @@
-mutation model_create($direct_url: String!, $property_name: String = "photo", $model_schema_name: String = "modules/direct_s3_upload/uppy") {
+mutation model_create($direct_url: String!, $user_id: ID!) {
   model_create(model: {
-    custom_model_type_name: $model_schema_name
+    custom_model_type_name: "modules/direct_s3_upload/uppy"
+    user_id: $user_id
     custom_images: {
-      name: $property_name
+      name: "photo"
       direct_url: $direct_url
     }
   }) {

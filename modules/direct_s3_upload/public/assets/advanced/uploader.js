@@ -62,12 +62,14 @@ uppy.on('complete', ({ failed, successful }) => {
 });
 
 const createImage = imageUrl => {
+  const userId = _form.dataset.s3UppyUserId;
+
   return fetch('/update_profile/advanced/create_model', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json'
     },
-    body: JSON.stringify({ direct_url: imageUrl })
+    body: JSON.stringify({ direct_url: imageUrl, user_id: userId })
   }).then(response => response.json());
 };

@@ -1,8 +1,8 @@
-query get_models($model_name: String = "modules/direct_s3_upload/uppy", $per_page: Int = 5) {
+query get_models($model_name: String = "modules/direct_s3_upload/uppy", $per_page: Int = 5, $user_id: ID!) {
   models(
     per_page: $per_page
     sort: { created_at: { order: DESC } }
-    filter: { model_schema_name: { value: $model_name }, deleted_at: { exists: false } }
+    filter: { model_schema_name: { value: $model_name }, deleted_at: { exists: false }, user_id: { value: $user_id } }
   ) {
     total_entries
     results {
