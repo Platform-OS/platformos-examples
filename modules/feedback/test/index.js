@@ -16,8 +16,13 @@ test('Create', async t => {
   await t
     .click(feedback.radio.create.excellent)
     .typeText(feedback.input.create_message, lorem)
-    .click(feedback.button.submit)
-    .click(feedback.button.refresh);
+    .click(feedback.button.submit);
+
+  const log = await feedback.data.log.with({
+    visibilityCheck: true
+  })();
+
+  await t.click(feedback.button.refresh);
 
   await t.expect(feedback.table.tableRows.count).eql(1);
   await t.expect(feedback.data.rating.innerText).eql(feedback.txt.createRating);

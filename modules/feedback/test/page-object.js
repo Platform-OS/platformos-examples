@@ -34,7 +34,8 @@ export default class Feedback {
     this.data = {
       id: Selector('tr > td:nth-of-type(1)'),
       rating: Selector('tr > td:nth-of-type(4)'),
-      message: Selector('tr > td:nth-of-type(5)')
+      message: Selector('tr > td:nth-of-type(5)'),
+      log: Selector('li[data-level="log"]:nth-of-type(2)').withText('[POST] /api/customizations')
     };
   }
 }
