@@ -17,8 +17,20 @@ metadata:
   <h2 id="#direct-upload-using-uppy">Direct upload using uppy (<a href="https://uppy.io/" target="_blank" rel="noopener">uppy.io</a>)</h2>
 
 
-  <!-- Get presign data from graphql -->
-  {% graphql data = 'modules/direct_s3_upload/image_presign_url' %}
+  {% graphql data %}
+    mutation presign {
+      image_presign_url(
+        options: {
+          content_length: { gte: 0, lte: 2048 }
+          model_property: { model_schema_name: "modules/direct_s3_upload/uppy", property_name: "photo" }
+        }
+      ) {
+        upload_url
+        upload_url_payload
+      }
+    }
+  {% endgraphql %}
+
   {% assign data = data.image_presign_url %}
 
   <!-- Expose presign fields as form, to easily digest it in JS -->

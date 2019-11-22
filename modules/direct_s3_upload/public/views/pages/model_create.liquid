@@ -1,3 +1,9 @@
+---
+slug: direct-s3-upload/images/model_create
+method: post
+---
+{% if context.params.user_id %}
+{% graphql model, direct_url: context.params.direct_url, user_id: context.params.user_id %}
 mutation model_create($direct_url: String!, $user_id: ID!) {
   model_create(model: {
     custom_model_type_name: "modules/direct_s3_upload/uppy"
@@ -10,3 +16,6 @@ mutation model_create($direct_url: String!, $user_id: ID!) {
     id
   }
 }
+{% endgraphql %}
+{{ model | fetch: "model_create" | json }}
+{% endif %}

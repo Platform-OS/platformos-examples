@@ -72,8 +72,9 @@ const createImage = imageUrl => {
   const userId = _form.dataset.s3UppyUserId;
 
   // Create model for this user with s3 image url
-  return fetch('/direct-s3-upload/images/create_model', {
+  return fetch('/direct-s3-upload/images/model_create', {
     method: 'POST',
+    credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json'

@@ -1,8 +1,0 @@
----
-slug: direct-s3-upload/images/create_model
-method: post
----
-{% if context.params.user_id %}
-{% graphql model = "modules/direct_s3_upload/create_model", direct_url: context.params.direct_url, user_id: context.params.user_id %}
-{{ model }}
-{% endif %}
