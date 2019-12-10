@@ -6,7 +6,7 @@ const uppy = Uppy.Core({
   restrictions: {
     maxFileSize: 2097152,
     maxNumberOfFiles: 3,
-    allowedFileTypes: ['image/png', 'image/jpeg', 'image/webp', 'image/svg+xml']
+    allowedFileTypes: ['image/png', 'image/jpeg', 'image/webp', 'image/svg+xml', 'image/gif']
   }
 })
   .use(Uppy.Dashboard, {
