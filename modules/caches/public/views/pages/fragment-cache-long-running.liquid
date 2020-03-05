@@ -1,0 +1,10 @@
+Random string not cached: {{ 18 | random_string }} <br>
+
+{% capture key %}{{ context.page.slug }}-v1{% endcapture %}
+{% cache key, expire: 15 %}
+  Random string cached: {{ 18 | random_string }} <br>
+  {%- for i in (1..5000) -%}
+    {%- assign r = 15 | random_string %}
+    <span class="{{ r }}">{{ i }}</span>
+  {%- endfor -%}
+{% endcache %}

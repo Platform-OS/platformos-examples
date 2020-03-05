@@ -1,0 +1,3 @@
+{% cache context.page.slug, expire: 10 %}
+Random string: {{ 18 | random_string }}
+{% endcache %}
