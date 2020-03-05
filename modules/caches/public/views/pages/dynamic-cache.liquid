@@ -1,0 +1,8 @@
+---
+dynamic_cache:
+  expire: 10
+  layout: true
+---
+Session ID: {{ context.session.session_id }} <br>
+Authenticity Token: {{ context.authenticity_token }} <br>
+Random Seed: {{ 5 | random_string }}
