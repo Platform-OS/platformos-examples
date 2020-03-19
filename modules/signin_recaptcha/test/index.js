@@ -10,7 +10,7 @@ test('There are no liquid errors on the page', async t => {
   await checkLiquidErrors({ t, Selector });
 });
 
-test('reCaptcha is showing up after 3 failed login attempts', async t => {
+test.skip('reCaptcha is showing up after 3 failed login attempts', async t => {
   const alert = await getBtAlertElement({ type: 'info', Selector });
 
   for (let i = 0; i < 4; i++) {
