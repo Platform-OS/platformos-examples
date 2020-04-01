@@ -1,0 +1,11 @@
+---
+slug: user_nested_customizations
+metadata:
+  description: Building a User form with children customizations
+---
+
+{% if context.current_user.id %}
+  {% include_form "modules/nested_customizations/create_children_for_current_user", id: context.current_user.id %}
+{% else %}
+  <h1>Please log in</h1>
+{% endif %}

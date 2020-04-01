@@ -1,0 +1,8 @@
+---
+slug: edit_parent_customization
+---
+{% if context.params.slug2 %}
+  {% include_form "modules/nested_customizations/save_parent", id: context.params.slug2 %}
+{% else %}
+  <h1>Please provide id of the parent to edit</h1>
+{% endif %}

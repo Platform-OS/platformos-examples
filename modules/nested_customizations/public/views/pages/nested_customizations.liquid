@@ -1,0 +1,48 @@
+---
+slug: nested_customizations
+metadata:
+  description: Building a parent customization form with nested children customizations
+---
+
+{%- graphql g -%}
+query {
+models(
+  filter: {
+    name: { value: "modules/nested_customizations/parent" },
+    deleted_at: { exists: false } }, per_page: 10
+) {
+    results {
+      id
+      name: property(name: "name")
+      deleted_at
+    }
+  }
+}
+{% endgraphql %}
+
+<h2>Recent customizations</h2>
+
+{% if g.models.results == blank %}
+  <p>There are no nested customizations yet</p>
+{% else %}
+  <table class="table table-striped">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+    </tr>
+    {% for model in g.models.results %}
+    <tr>
+      <td>{{ model.id }}</td>
+      <td>{{ model.name }}</td>
+      <td><a href="/edit_parent_customization/{{ model.id }}">Edit</a></td>
+      <td>{% include_form "modules/nested_customizations/delete_parent", id: model.id %}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endif %}
+
+<hr class="hr">
+
+{% include_form "modules/nested_customizations/save_parent" %}
