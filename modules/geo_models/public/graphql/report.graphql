@@ -1,7 +1,6 @@
 query search {
   companies: models(
     filter: {
-      deleted_at: { exists: false }
       model_schema_name: { value_in: "modules/geo_models/company" }
     }
     per_page: 500

@@ -1,10 +1,39 @@
-query search($company_id: String, $point: GeometryJSON, $distance: Int, $specialties: [String!]) {
-  locations: customizations(name: "modules/geo_models/company", aggregations: {name: "geo", fields: [{name: "location", field_name: "properties.timezone", aggregations: [{name: "centric", type: terms, field_name: "properties.city"}]}]}) {
+query search(
+  $company_id: String
+  $point: GeometryJSON
+  $distance: Int
+  $specialties: [String!]
+) {
+  locations: customizations(
+    name: "modules/geo_models/company"
+    aggregations: {
+      name: "geo"
+      fields: [
+        {
+          name: "location"
+          field_name: "properties.timezone"
+          aggregations: [
+            { name: "centric", type: terms, field_name: "properties.city" }
+          ]
+        }
+      ]
+    }
+  ) {
     aggs: aggregations {
       raw
     }
   }
-  specialties: customizations(name: "modules/geo_models/programmer", aggregations: [{name: "spec", fields: [{ size: 500 name: "spec", field_name: "properties.specialties"}]}]) {
+  specialties: customizations(
+    name: "modules/geo_models/programmer"
+    aggregations: [
+      {
+        name: "spec"
+        fields: [
+          { size: 500, name: "spec", field_name: "properties.specialties" }
+        ]
+      }
+    ]
+  ) {
     aggs: aggregations {
       raw
     }
@@ -13,21 +42,20 @@ query search($company_id: String, $point: GeometryJSON, $distance: Int, $special
     filter: {
       related_models: [
         {
-          join: { join_on_property: "id" foreign_property: "company_id" }
+          join: { join_on_property: "id", foreign_property: "company_id" }
           filter: {
             model_schema_name: { value: "modules/geo_models/programmer" }
-            properties: [
-              { name: "specialties", value_in: $specialties }
-            ]
+            properties: [{ name: "specialties", value_in: $specialties }]
           }
         }
       ]
-
       properties: [
-        {name: "company_id", value: $company_id}
-        {name: "location", distance_sphere: { center: $point distance_in_km: $distance } }
+        { name: "company_id", value: $company_id }
+        {
+          name: "location"
+          distance_sphere: { center: $point, distance_in_km: $distance }
+        }
       ]
-      deleted_at: { exists: false }
       name: { value_in: "modules/geo_models/company" }
     }
     per_page: 20
@@ -40,7 +68,11 @@ query search($company_id: String, $point: GeometryJSON, $distance: Int, $special
       timezone: property(name: "timezone")
       city: property(name: "city")
 
-      programmers: related_models(join_on_property: "id" foreign_property: "company_id" model_schema_name: "modules/geo_models/programmer") {
+      programmers: related_models(
+        join_on_property: "id"
+        foreign_property: "company_id"
+        model_schema_name: "modules/geo_models/programmer"
+      ) {
         email: property(name: "email")
         name: property(name: "name")
         specialties: property_array(name: "specialties")
