@@ -2,12 +2,8 @@
 name: email_with_pdf
 to: "{{ form.properties.email }}"
 delay: 0.1
-enabled: true
-trigger_condition: true
 from: 'PlatformOS Example Project <no-reply@platform-os.com>'
 reply_to: no-reply@example.com
-cc:
-bcc:
 subject: 'Here is your pdf!'
 layout_path: mailer
 attachments: >
