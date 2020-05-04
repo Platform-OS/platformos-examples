@@ -7,13 +7,7 @@ query get_models($model_name: String = "modules/direct_s3_upload/uppy", $per_pag
     total_entries
     results {
       id
-      images {
-        original: url
-        large_bw: url(version: "large_bw")
-        small: url(version: "small")
-        thumb: url(version: "thumb")
-        center: url(version: "center")
-      }
+      my_upload: property_upload(name: "my_upload")
     }
   }
 }
