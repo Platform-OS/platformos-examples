@@ -19,19 +19,14 @@ metadata:
 
   {% graphql data %}
     mutation presign {
-      image_presign_url(
-        options: {
-          content_length: { gte: 0, lte: 2048 }
-          model_property: { model_schema_name: "modules/direct_s3_upload/uppy", property_name: "photo" }
-        }
-      ) {
+    property_upload_presigned_url(model_schema_name: "modules/direct_s3_upload/uppy", property_name: "my_upload") {
         upload_url
         upload_url_payload
       }
     }
   {% endgraphql %}
 
-  {% assign data = data.image_presign_url %}
+  {% assign data = data.property_upload_presigned_url %}
 
   <!-- Expose presign fields as form, to easily digest it in JS -->
   <form action="{{ data.upload_url }}" hidden data-s3-uppy="form" data-s3-uppy-user-id="{{ context.current_user.id }}">
@@ -85,17 +80,14 @@ metadata:
 
     <!-- Show all versions next to each other -->
     {% for model in models.results %}
-      {% assign versions = model | dig: "images" | first %}
-
+      {% assign versions = model | dig: "my_upload" %}
       <div class="card my-4">
         <div class="card-body">
           <div class="row">
             {% for version in versions %}
               <div class="col-sm-2">
                 <h4>{{ version[0] }}</h4>
-                <a href="{{ version[1] }}">
-                  <img src="{{ version[1] }}" alt="{{ version[0] }}" width="150">
-                </a>
+                <a href="{{ version[1] }}"><img src="{{ version[1] }}" alt="{{ version[0] }}" width="150"></a>
               </div>
             {% endfor %}
           </div>

@@ -1,44 +1,47 @@
 name: uppy
 properties:
-- name: photo
-  type: photo
-  # Definitions of image transformations
-  image_versions:
-    large_bw: # version name
-      output:
-        format: jpeg    # output format
-        quality: 70     # output quality
-      resize:
-        width: 1600     # width of the image - in this case max width
-        height: 1200    # max height of the image - in this case max height
-        fit: inside     # preserve aspect ratio, do not crop the image, make sure all pixels are within viewport
-        without_enlargement: false              # if image is smaller than width/height, do not enlarge it
-      manipulate:
-        greyscale: true   # make image greyscale (similar to css "filter: grayscale(1)")
-        blur: 20          # blur using gaussian mask (similar to css "filter: blur(1.5rem)")
-        flatten: red      # merge alpha transparency channel (if exists) with given color
-    small:
-      output:
-        format: webp
-        quality: 80
-      resize:
-        width: 640
-        height: 480
-        fit: cover
-        position: top   # define the gravity direction or strategy when cropping the image using fit cover or contain
-    thumb:
-      output:
-        format: png
-        quality: 80
-      resize:
-        width: 200
-        fit: contain
-        background: "rgba(255, 255, 255, 0.5)"  # if resized image is not covering whole viewport, set background color
-    center:
-      output:
-        format: jpeg
-        quality: 100
-      resize:
-        height: 400
-        width: 400
-        fit: cover
+- name: my_upload
+  type: upload
+  options:
+    # Definitions of image transformations
+    content_length:
+      lte: 2048
+    versions:
+      - name: large_bw    # version name
+        output:
+          format: jpeg    # output format
+          quality: 70     # output quality
+        resize:
+          width: 1600     # width of the image - in this case max width
+          height: 1200    # max height of the image - in this case max height
+          fit: inside     # preserve aspect ratio, do not crop the image, make sure all pixels are within viewport
+          without_enlargement: false              # if image is smaller than width/height, do not enlarge it
+        manipulate:
+          greyscale: true   # make image greyscale (similar to css "filter: grayscale(1)")
+          blur: 20          # blur using gaussian mask (similar to css "filter: blur(1.5rem)")
+          flatten: red      # merge alpha transparency channel (if exists) with given color
+      - name: small
+        output:
+          format: webp
+          quality: 80
+        resize:
+          width: 640
+          height: 480
+          fit: cover
+          position: top   # define the gravity direction or strategy when cropping the image using fit cover or contain
+      - name: thumb
+        output:
+          format: png
+          quality: 80
+        resize:
+          width: 200
+          fit: contain
+          background: "rgba(255, 255, 255, 0.5)"  # if resized image is not covering whole viewport, set background color
+      - name: center
+        output:
+          format: jpeg
+          quality: 100
+        resize:
+          height: 400
+          width: 400
+          fit: cover
