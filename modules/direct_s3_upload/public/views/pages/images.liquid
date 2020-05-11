@@ -80,10 +80,14 @@ metadata:
 
     <!-- Show all versions next to each other -->
     {% for model in models.results %}
-      {% assign versions = model | dig: "my_upload" %}
+      {% assign versions = model | dig: "my_upload", "versions" %}
       <div class="card my-4">
         <div class="card-body">
           <div class="row">
+              <div class="col-sm-2">
+                <h4>Original</h4>
+                <a href="{{ model.my_upload.url }}"><img src="{{ model.my_upload.url }}" alt="Original" width="150"></a>
+              </div>
             {% for version in versions %}
               <div class="col-sm-2">
                 <h4>{{ version[0] }}</h4>
