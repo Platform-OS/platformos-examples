@@ -1,0 +1,27 @@
+---
+method: post
+---
+
+{% parse_json user_data %}
+  {
+    "user_id": {{ context.params.user_id | json }},
+    "user_email": {{ context.params.user_email | json }},
+    "action": "registered"
+  }
+{% endparse_json %}
+
+<!-- Your registration logic-->
+
+{% background priority: 'high', source_name: "user-registered", data: user_data %}
+
+  {% graphql notify_one, data: data %}
+    mutation send_api_call ($data: HashObject) {
+      api_call_send(data: $data, template: { name: "notification" }) {
+        response { status body }
+      }
+    }
+  {% endgraphql %}
+
+  {% log notify_one %}
+
+{% endbackground %}

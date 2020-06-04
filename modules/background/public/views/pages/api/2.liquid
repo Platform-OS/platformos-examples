@@ -1,0 +1,11 @@
+---
+layout: ''
+method: post
+response_headers: '{ "Content-Type": "application/json" }'
+---
+{% log 'Received data', type: 'API 2' %}
+{% log context.params, type: 'API 2' %}
+
+{
+  "params": {{ context.params | json }}
+}
