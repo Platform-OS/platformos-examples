@@ -1,4 +1,4 @@
-# marketplace-nearme-example
+# platformos-examples
 
 1. Install [pos-cli](https://github.com/mdyd-dev/pos-cli) via `npm i -g @platformos/pos-cli`.
 
