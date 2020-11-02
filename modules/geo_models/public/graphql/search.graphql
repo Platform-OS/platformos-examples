@@ -1,7 +1,7 @@
 query search(
   $company_id: String
   $point: GeometryJSON
-  $distance: Int
+  $distance: Float
   $specialties: [String!]
 ) {
   locations: customizations(
