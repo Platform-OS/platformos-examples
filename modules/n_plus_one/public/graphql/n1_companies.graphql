@@ -1,10 +1,10 @@
 query companies($ids: [ID!], $limit: Int = 200) {
-  companies: models(filter: { name: { value: "modules/n_plus_one/company" }, id: { value_in: $ids }}, per_page: $limit) {
+  companies: records(filter: { table: { value: "modules/n_plus_one/company" }, id: { value_in: $ids }}, per_page: $limit) {
     total_entries
     results {
       properties
       id
-      name
+      table
     }
   }
 }

@@ -67,9 +67,9 @@ metadata:
   </div>
 
   <!-- Get recently uploaded images for this user, in all versions -->
-  {% graphql models = "modules/direct_s3_upload/get_models", per_page: 5, user_id: context.current_user.id | dig: "models" %}
+  {% graphql records = "modules/direct_s3_upload/get_records", per_page: 5, user_id: context.current_user.id | dig: "records" %}
 
-  {% if models.total_entries > 0 %}
+  {% if records.total_entries > 0 %}
     <hr>
 
     <div class="row my-2">
@@ -79,14 +79,14 @@ metadata:
     </div>
 
     <!-- Show all versions next to each other -->
-    {% for model in models.results %}
-      {% assign versions = model | dig: "my_upload", "versions" %}
+    {% for record in records.results %}
+      {% assign versions = record | dig: "my_upload", "versions" %}
       <div class="card my-4">
         <div class="card-body">
           <div class="row">
               <div class="col-sm-2">
                 <h4>Original</h4>
-                <a href="{{ model.my_upload.url }}"><img src="{{ model.my_upload.url }}" alt="Original" width="150"></a>
+                <a href="{{ record.my_upload.url }}"><img src="{{ record.my_upload.url }}" alt="Original" width="150"></a>
               </div>
             {% for version in versions %}
               <div class="col-sm-2">

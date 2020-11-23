@@ -1,7 +1,7 @@
 query feedback($per_page: Int = 10) {
-  models(
+  records(
     filter: {
-      name: { value: "modules/feedback/feedback" }
+      table: { value: "modules/feedback/feedback" }
     },
     per_page: $per_page,
     sort: { created_at: { order: DESC }}

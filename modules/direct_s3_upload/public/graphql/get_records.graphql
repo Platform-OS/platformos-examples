@@ -1,0 +1,16 @@
+query get_records($table: String = "modules/direct_s3_upload/uppy", $per_page: Int = 5, $user_id: ID!) {
+  records(
+    per_page: $per_page
+    sort: { created_at: { order: DESC } }
+    filter: { table: { value: $table }, user_id: { value: $user_id } }
+  ) {
+    total_entries
+    results {
+      id
+      my_upload: property_upload(name: "my_upload") {
+        url
+        versions
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 query get_contacts($id: ID) {
-  models(
+  records(
     filter: {
-      name: {
+      table: {
         value: "modules/contacts/contact"
       }
       id: {

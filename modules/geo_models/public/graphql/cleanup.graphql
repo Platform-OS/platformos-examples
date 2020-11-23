@@ -1,9 +1,0 @@
-mutation {
-  company_cleanup: models_delete_all(model_schema_name: "modules/geo_models/company") {
-    count
-  }
-
-  programmers_cleanup: models_delete_all(model_schema_name: "modules/geo_models/programmer") {
-    count
-  }
-}

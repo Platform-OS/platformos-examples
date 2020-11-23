@@ -1,0 +1,18 @@
+mutation addProgrammer($title: String, $email: String, $company_id: String, $name: String, $specialties: [String!]) {
+  model_create(
+    form_configuration_name: "modules/geolocation/create_programmer"
+    model: {
+      model_schema_name: "modules/geolocation/programmer"
+      properties: [
+        { name: "company_id", value: $company_id }
+        { name: "title", value: $title }
+        { name: "email", value: $email }
+        { name: "name", value: $name }
+        { name: "specialties" value_array: $specialties}
+      ]
+    }
+  ) {
+    id
+    properties
+  }
+}

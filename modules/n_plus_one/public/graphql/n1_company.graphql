@@ -1,8 +1,8 @@
 query company($id: ID) {
-  companies: models(per_page: 200, filter: { name: { value: "modules/n_plus_one/company" }, id: { value: $id } }){
+  companies: records(per_page: 200, filter: { table: { value: "modules/n_plus_one/company" }, id: { value: $id } }){
     total_entries
     results {
-      name
+      table
       id
       deleted_at
       properties

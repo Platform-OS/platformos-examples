@@ -1,0 +1,23 @@
+query search {
+  companies: models(
+    filter: {
+      model_schema_name: { value_in: "modules/geolocation/company" }
+    }
+    per_page: 500
+  ) {
+    total_entries
+    results {
+      id
+      name: property(name: "name")
+      location: property(name: "location")
+      timezone: property(name: "timezone")
+      city: property(name: "city")
+
+      programmers: related_models(join_on_property: "id" foreign_property: "company_id" model_schema_name: "modules/geolocation/programmer") {
+        email: property(name: "email")
+        name: property(name: "name")
+        specialties: property_array(name: "specialties")
+      }
+    }
+  }
+}
