@@ -1,0 +1,104 @@
+---
+slug: sanitization
+converter: ''
+metadata:
+  description: Sanitization examples
+  docs_slug: /api-reference/liquid/sanitization
+---
+
+<h1>Input sanitization techniques</h1>
+
+<p>This page shows you different results for different techniques of handling potentially dangerous strings.</p>
+
+<p>Potentially dangerous strings are usually user-input, query params, form data, etc. To avoid users injecting harmful code into your application you have to think about input sanitization.</p>
+
+<p>
+  <a href="https://github.com/mdyd-dev/platformos-examples/blob/master/modules/sanitization/public/views/pages/sanitization/index.html">Source code of this example is on Github</a>
+  <br/>
+  It is very important that you compare the code that has been used to generate those results.
+</p>
+
+<h2>
+  `html_safe` filter
+</h2>
+
+<div class="card">
+  <div class="card-header">
+    <h4>
+      Without html_safe
+    </h4>
+  </div>
+  <div class="card-body">
+    <p>This will just print text in the source code of the page, because it is automatically sanitized.</p>
+    <pre>{{ '<script>console.log("html_safe example: Just print")</script>' }}</pre>
+  </div>
+</div>
+<br>
+
+<div class="card">
+  <div class="card-header">
+    <h4>
+      With html_safe
+    </h4>
+  </div>
+  <div class="card-body">
+    <p>This code will execute, because it is marked as "safe" using html_safe filter.  You can verify that by opening your devtools console.</p>
+    <pre>{{ '<script>console.log("html_safe example: Execute")</script>' | html_safe }}</pre>
+  </div>
+</div>
+<br>
+
+
+<h2>`print` tag</h2>
+
+{% liquid
+  assign safe_script = "<script>console.log('Print example: Safe script')</script>"
+  assign malicious_script = "<script>console.log('Print example: Malicious script')</script>"
+%}
+
+{% capture result %}{{ malicious_script }}{{ safe_script | html_safe }}{% endcapture %}
+
+<div class="card">
+  <div class="card-header">
+    <h4>
+      Without print
+    </h4>
+  </div>
+  <div class="card-body">
+    <p>
+      This code will not execute the second script, even though it is marked as html_safe.
+    </p>
+
+    <pre>{{ result }}</pre>
+  </div>
+</div>
+<br>
+<div class="card">
+  <div class="card-header">
+    <h4>
+      With print
+    </h4>
+  </div>
+  <div class="card-body">
+    <p>Print tag allows us to mix html_safe and unsafe strings into one, which in result renders first variable and executes the "safe script" and prints out "malicious script". You can verify that by opening your devtools console.</p>
+
+    <pre>{% print result %}</pre>
+  </div>
+</div>
+
+
+<h2>String and variable rendering</h2>
+
+<div class="card">
+  <div class="card-body">
+    <p>String rendering {% raw %}{{ var }}{% endraw %} output is sanitized by default. So if you assign string to a variable, it will be sanitized when you render it.</p>
+
+    {% raw %}
+      {% assign user_name = '<a href="https://www.platformos.com">Click Me</a>' %}
+      <p>{{ user_name }}</p>
+    {% endraw %}
+
+    {% assign user_name = '<a href="https://www.platformos.com">Click Me</a>' %}
+    <p>{{ user_name }}</p>
+  </div>
+</div>
