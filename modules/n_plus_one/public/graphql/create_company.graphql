@@ -1,8 +1,8 @@
 mutation addCompany($name: String, $email: String, $url: String, $number: String) {
-  model_create(
-    form_configuration_name: "modules/n_plus_one/create_company"
-    model: {
-      model_schema_name: "modules/n_plus_one/company"
+  record_create(
+    form_name: "modules/n_plus_one/create_company"
+    record: {
+      table: "modules/n_plus_one/company"
       properties: [
         { name: "url", value: $url }
         { name: "name", value: $name }

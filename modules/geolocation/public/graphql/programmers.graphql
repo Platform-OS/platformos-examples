@@ -1,7 +1,7 @@
 query programmers($company_id: String) {
-  programmers: models(
+  programmers: records(
     filter: {
-      name: { value: "modules/geolocation/programmer" }
+      table: { value: "modules/geolocation/programmer" }
       properties: [ {name: "company_id", value: $company_id}]
     }
     per_page: 1000

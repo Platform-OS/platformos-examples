@@ -1,8 +1,8 @@
 query get_project($creator_id: ID!, $id: ID!) {
-  project: models(
+  project: records(
     per_page: 10
     filter:{
-      name: { value: "modules/users/project" }
+      table: { value: "modules/users/project" }
       user_id: { value: $creator_id }
       id: { value: $id }
     }

@@ -18,7 +18,7 @@ fields:
 flash_notice: PDF Request has been submitted. After a while you will be able to download PDF.
 async_callback_actions:
   content: >
-    {% graphql pdf = 'modules/pdf_generation/generate_pdf', model_id: form.id, file_name: form.properties.file_name, body: form.properties.body %}
+    {% graphql pdf = 'modules/pdf_generation/generate_pdf', record_id: form.id, file_name: form.properties.file_name, body: form.properties.body %}
 email_notifications:
   - modules/pdf_generation/email_with_pdf
 

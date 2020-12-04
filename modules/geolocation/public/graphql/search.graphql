@@ -38,25 +38,22 @@ query search(
       raw
     }
   }
-  companies: models(
+  companies: records(
     filter: {
-      related_models: [
+      related_records: [
         {
           join: { join_on_property: "id", foreign_property: "company_id" }
           filter: {
-            model_schema_name: { value: "modules/geolocation/programmer" }
+            table: { value: "modules/geolocation/programmer" }
             properties: [{ name: "specialties", value_in: $specialties }]
           }
         }
       ]
       properties: [
         { name: "company_id", value: $company_id }
-        {
-          name: "location"
-          distance_sphere: { center: $point, distance_in_km: $distance }
-        }
+        { name: "location", distance_sphere: { center: $point, distance_in_km: $distance } }
       ]
-      name: { value_in: "modules/geolocation/company" }
+      table: { value: "modules/geolocation/company" }
     }
     per_page: 20
   ) {
@@ -68,10 +65,10 @@ query search(
       timezone: property(name: "timezone")
       city: property(name: "city")
 
-      programmers: related_models(
+      programmers: related_records(
         join_on_property: "id"
         foreign_property: "company_id"
-        model_schema_name: "modules/geolocation/programmer"
+        table: "modules/geolocation/programmer"
       ) {
         email: property(name: "email")
         name: property(name: "name")

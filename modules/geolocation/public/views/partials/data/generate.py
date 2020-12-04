@@ -11,11 +11,11 @@ titles = json.loads(open("./titles.liquid","r").read())
 COMPANY_NUMBER = 500;
 PROGRAMMER_NUMBER = 1000;
 
-models = []
+records = []
 
 def generate_programmers(size):
   for id in range(size):
-    models.append({
+    records.append({
       "type_name": "modules/geolocation/programmer",
       "properties": {
         "name": fake.name(),
@@ -30,7 +30,7 @@ def generate_companies(size):
   for id in range(size):
     location = fake.local_latlng(country_code="US", coords_only=False)
 
-    models.append({
+    records.append({
       "id": id,
       "type_name": "modules/geolocation/company",
       "properties": {
@@ -48,4 +48,4 @@ def generate_companies(size):
 generate_companies(COMPANY_NUMBER)
 generate_programmers(PROGRAMMER_NUMBER)
 
-print(json.dumps({ "models": models, "users": [], "transactables": [] }))
+print(json.dumps({ "records": records, "users": [], "transactables": [] }))

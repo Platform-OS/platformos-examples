@@ -2,7 +2,7 @@
 slug: client/projects/edit
 ---
 {% graphql graph_project = 'modules/users/get_project', id: context.params.slugs, creator_id: context.current_user.id %}
-{% assign project = graph_project.models.results.first %}
+{% assign project = graph_project.records.results.first %}
 {% if project %}
   <h1>Edit {{ project.name }}</h1>
   {% include_form 'modules/users/project', id: project.id %}

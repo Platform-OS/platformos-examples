@@ -1,8 +1,8 @@
 query companies($ids: [ID!], $limit: Int = 500, $timezone: String, $city: String) {
-  companies: models(
+  companies: records(
     per_page: $limit
     filter: {
-      name: {
+      table: {
         value: "modules/geolocation/company"
       }
       id: { value_in: $ids }

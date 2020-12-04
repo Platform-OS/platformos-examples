@@ -10,7 +10,7 @@ attachments: >
   {% graphql pdf = 'modules/pdf_generation/get_pdf_requests', id: form.id %}
   {
     "report.pdf": {
-      "url": "{{ pdf.models.results.first.pdf.url }}"
+      "url": "{{ pdf.records.results.first.pdf.url }}"
     }
   }
 ---

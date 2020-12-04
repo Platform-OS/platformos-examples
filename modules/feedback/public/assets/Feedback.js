@@ -26,7 +26,7 @@ const Create = event => {
       }
     })
     .then(response => {
-      console.info(`Model successfully created. Model id: ${response.id}`);
+      console.info(`Record successfully created. Record id: ${response.id}`);
     });
 };
 
@@ -74,14 +74,14 @@ window.addEventListener('load', Read);
 
 const Update = event => {
   event.preventDefault();
-  const id = event.target.querySelector('[name="model_id"]').value;
+  const id = event.target.querySelector('[name="record_id"]').value;
 
   request({
     url: `${event.target.getAttribute('action')}/${id}`,
     form: event.target
   }).then(response => {
     if (response.ok) {
-      console.info('Model successfully updated.');
+      console.info('Record successfully updated.');
     }
   });
 };
@@ -93,14 +93,14 @@ updateForm.addEventListener('submit', Update);
 
 const Delete = event => {
   event.preventDefault();
-  const id = event.target.querySelector('[name="model_id"]').value;
+  const id = event.target.querySelector('[name="record_id"]').value;
 
   request({
     url: `${event.target.getAttribute('action')}/${id}`,
     form: event.target
   }).then(response => {
     if (response.ok) {
-      console.info(`Model ${id} successfully deleted.`);
+      console.info(`Record ${id} successfully deleted.`);
     }
   });
 };

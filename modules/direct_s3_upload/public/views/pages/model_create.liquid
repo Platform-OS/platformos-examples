@@ -1,12 +1,12 @@
 ---
-slug: direct-s3-upload/images/model_create
+slug: direct-s3-upload/images/record_create
 method: post
 ---
 {% if context.params.user_id %}
-{% graphql model, direct_url: context.params.direct_url, user_id: context.params.user_id %}
-mutation model_create($direct_url: String!, $user_id: ID!) {
-  model_create(model: {
-    custom_model_type_name: "modules/direct_s3_upload/uppy"
+{% graphql record, direct_url: context.params.direct_url, user_id: context.params.user_id %}
+mutation record_create($direct_url: String!, $user_id: ID!) {
+  record_create(record: {
+    table: "modules/direct_s3_upload/uppy"
     user_id: $user_id
     properties: [{ name: "my_upload" value: $direct_url }]
   }) {
@@ -14,5 +14,5 @@ mutation model_create($direct_url: String!, $user_id: ID!) {
   }
 }
 {% endgraphql %}
-{{ model | fetch: "model_create" | json }}
+{{ record | fetch: "record_create" }}
 {% endif %}

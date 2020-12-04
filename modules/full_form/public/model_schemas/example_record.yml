@@ -1,4 +1,4 @@
-name: example_model
+name: example_record
 properties:
   - name: email
     type: string

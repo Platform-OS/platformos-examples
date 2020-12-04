@@ -29,7 +29,7 @@ test('There are no liquid errors on the page', async t => {
   });
 });
 
-test('models_delete_all cleans contacts correctly', async t => {
+test('records_delete_all cleans contacts correctly', async t => {
   await t.expect(contacts.table.tableRows.count).gte(0);
 
   // clean database

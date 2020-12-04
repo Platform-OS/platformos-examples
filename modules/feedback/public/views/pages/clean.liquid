@@ -5,5 +5,5 @@ format: json
 {% graphql clean = 'modules/feedback/clean' %}
 
 {
-  "ok": {{ clean.models_delete_all.count | default: 0 }}
+  "ok": {{ clean.records_delete_all.count | default: 0 }}
 }

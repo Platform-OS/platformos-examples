@@ -1,7 +1,7 @@
 query search {
-  companies: models(
+  companies: records(
     filter: {
-      model_schema_name: { value_in: "modules/geolocation/company" }
+      table: { value_in: "modules/geolocation/company" }
     }
     per_page: 500
   ) {
@@ -13,7 +13,7 @@ query search {
       timezone: property(name: "timezone")
       city: property(name: "city")
 
-      programmers: related_models(join_on_property: "id" foreign_property: "company_id" model_schema_name: "modules/geolocation/programmer") {
+      programmers: related_records(join_on_property: "id" foreign_property: "company_id" table: "modules/geolocation/programmer") {
         email: property(name: "email")
         name: property(name: "name")
         specialties: property_array(name: "specialties")
