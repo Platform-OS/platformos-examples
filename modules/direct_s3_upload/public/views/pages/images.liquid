@@ -19,7 +19,7 @@ metadata:
 
   {% graphql data %}
     mutation presign {
-    property_upload_presigned_url(model_schema_name: "modules/direct_s3_upload/uppy", property_name: "my_upload") {
+    property_upload_presigned_url(table: "modules/direct_s3_upload/uppy", property_name: "my_upload") {
         upload_url
         upload_url_payload
       }
