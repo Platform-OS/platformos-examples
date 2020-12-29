@@ -1,6 +1,6 @@
 import { Selector } from 'testcafe';
 
-export default class RelatedModels {
+export default class RelatedRecords {
   constructor() {
     this.link = {
       onlyProgrammers: Selector('a').withText('Only Programmers'),

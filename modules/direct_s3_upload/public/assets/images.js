@@ -45,7 +45,7 @@ uppy.on('upload-success', (_file, data) => {
 uppy.on('complete', ({ failed, successful }) => {
   /*
     For every successfully uploaded image to s3, send request to the instance
-    that will create model with uploaded image url as direct_url param.
+    that will create record with uploaded image url as direct_url param.
   */
   Promise.all(successful.map(({ response }) => createImage(response.body.location)))
   .then(() => {
@@ -71,8 +71,8 @@ const createImage = imageUrl => {
   // Get logged in user id
   const userId = _form.dataset.s3UppyUserId;
 
-  // Create model for this user with s3 image url
-  return fetch('/direct-s3-upload/images/model_create', {
+  // Create record for this user with s3 image url
+  return fetch('/direct-s3-upload/images/record_create', {
     method: 'POST',
     credentials: 'same-origin',
     headers: {

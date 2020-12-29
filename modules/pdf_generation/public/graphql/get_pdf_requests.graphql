@@ -1,8 +1,8 @@
 query get_pdf_requests($id: ID) {
-  models(
+  records(
     per_page: 10
     filter: {
-      name: { value: "modules/pdf_generation/pdf_requests" }
+      table: { value: "modules/pdf_generation/pdf_requests" }
       id: { value: $id }
     }
     sort: { created_at: { order: DESC } }

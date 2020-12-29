@@ -1,5 +1,5 @@
 mutation clean_contacts {
-  models_delete_all(custom_model_type_name: "modules/contacts/contact") {
+  records_delete_all(table: "modules/contacts/contact") {
     count
   }
 }

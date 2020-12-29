@@ -6,17 +6,17 @@ metadata:
   full_width: true
 ---
 
-<h2> Module example - Admin </h2>
+<h2>Module example - Admin</h2>
 
 <div class="row">
   <div class="col-xs-12 col-lg-6">
     <div class="card">
       <div class="card-header">
-        <h3> Models </h3>
+        <h3>Records</h3>
       </div>
       <div class="card-body">
-        {%- graphql c = "modules/admincms/get_models" -%}
-        <table class="table table-sm" data-result="models">
+        {%- graphql c = "modules/admincms/get_records" -%}
+        <table class="table table-sm" data-result="records">
           <thead>
             <tr>
               <th>Name</th>
@@ -24,10 +24,10 @@ metadata:
             </tr>
           </thead>
           <tbody>
-            {% for model in c.models.results %}
+            {% for record in c.records.results %}
               <tr>
-                <td>{{ model.name }}</td>
-                <td>{{ model.properties }}</td>
+                <td>{{ record.name }}</td>
+                <td>{{ record.properties }}</td>
               </tr>
             {% endfor %}
           </tbody>

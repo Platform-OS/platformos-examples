@@ -1,0 +1,18 @@
+---
+dynamic_cache:
+  layout: true
+  key: >
+    {%- graphql record = 'modules/caches/records_updated_at' | fetch: 'records' | fetch: 'results' | first -%}
+    {{ context.page.slug | append: record.updated_at }}
+---
+{% graphql records = 'modules/caches/get_records' | fetch: 'records' | fetch: 'results' %}
+
+This page cache will be invalidated when any of the `programmer` or `company` records changes or when this page is updated. Whichever comes first. <br>
+
+Random string: {{ 18 | random_string }} <br>
+
+<ul>
+  {% for item in records %}
+    <li>[{{ item.updated_at }}] {{ item.table }} - {{ item.email }}</li>
+  {% endfor %}
+</ul>

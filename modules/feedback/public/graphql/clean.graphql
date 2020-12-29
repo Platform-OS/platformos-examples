@@ -1,5 +1,5 @@
 mutation clean_feedback {
-  models_delete_all(model_schema_name: "modules/feedback/feedback") {
+  records_delete_all(table: "modules/feedback/feedback") {
     count
   }
 }

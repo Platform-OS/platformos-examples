@@ -41,7 +41,7 @@ metadata:
 {% assign _graph_duration = _start | time_diff: _graph | round %}
 {% assign _render_duration = _start | time_diff: _render | round %}
 
-{% log _graph_duration, type: "benchmark-graph-model-on-demand" %}
-{% log _render_duration, type: "benchmark-render-model-on-demand" %}
+{% log _graph_duration, type: "benchmark-graph-record-on-demand" %}
+{% log _render_duration, type: "benchmark-render-record-on-demand" %}
 
 {% include 'modules/n_plus_one/benchmark-report' %}

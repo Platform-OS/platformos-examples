@@ -1,0 +1,53 @@
+---
+slug: geo/report
+layout_name: application
+metadata:
+  full_width: true
+---
+{% include 'modules/geolocation/menu' %}
+
+{% assign _start = "now" | to_time %}
+
+{% graphql g = 'modules/geolocation/report' %}
+
+{% assign _graph = "now" | to_time %}
+
+<h2>Only Companies</h2>
+
+<table class="table table-bordered table-striped scroll">
+  <thead>
+    <tr> <th colspan="2"> companies [{{ g.companies.total_entries }}] </th> </tr>
+    <tr>
+      <th>name</th>
+      <th>programmers</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for company in g.companies.results %}
+      <tr>
+        <td>
+          {{ company.name }}<small> {{ company.id }} <br />
+          <small> {{ company.city }} </small>
+          <small> {{ company.timezone }} </small>
+        </td>
+        <td>
+          {% for programmer in company.programmers  %}
+            <dd>{{ programmer.name }}
+            <small>{{ programmer.email }}</small><br>
+            <small>{{ programmer.specialties | join: "-" }}</small>
+          {% endfor %}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% assign _render = "now" | to_time %}
+
+{% assign _graph_duration = _start | time_diff: _graph | round %}
+{% assign _render_duration = _start | time_diff: _render | round %}
+
+{% log _graph_duration, type: "benchmark-graph" %}
+{% log _render_duration, type: "benchmark-render" %}
+{% include 'modules/geolocation/benchmark-report' %}
+

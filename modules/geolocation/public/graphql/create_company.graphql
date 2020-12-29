@@ -1,0 +1,17 @@
+mutation addCompany($name: String, $email: String, $timezone: String, $geopoint: JSONPayload, $city: String) {
+  record_create(
+    form_name: "modules/geolocation/create_company"
+    record: {
+      table: "modules/geolocation/company"
+      properties: [
+        { name: "name", value: $name }
+        { name: "email", value: $email }
+        { name: "timezone", value: $timezone }
+        { name: "city", value: $city }
+        { name: "location", value_json: $geopoint }
+      ]
+    }
+  ) {
+    id
+  }
+}

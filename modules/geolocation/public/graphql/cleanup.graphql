@@ -1,0 +1,9 @@
+mutation {
+  company_cleanup: records_delete_all(table: "modules/geolocation/company") {
+    count
+  }
+
+  programmers_cleanup: records_delete_all(table: "modules/geolocation/programmer") {
+    count
+  }
+}

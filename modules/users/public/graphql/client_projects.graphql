@@ -1,10 +1,10 @@
 query client_projects($page: Int, $creator_id: ID!) {
-  projects: models(
+  projects: records(
     per_page: 20
     page: $page
     sort: [{ created_at: { order: DESC } }]
     filter: {
-      name: { value: "modules/users/project" }
+      table: { value: "modules/users/project" }
       user_id: { value: $creator_id }
     }
   ) {

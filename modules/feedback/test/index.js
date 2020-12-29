@@ -28,10 +28,10 @@ test('Create', async t => {
 
 test('Update', async t => {
   const lorem = faker.lorem.sentence();
-  let model_id = await feedback.data.id.innerText;
+  let record_id = await feedback.data.id.innerText;
 
   await t
-    .typeText(feedback.input.update_id, model_id)
+    .typeText(feedback.input.update_id, record_id)
     .click(feedback.radio.update.meh)
     .typeText(feedback.input.update_message, lorem)
     .click(feedback.button.update)
@@ -42,12 +42,12 @@ test('Update', async t => {
 });
 
 test('Delete', async t => {
-  let model_id = await feedback.data.id.innerText;
+  let record_id = await feedback.data.id.innerText;
 
   await t.expect(await feedback.table.tableRows.count).eql(1);
 
   await t
-    .typeText(feedback.input.delete_id, model_id)
+    .typeText(feedback.input.delete_id, record_id)
     .click(feedback.button.delete)
     .click(feedback.button.refresh);
 

@@ -4,4 +4,4 @@ layout_name: ''
 format: json
 ---
 {%- graphql recent = "modules/feedback/feedback", per_page: 20 -%}
-{{ recent.models.results | json }}
+{{ recent.records.results }}

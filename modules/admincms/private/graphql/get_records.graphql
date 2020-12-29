@@ -1,0 +1,16 @@
+query get_records {
+  records(
+    per_page: 15,
+    sort: { id: { order: DESC }}
+    filter: {
+      table: {
+        value_in: ["modules/full_form/example_record", "modules/feedback/feedback", "modules/users/reset_password"]
+      }
+    }
+  ) {
+    results {
+      table
+      properties
+    }
+  }
+}
