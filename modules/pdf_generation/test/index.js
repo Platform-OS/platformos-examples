@@ -17,6 +17,7 @@ test('Create PDF file', async t => {
   await t.eval(() => location.reload(true));
   await t
     .expect(await pdfGeneration.button.PDF.getAttribute('href'))
-    .match(/attachment.pdf/);
+    .match(/\.pdf/);
   await t.click(pdfGeneration.button.delete);
 });
+
