@@ -1,13 +1,11 @@
 ---
-name: sign_in_with_recaptcha
+name: sign_in_with_hcaptcha
 resource: Session
-spam_protection:
-  recaptcha_v2:
+authorization_policies:
+  - modules/sign_in_hcaptcha/is_hcaptcha_authorized
 fields:
   email:
   password:
-callback_actions: >
-  {% graphql g = "modules/signin_recaptcha/clear_failed_signin_attempts" %}
 ---
 {% form html-class: 'w-50' %}
   <div class="form-group">
@@ -25,8 +23,9 @@ callback_actions: >
 
   <div class="form-group">
     {{ form.errors.base }}
-    {% spam_protection "recaptcha_v2" %}
   </div>
+
+  {% spam_protection "hcaptcha" %}
 
   <button class="btn btn-primary">Log In</button>
 {% endform %}
