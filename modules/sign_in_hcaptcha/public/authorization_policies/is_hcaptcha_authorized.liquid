@@ -1,0 +1,6 @@
+---
+name: is_hcaptcha_authorized
+redirect_to: /sign-in-hcaptcha
+flash_alert: 'Invalid captcha authorization.'
+---
+{{ context.params | hcaptcha }}
