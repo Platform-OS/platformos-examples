@@ -1,17 +1,21 @@
-mutation generate_pdf($record_id: ID!, $body: String!, $file_name: String!) {
-  custom_attachment_create(
-    custom_attachment: {
-      owner_id: $record_id
-      owner_type: "Customization"
-      custom_attribute_name: "pdf"
-      generate_file: {
-        # synchronous: true
-        strategy: pdf
-        file_name: $file_name
-        body: $body
-      }
+mutation generate_pdf($body: String!) {
+  record_create(
+    record: {
+      table: "modules/pdf_generation/pdf_upload"
+      properties: [ { 
+        name: "file", value_upload: {
+          type: pdf
+          content: $body
+        }
+      } ]
     }
   ) {
     id
+    url: property_upload(name:"file", expires_in: 600) {
+      extension
+      file_name
+      url
+      versions
+    }
   }
 }

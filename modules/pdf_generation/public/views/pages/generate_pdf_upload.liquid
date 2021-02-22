@@ -1,0 +1,10 @@
+---
+slug: generate_pdf_upload
+method: post
+---
+
+{% graphql pdf = 'modules/pdf_generation/generate_pdf', body: params.body %}
+
+{% liquid
+  redirect_to '/pdf-generation'
+%}

@@ -1,7 +1,7 @@
-<h2>Recent pdf_requests</h2>
+<h2>Recent pdf uploads</h2>
 
-{% if pdf_requests == blank %}
-  <p>There are no pdf_requests yet. Use the form below to add some.</p>
+{% if pdf_uploads == blank %}
+  <p>There are no pdf uploads yet. Use the form below to add some.</p>
 {% else %}
   <table class="table table-striped">
     <tr>
@@ -9,11 +9,11 @@
       <th>Actions</th>
       <th></th>
     </tr>
-    {% for pdf_request in pdf_requests %}
+    {% for pdf_upload in pdf_uploads %}
     <tr>
-      <td>{{ pdf_request.id }}</td>
-      <td>{% if pdf_request.pdf.url == blank %}PDF is being generated, please reload the page{% else %}<a href="{{ pdf_request.pdf.url }}" download class="btn btn-link">PDF</a>{% endif %}</td>
-      <td>{% include_form "modules/pdf_generation/delete_pdf_request_form", id: pdf_request.id %}</td>
+      <td>{{ pdf_upload.id }}</td>
+      <td>{% if pdf_upload.pdf.url == blank %}PDF is being generated, please reload the page{% else %}<a href="{{ pdf_upload.pdf.url }}" download class="btn btn-link">PDF</a>{% endif %}</td>
+      <td>{% include_form "modules/pdf_generation/delete_pdf_upload_form", id: pdf_upload.id %}</td>
     </tr>
     {% endfor %}
   </table>
@@ -21,4 +21,29 @@
 
 <hr class="hr">
 
-{% include_form 'modules/pdf_generation/pdf_request_form' %}
+<h2>PDF Upload</h2>
+
+<form action="/generate_pdf_upload" method="POST">
+  <div class="row">
+    <div class="form-group col-6">
+      <label for="name">PDF Content (html):</label>
+      {% capture default_html %}
+<html lang="en">
+  <body>
+      <main>
+        <h1>Hello World</h1>
+        <p>This is a generated pdf.</p>
+      </main>
+      <footer>
+        My footer
+      </footer>
+    </div>
+  </body>
+</html>
+      {% endcapture %}
+      <textarea rows="12" name="body" id="body" type="text" class="form-control">{{ params.body | default: default_html }}</textarea>
+    </div>
+  </div>
+
+  <button class="btn btn-primary btn-lg">Save</button>
+</form>

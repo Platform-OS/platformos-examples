@@ -1,0 +1,20 @@
+query get_pdf_uploads($id: ID) {
+  records(
+    per_page: 50
+    filter: {
+      table: { value: "modules/pdf_generation/pdf_upload" }
+      id: { value: $id }
+    }
+    sort: { created_at: { order: DESC } }
+  ) {
+    results {
+      id
+      pdf: property_upload(name:"file", expires_in: 600) {
+        extension
+        file_name
+        url
+        versions
+      }
+    }
+  }
+}

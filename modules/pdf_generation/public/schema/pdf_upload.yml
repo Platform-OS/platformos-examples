@@ -1,0 +1,4 @@
+name: pdf_upload
+properties:
+  - name: file
+    type: upload
