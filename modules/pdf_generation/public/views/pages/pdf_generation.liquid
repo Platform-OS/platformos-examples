@@ -2,9 +2,10 @@
 slug: pdf-generation
 metadata:
   description: Example of generating PDF from html
+  docs_slug: developer-guide/pdf-generation
 ---
-{%- graphql g = "modules/pdf_generation/get_pdf_requests" -%}
+{%- graphql g = "modules/pdf_generation/get_pdf_uploads" -%}
 
 <h1>PDF Requests</h1>
 
-{% include 'modules/pdf_generation/list', pdf_requests: g.records.results %}
+{% include 'modules/pdf_generation/list', pdf_uploads: g.records.results %}
