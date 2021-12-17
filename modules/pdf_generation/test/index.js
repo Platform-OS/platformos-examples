@@ -28,6 +28,8 @@ test('There are no liquid errors on the page', async t => {
 test('Create PDF file', async t => {
   await t
     .click(pdfGeneration.button.save); //waiting for generating pdf file;
+  await t
+    .wait(5500)
 
   const pdfGenerationStatus = await getRequestResult(await pdfGeneration.button.PDF.getAttribute('href'));
 
