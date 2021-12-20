@@ -1,4 +1,4 @@
-import { ClientFunction } from 'testcafe';
+import { Selector, ClientFunction } from 'testcafe';
 import PDFGeneration from './page-object';
 import { checkLiquidErrors } from '@platform-os/testcafe-helpers';
 
