@@ -37,6 +37,7 @@ export default class Contacts {
     this.formErrors = {
       errorInvalidPassText: 'Invalid email or password',
       errorText: "can't be blank",
+      emailErrorText: "is not a valid email address, can't be blank",
       errorIsNotValidEmailText: 'is not a valid email address',
       errorIsTooShort: 'is too short (minimum is 6 characters)'
     };

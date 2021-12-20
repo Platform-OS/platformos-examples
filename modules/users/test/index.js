@@ -51,12 +51,9 @@ test('Display errors message on the form', async t => {
   await t.click(users.link.clientRegister).click(users.button.submit);
 
   await t
-    .expect(users.error.firstname.innerText)
-    .eql(users.formErrors.errorText)
-    .expect(users.error.email.innerText)
-    .eql(users.formErrors.errorText)
-    .expect(users.error.password.innerText)
-    .eql(users.formErrors.errorIsTooShort);
+    .expect(users.error.firstname.innerText).eql(users.formErrors.errorText)
+    .expect(users.error.email.innerText).eql(users.formErrors.emailErrorText)
+    .expect(users.error.password.innerText).eql(users.formErrors.errorIsTooShort);
 });
 
 fixture('Register as developer').page(process.env.MP_URL);
@@ -90,14 +87,10 @@ test('Display errors message on the form', async t => {
   await t.click(users.button.submit);
 
   await t
-    .expect(users.error.firstname.innerText)
-    .eql(users.formErrors.errorText)
-    .expect(users.error.email.innerText)
-    .eql(users.formErrors.errorText)
-    .expect(users.error.password.innerText)
-    .eql(users.formErrors.errorIsTooShort)
-    .expect(users.error.phone.innerText)
-    .eql(users.formErrors.errorText);
+    .expect(users.error.firstname.innerText).eql(users.formErrors.errorText)
+    .expect(users.error.email.innerText).eql(users.formErrors.emailErrorText)
+    .expect(users.error.password.innerText).eql(users.formErrors.errorIsTooShort)
+    .expect(users.error.phone.innerText).eql(users.formErrors.errorText);
 });
 
 fixture('Recover password').page(`${process.env.MP_URL}/recover-password`);
