@@ -16,7 +16,7 @@
   "devDependencies": {
     "@platform-os/testcafe-helpers": "^2.1.1",
     "faker": "^4.1.0",
-    "got": "^9.6.0"
+    "got": "^12.5.3"
   },
   "peerDependencies": {
     "babel-eslint": "^10.0.2"
