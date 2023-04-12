@@ -6,127 +6,100 @@ def production_url = "https://examples.platform-os.com"
 pipeline {
   agent any
 
-  environment {
-    MPKIT_TOKEN = credentials('POS_TOKEN')
-    MPKIT_EMAIL = "darek+ci@near-me.com"
-    CI = true
-  }
-
-  parameters {
-    string(description: 'Instance URL. When empty then we deploy on staging and production', name: 'MP_URL', defaultValue: '')
-  }
-
   options {
     disableConcurrentBuilds()
     timeout(time: 20, unit: 'MINUTES')
     buildDiscarder(logRotator(daysToKeepStr: '1', artifactDaysToKeepStr: '1'))
   }
 
+  parameters {
+    // string(description: 'Instance URL', name: 'MPKIT_URL', defaultValue: 'https://alpha.shx-01.frankfurt.platformos.com')
+    // string(description: 'Instance URL', name: 'MPKIT_URL', defaultValue: 'https://template.qa0.oregon.platformos.com')
+    choice(
+      choices: [
+        'https://ci-01.platformos.dev',
+        'https://ci-02.platformos.dev',
+        'https://ci-03.platformos.dev',
+        'https://template.qa0.oregon.platformos.com',
+        'https://getmarketplace-beta.staging.oregon.platform-os.com'
+      ],
+      name: 'MPKIT_URL')
+  }
+
+  environment {
+    MPKIT_TOKEN = credentials('MPKIT_TOKEN')
+    MPKIT_EMAIL = credentials('MPKIT_EMAIL')
+    MPKIT_URL   = "${params.MPKIT_URL}"
+    CI = true
+
+    // TC REPORTS
+    UPLOAD_HOST = "https://tests.qa0.oregon.platformos.com"
+    REPORT_PATH  = "${env.GIT_COMMIT}-${System.currentTimeMillis()}"
+    REPORT_TYPE = "manual"
+  }
+
   stages {
-    stage('Install dependencies') {
-      when { branch 'master' }
-
-      agent { docker { image 'node:12-alpine'; args '-u root' } }
-
+    stage('build') {
+      agent { kubernetes { yaml podTemplate("amd64") } }
       steps {
-        sh 'npm ci'
+        container(name: 'testcafe') {
+          sh 'npm ci'
+          sh 'pos-cli deploy'
+          sh 'sleep 10'
+        }
       }
     }
 
-    stage('Deploy to URL') {
-      when { expression { return !params.MP_URL.isEmpty() } }
-      environment {
-        MPKIT_URL = "${params.MP_URL}"
-        CI = true
-      }
-      agent { docker { image 'platformos/pos-cli' } }
+    stage("tests") {
+      agent { kubernetes { yaml podTemplate("amd64") } }
       steps {
-        sh 'pos-cli deploy'
+
+        container(name: 'testcafe') {
+          sh 'npm run test-ci'
+        }
+      }
+
+      post {
+        failure { archiveArtifacts "screenshots/" }
+        // always {
+        //   container(name: 'testcafe') {
+        //     sh 'REPORT_TYPE=tc-concurrent npm run ci:test:publish'
+        //     publishHTML (target: [allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '', reportFiles: 'test-report.html', reportName: "tc-concurrent"])
+        //   }
+        // }
       }
     }
 
-    stage('Test on URL') {
-      when { expression { return !params.MP_URL.isEmpty() } }
-      agent { docker { image "platformos/testcafe" } }
-      environment { MP_URL = "${params.MP_URL}" }
-      steps {
-        sh 'npm run test-ci'
-      }
-      post { failure { archiveArtifacts "screenshots/" } }
-    }
-
-    stage('Deploy staging') {
-      agent { docker { image 'platformos/pos-cli' } }
-
-      environment {
-        MPKIT_URL = "${staging_url}"
-        CI = true
-      }
-
-      when {
-        expression { return params.MP_URL.isEmpty() }
-        anyOf { branch 'master' }
-      }
-
-      steps {
-        sh 'pos-cli deploy'
-      }
-    }
-
-    stage('Test Staging') {
-      agent { docker { image "platformos/testcafe" } }
-
-      environment {
-        MP_URL = "${staging_url}"
-      }
-
-      when {
-        expression { return params.MP_URL.isEmpty() }
-        anyOf { branch 'master' }
-      }
-
-      steps {
-        sh 'npm run test-ci'
-      }
-      post { failure { archiveArtifacts "screenshots/" } }
-    }
-
-    stage('Deploy production') {
-      agent { docker { image 'platformos/pos-cli' } }
-
-      environment {
-        MPKIT_URL = "${production_url}"
-        CI = true
-      }
-
-      when {
-        expression { return params.MP_URL.isEmpty() }
-        anyOf { branch 'master' }
-      }
-
-      steps {
-        sh 'pos-cli deploy'
-      }
-    }
-  }
-
-  post {
-    success {
-      slackSend (channel: "#notifications-example", color: '#00FF00', message: "SUCCESS: <${env.BUILD_URL}|Build #${env.BUILD_NUMBER}> - ${buildDuration()}. ${commitInfo()}")
-    }
-
-    failure {
-      slackSend (channel: "#notifications-example", color: '#FF0000', message: "FAILED: <${env.BUILD_URL}|Open build details> - ${buildDuration()}")
-    }
   }
 }
 
-def commitInfo() {
-  GH_URL = "https://github.com/mdyd-dev/platformos-examples"
-
-  def commitSha = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
-  // def commitAuthor = sh(returnStdout: true, script: 'git log --no-merges --format="%an" -1').trim()
-  def commitMsg = sh(returnStdout: true, script: 'git log --no-merges --format="%B" -1 ${commitSha}').trim()
-
-  return "<${GH_URL}/commit/${commitSha}|${commitSha} ${commitMsg}>"
+def podTemplate(arch) {
+  return """
+        spec:
+          nodeSelector:
+            beta.kubernetes.io/arch: "${arch}"
+          containers:
+          - name: testcafe
+            resources:
+              limits:
+                cpu: 3
+                memory: 4Gi
+              requests:
+                cpu: 3
+              memory: 4Gi
+            image: 'platformos/testcafe:4.6.2-1.17.1'
+            imagePullPolicy: Always
+            command:
+            - cat
+            tty: true
+"""
 }
+
+pipeline {
+  agent any
+
+  environment {
+    MPKIT_TOKEN = credentials('POS_TOKEN')
+    MPKIT_EMAIL = "darek+ci@near-me.com"
+    CI = true
+  }
