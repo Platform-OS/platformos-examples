@@ -11,17 +11,7 @@ pipeline {
   }
 
   parameters {
-    // string(description: 'Instance URL', name: 'MPKIT_URL', defaultValue: 'https://alpha.shx-01.frankfurt.platformos.com')
-    // string(description: 'Instance URL', name: 'MPKIT_URL', defaultValue: 'https://template.qa0.oregon.platformos.com')
-    choice(
-      choices: [
-        'https://ci-01.platformos.dev',
-        'https://ci-02.platformos.dev',
-        'https://ci-03.platformos.dev',
-        'https://template.qa0.oregon.platformos.com',
-        'https://getmarketplace-beta.staging.oregon.platform-os.com'
-      ],
-      name: 'MPKIT_URL')
+    string(description: 'Instance URL', name: 'MPKIT_URL', defaultValue: 'https://nearme-example.qa0.oregon.platformos.com')
   }
 
   environment {
