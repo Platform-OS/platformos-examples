@@ -1,7 +1,7 @@
 import { Selector } from 'testcafe';
 import { getResultText } from '@platform-os/testcafe-helpers';
 
-fixture('Include tag and exports tag').page(`${process.env.MP_URL}/include`);
+fixture('Include tag and exports tag').page(`${process.env.MPKIT_URL}/include`);
 
 test('Simple include', async t => {
   const actual = await getResultText({ name: 1, Selector });

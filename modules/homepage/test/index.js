@@ -4,7 +4,7 @@ import Homepage from './page-object';
 
 const homepage = new Homepage();
 
-fixture('Homepage').page(process.env.MP_URL);
+fixture('Homepage').page(process.env.MPKIT_URL);
 
 test('There are no liquid errors on the page', async t => {
   await checkLiquidErrors({ t, Selector });

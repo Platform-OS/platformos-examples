@@ -17,7 +17,7 @@ const getRequestResult = ClientFunction(url => {
   });
 });
 
-fixture('PDF Requests').page(process.env.MP_URL).beforeEach(async t => {
+fixture('PDF Requests').page(process.env.MPKIT_URL).beforeEach(async t => {
   await t.navigateTo('/pdf-generation');
 });
 

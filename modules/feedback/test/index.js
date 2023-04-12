@@ -4,10 +4,10 @@ import got from 'got';
 import Feedback from './page-object.js';
 const feedback = new Feedback();
 
-const clearDB = () => got(`${process.env.MP_URL}/feedback/clean.json`);
+const clearDB = () => got(`${process.env.MPKIT_URL}/feedback/clean.json`);
 
 fixture('Feedback - CRUD using AJAX')
-  .page(`${process.env.MP_URL}/feedback`)
+  .page(`${process.env.MPKIT_URL}/feedback`)
   .before(async () => await clearDB())
   .after(async () => await clearDB());
 

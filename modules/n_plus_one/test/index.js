@@ -4,7 +4,7 @@ import { checkLiquidErrors } from '@platform-os/testcafe-helpers';
 
 const page = new PageObject();
 
-fixture('n+1 - related records load much faster').page(process.env.MP_URL);
+fixture('n+1 - related records load much faster').page(process.env.MPKIT_URL);
 
 test('There are no liquid errors on the page', async t => {
   await t.navigateTo('/companies/index');

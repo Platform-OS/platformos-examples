@@ -1,7 +1,7 @@
 import { Selector } from 'testcafe';
 import { getResultText as getTxt, getBtAlertText } from '@platform-os/testcafe-helpers';
 
-fixture('Multilanguage page - translations').page(process.env.MP_URL);
+fixture('Multilanguage page - translations').page(process.env.MPKIT_URL);
 
 test('Default - no language - en fallback', async t => {
   await t.navigateTo('/multilanguage?name=John&url=https://documentation.platformos.com');

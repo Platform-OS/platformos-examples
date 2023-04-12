@@ -4,7 +4,7 @@ import Module from './page-object';
 
 const module = new Module();
 
-fixture('Module').page(`${process.env.MP_URL}/admincms`);
+fixture('Module').page(`${process.env.MPKIT_URL}/admincms`);
 
 test('There are no liquid errors on the page', async t => {
   await checkLiquidErrors({ t, Selector });

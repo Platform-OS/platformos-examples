@@ -8,7 +8,7 @@
 // const updateProfile = new UpdateProfile();
 
 // fixture('Update profile')
-//   .page(process.env.MP_URL)
+//   .page(process.env.MPKIT_URL)
 //   .beforeEach(async t => {
 //     await updateProfile.login('test_user@test.com', 'password');
 //     await t.navigateTo('/update_profile');

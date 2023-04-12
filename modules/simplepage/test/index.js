@@ -2,7 +2,7 @@ import { Selector } from 'testcafe';
 
 import { checkLiquidErrors } from '@platform-os/testcafe-helpers';
 
-fixture('Simple page').page(`${process.env.MP_URL}/about`);
+fixture('Simple page').page(`${process.env.MPKIT_URL}/about`);
 
 test('There are no liquid errors on the page', async t => {
   await checkLiquidErrors({ t, Selector });

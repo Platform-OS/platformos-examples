@@ -19,7 +19,7 @@ const { client, dev } = {
   }
 };
 
-fixture('Register as client').page(process.env.MP_URL);
+fixture('Register as client').page(process.env.MPKIT_URL);
 
 test('There are no liquid errors on the page', async t => {
   await checkLiquidErrors({ t, Selector });
@@ -56,7 +56,7 @@ test('Display errors message on the form', async t => {
     .expect(users.error.password.innerText).eql(users.formErrors.errorIsTooShort);
 });
 
-fixture('Register as developer').page(process.env.MP_URL);
+fixture('Register as developer').page(process.env.MPKIT_URL);
 
 test('There are no liquid errors on the page', async t => {
   await checkLiquidErrors({ t, Selector });
@@ -93,7 +93,7 @@ test('Display errors message on the form', async t => {
     .expect(users.error.phone.innerText).eql(users.formErrors.errorText);
 });
 
-fixture('Recover password').page(`${process.env.MP_URL}/recover-password`);
+fixture('Recover password').page(`${process.env.MPKIT_URL}/recover-password`);
 
 test('Is showing success after form submit', async t => {
   await t.typeText(users.input.email, dev.email).click(users.button.submit);

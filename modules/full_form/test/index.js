@@ -4,7 +4,7 @@ import FullFormPage from './page-object';
 
 const form = new FullFormPage();
 
-fixture('FullForm').page(`${process.env.MP_URL}/full-form-example`)
+fixture('FullForm').page(`${process.env.MPKIT_URL}/full-form-example`)
 
 test('There are no liquid errors on the page', async t => {
   await checkLiquidErrors({ t, Selector });
