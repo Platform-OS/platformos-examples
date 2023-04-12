@@ -95,11 +95,3 @@ def podTemplate(arch) {
 """
 }
 
-pipeline {
-  agent any
-
-  environment {
-    MPKIT_TOKEN = credentials('POS_TOKEN')
-    MPKIT_EMAIL = "darek+ci@near-me.com"
-    CI = true
-  }
