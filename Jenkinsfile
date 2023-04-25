@@ -5,7 +5,6 @@ pipeline {
   agent any
 
   options {
-    disableConcurrentBuilds()
     timeout(time: 20, unit: 'MINUTES')
     buildDiscarder(logRotator(daysToKeepStr: '1', artifactDaysToKeepStr: '1'))
   }
