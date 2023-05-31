@@ -10,13 +10,13 @@ pipeline {
   }
 
   parameters {
-    string(description: 'Instance URL', name: 'MPKIT_URL', defaultValue: 'https://nearme-example.qa0.oregon.platformos.com')
+    string(description: 'Instance URL', name: 'TARGET_URL', defaultValue: 'https://nearme-example.qa0.oregon.platformos.com')
   }
 
   environment {
     MPKIT_TOKEN = credentials('MPKIT_TOKEN')
     MPKIT_EMAIL = credentials('MPKIT_EMAIL')
-    MPKIT_URL   = "${params.MPKIT_URL}"
+    MPKIT_URL   = "${params.TARGET_URL}"
     CI = true
 
     // TC REPORTS
