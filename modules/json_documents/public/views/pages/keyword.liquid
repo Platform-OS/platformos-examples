@@ -1,0 +1,46 @@
+---
+slug: json-documents/keyword
+metadata:
+  full_width: true
+  description: JSON Document keyword search
+  docs_slug: developer-guide/json-documents/json-documents
+---
+{% assign keyword = context.params.keyword | strip %}
+{% assign category = context.params.category | strip %}
+
+{% render 'modules/json_documents/menu' %}
+<form action="" name="search">
+  <input type="hidden" name="authenticity_token" value="{{ context.authenticity_token }}">
+  <input type="text" value="{{ keyword }}" name="keyword"/>
+  <input type="hidden" value="{{ category }}" name="category" />
+  <input type="submit" value="search" class="btn btn-primary" />
+</form>
+
+{% graphql result = 'modules/json_documents/keyword_search', keyword: keyword, category: category %}
+
+<table class="table table-bordered table-striped scroll">
+  <thead>
+    <tr> <th colspan="5"> books [{{ result.documents.total_entries }}] </th> </tr>
+    <tr>
+      <th>title</th>
+      <th>category</th>
+      <th>author name</th>
+      <th>price</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for book in result.documents.results %}
+      <tr>
+        <td> {{ book.properties.title }} </td>
+        <td> {{ book.properties.category }} </td>
+        <td> {{ book.properties.author.name }} </td>
+        <td> {{ book.properties.price | pricify_cents: 'USD' }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<p>
+  Source code of this example:
+  <a href="https://github.com/mdyd-dev/platformos-examples/blob/master/modules/json_documents/public/views/pages/keyword.liquid" target="_blank">HTML & Liquid</a>
+</p>

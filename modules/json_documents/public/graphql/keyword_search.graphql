@@ -1,0 +1,38 @@
+query search(
+  $limit: Int = 20
+  $page: Int = 1
+  $keyword: String
+  $category: String
+  $sort: [IndexSearchSortInput!] = []
+) {
+  documents: documents_rc(
+    search_index: "books"
+    per_page: $limit
+    page: $page
+    query: {
+      keyword: $keyword
+      match_type: FUZZY
+      properties: [
+        { name: "title" priority: 7 }
+        { name: "category" priority: 5 }
+        { name: "author.name" priority: 2 }
+      ]
+    }
+    filter: [
+        { name: "category", prefix: $category }
+    ]
+    sort: $sort
+  ) {
+    total_entries
+    total_pages
+
+    has_next_page
+    has_previous_page
+
+    results {
+      title: property(name: "title")
+      properties
+    }
+  }
+}
+

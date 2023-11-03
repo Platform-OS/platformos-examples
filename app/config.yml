@@ -1,1 +1,22 @@
-escape_output_instead_of_sanitize: true
+search_indexes:
+- books:
+    properties:
+      title:
+        type: keyword
+      published_at:
+        type: date
+      price:
+        type: integer
+      category:
+        type: keyword
+      author:
+        type: object
+        properties:
+          id:
+            type: integer
+          name:
+            type: text
+            analyzer: english
+            fields:
+              raw:
+                type: keyword

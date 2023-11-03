@@ -1,0 +1,27 @@
+{% parse_json document1 %}
+  {
+    "title": "Pride and Prejudice",
+    "price": 9000,
+    "category": "abc",
+    "author": {
+      "name": "Jane Austen"
+    }
+  }
+{% endparse_json %}
+
+{% parse_json document2 %}
+  {
+    "title": "A Christmas Carol",
+    "price": 8500,
+    "category": "xyz",
+    "author": {
+      "name": "Charles Dickens"
+    }
+  }
+{% endparse_json %}
+
+{% liquid
+  graphql _document1 = 'modules/json_documents/create', name: 'books', document: document1, id: 'document1'
+  graphql _document2 = 'modules/json_documents/create', name: 'books', document: document2, id: 'document2'
+%}
+
