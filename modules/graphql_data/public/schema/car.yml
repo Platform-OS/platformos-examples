@@ -1,0 +1,6 @@
+properties:
+  - name: brand
+  - name: car_model
+  - name: color
+  - name: year
+    type: integer

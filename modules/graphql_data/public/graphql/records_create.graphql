@@ -1,0 +1,34 @@
+mutation create_multiple {
+  records: records_create_rc(
+    records: [
+      {
+        table: "modules/graphql_data/brand"
+        properties: {
+          name: "toyota",
+          country: "japan"
+        }
+      },
+      {
+        table: "modules/graphql_data/car"
+        properties: {
+          brand: "toyota"
+          car_model: "camry"
+          year: 2020
+          color: "silver"
+        }
+      },
+      {
+        table: "modules/graphql_data/car"
+        properties: {
+          brand: "toyota"
+          car_model: "corolla"
+          year: 2023
+          color: "red"
+        }
+      }
+    ]
+  ){
+    id
+    table
+  }
+}
