@@ -65,12 +65,11 @@ def podTemplate(arch) {
           - name: testcafe
             resources:
               limits:
-                cpu: 3
-                memory: 4Gi
+                memory: 1Gi
               requests:
-                cpu: 3
-              memory: 4Gi
-            image: 'platformos/testcafe:4.6.2-1.17.1'
+                cpu: 1
+              memory: 1Gi
+            image: 'platformos/pos-cli:5.1.4'
             imagePullPolicy: Always
             command:
             - cat
