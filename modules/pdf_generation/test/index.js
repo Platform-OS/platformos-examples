@@ -5,15 +5,17 @@ import { checkLiquidErrors } from '@platform-os/testcafe-helpers';
 const pdfGeneration = new PDFGeneration();
 const getRequestResult = ClientFunction(url => {
   return new Promise(resolve => {
-      var xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
 
-      xhr.open('GET', url);
+    console.log(url);
+    xhr.open('GET', url);
 
-      xhr.onload = function () {
-          resolve(xhr.status);
-      };
+    xhr.onload = function () {
+      console.log(xhr.status);
+      resolve(xhr.status);
+    };
 
-      xhr.send(null);
+    xhr.send(null);
   });
 });
 
@@ -33,6 +35,8 @@ test('Create PDF file', async t => {
 
   console.log("now!");
 
+  const href = await pdfGeneration.button.PDF.getAttribute('href');
+  console.log(href);
   const pdfGenerationStatus = await getRequestResult(await pdfGeneration.button.PDF.getAttribute('href'));
 
   console.log(pdfGenerationStatus);
