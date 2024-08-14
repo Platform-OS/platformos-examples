@@ -31,7 +31,11 @@ test('Create PDF file', async t => {
   await t
     .wait(10000)
 
+  console.log("now!");
+
   const pdfGenerationStatus = await getRequestResult(await pdfGeneration.button.PDF.getAttribute('href'));
+
+  console.log(pdfGenerationStatus);
 
   await t.expect(pdfGenerationStatus).notEql(404);
   await t.expect(pdfGenerationStatus).notEql(403);
