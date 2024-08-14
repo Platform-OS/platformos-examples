@@ -1,3 +1,5 @@
+allow_data_clean: true
+elasticsearch_version: legacy
 search_indexes:
 - books:
     properties:

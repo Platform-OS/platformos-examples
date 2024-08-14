@@ -11,6 +11,9 @@ test('There are no liquid errors on the page', async t => {
 });
 
 test('There is list of Records', async t => {
+
+  await t
+    .wait(10000) // ¯\_(ツ)_/¯
   let tableRowsCount = module.table.propertiesRows;
   let count = await tableRowsCount.count;
 

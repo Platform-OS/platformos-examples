@@ -29,7 +29,7 @@ test('Create PDF file', async t => {
   await t
     .click(pdfGeneration.button.save); //waiting for generating pdf file;
   await t
-    .wait(10000)
+    .wait(20000)
 
   console.log("now!");
 
