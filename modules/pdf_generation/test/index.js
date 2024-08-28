@@ -10,6 +10,16 @@ const getRequestResult = ClientFunction(url => {
     console.log(url);
     xhr.open('GET', url);
 
+    xhr.onreadystatechange = function (oEvent) {
+      if (oXHR.readyState === 4) {
+        if (oXHR.status === 200) {
+          console.log(oXHR.responseText)
+        } else {
+          console.log("Error", oXHR.statusText);
+        }
+      }
+    };
+
     xhr.onload = function () {
       console.log(xhr.status);
       resolve(xhr.status);
