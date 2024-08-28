@@ -11,6 +11,7 @@ const getRequestResult = ClientFunction(url => {
     xhr.open('GET', url);
 
     xhr.onreadystatechange = function (oEvent) {
+      console.log(oEvent);
       if (oXHR.readyState === 4) {
         if (oXHR.status === 200) {
           console.log(oXHR.responseText)
@@ -20,11 +21,14 @@ const getRequestResult = ClientFunction(url => {
       }
     };
 
-    xhr.onload = function () {
+    xhr.onload = function (e) {
+      console.log(e);
       console.log(xhr.status);
       resolve(xhr.status);
       console.log("16");
     };
+
+    xhr.onerror = (e) => reject( Error("A network error occured "+e.message));
 
     xhr.send(null);
     console.log("20");
