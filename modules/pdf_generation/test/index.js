@@ -13,9 +13,11 @@ const getRequestResult = ClientFunction(url => {
     xhr.onload = function () {
       console.log(xhr.status);
       resolve(xhr.status);
+      console.log("16");
     };
 
     xhr.send(null);
+    console.log("20");
   });
 });
 
@@ -37,8 +39,9 @@ test('Create PDF file', async t => {
 
   const href = await pdfGeneration.button.PDF.getAttribute('href');
   console.log(href);
-  const pdfGenerationStatus = await getRequestResult(await pdfGeneration.button.PDF.getAttribute('href'));
+  const pdfGenerationStatus = await getRequestResult(href);
 
+  console.log("44");
   console.log(pdfGenerationStatus);
 
   await t.expect(pdfGenerationStatus).notEql(404);
