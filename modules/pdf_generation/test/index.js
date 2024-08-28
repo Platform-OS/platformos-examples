@@ -4,34 +4,7 @@ import { checkLiquidErrors } from '@platform-os/testcafe-helpers';
 
 const pdfGeneration = new PDFGeneration();
 const getRequestResult = ClientFunction(url => {
-  return new Promise(resolve => {
-    var xhr = new XMLHttpRequest();
-
-    console.log(url);
-    xhr.open('GET', url);
-
-    xhr.onreadystatechange = function (oEvent) {
-      console.log(oEvent);
-      if (oXHR.readyState === 4) {
-        if (oXHR.status === 200) {
-          console.log(oXHR.responseText)
-        } else {
-          console.log("Error", oXHR.statusText);
-        }
-      }
-    };
-
-    xhr.onload = function (e) {
-      console.log(e);
-      console.log(xhr.status);
-      resolve(xhr.status);
-      console.log("16");
-    };
-
-    xhr.onerror = (e) => reject( Error("A network error occured "+e.message));
-
-    xhr.send(null);
-    console.log("20");
+  return fetch(url)
   });
 });
 
