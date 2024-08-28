@@ -3,10 +3,7 @@ import PDFGeneration from './page-object';
 import { checkLiquidErrors } from '@platform-os/testcafe-helpers';
 
 const pdfGeneration = new PDFGeneration();
-const getRequestResult = ClientFunction(url => {
-  return fetch(url)
-  });
-});
+const getRequestResult = ClientFunction(url => fetch(url));
 
 fixture('PDF Requests').page(process.env.MPKIT_URL).beforeEach(async t => {
   await t.navigateTo('/pdf-generation');
