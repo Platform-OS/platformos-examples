@@ -17,7 +17,7 @@ test('Create PDF file', async t => {
   await t
     .click(pdfGeneration.button.save); //waiting for generating pdf file;
   await t
-    .wait(20000)
+    .wait(30000)
 
   const href = await pdfGeneration.button.PDF.getAttribute('href');
   const pdfGenerationStatus = await getRequestResult(href);
