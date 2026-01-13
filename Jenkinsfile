@@ -72,7 +72,7 @@ def podTemplate(arch) {
               requests:
                 cpu: 1
                 memory: 2Gi
-            image: 'platformos/testcafe:4.6.2-1.17.1'
+            image: 'docker.io/platformos/testcafe:4.6.2-1.17.1'
             imagePullPolicy: Always
             command:
             - cat
