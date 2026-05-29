@@ -1,17 +1,9 @@
-import { type Page, type Locator } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 
 export default class Module {
-  table: {
-    propertiesRows: Locator;
-    pagesRows: Locator;
-    assetsRows: Locator;
-  };
+  table: (text: string) => Locator;
 
   constructor(page: Page) {
-    this.table = {
-      propertiesRows: page.locator('[data-result="records"] td:nth-of-type(2)'),
-      pagesRows: page.locator('[data-result="pages"] td:nth-of-type(2)'),
-      assetsRows: page.locator('[data-result="assets"] td:nth-of-type(2)'),
-    };
+    this.table = (text: string) => page.locator(`[data-result="${text}"]`);
   }
 }
