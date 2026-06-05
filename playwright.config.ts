@@ -10,13 +10,13 @@ export default defineConfig({
   projects: [
     {
       name: 'setup test data',
-      testMatch: 'modules/**/test/setup.spec.ts',
+      testMatch: 'modules/**/tests/setup.spec.ts',
     },
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
       dependencies: ['setup test data'],
-      testMatch: ['modules/**/test/index.spec.ts'],
+      testMatch: ['modules/**/tests/index.spec.ts'],
     },
   ],
 });
