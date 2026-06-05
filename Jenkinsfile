@@ -72,7 +72,7 @@ def podTemplate(arch) {
               requests:
                 cpu: 1
                 memory: 2Gi
-            image: 'docker.io/platformos/playwright:6.0.6-1.60.0'
+            image: 'docker.io/platformos/playwright:6.0.7-1.60.0'
             imagePullPolicy: Always
             command:
             - cat
