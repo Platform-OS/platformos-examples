@@ -33,7 +33,7 @@ pipeline {
           sh 'npm ci'
           sh 'pos-cli deploy'
           sh 'sleep 10'
-          retry(2) { 
+          retry(2) {
             sh 'npm run test-ci'
           }
         }
@@ -58,7 +58,7 @@ def podTemplate(arch) {
         spec:
           nodeSelector:
             beta.kubernetes.io/arch: "${arch}"
-             
+
           imagePullSecrets:
           - name: dockeriosec
           - name: ocirsecret
@@ -72,7 +72,7 @@ def podTemplate(arch) {
               requests:
                 cpu: 1
                 memory: 2Gi
-            image: 'docker.io/platformos/testcafe:4.6.2-1.17.1'
+            image: 'docker.io/platformos/playwright:6.0.6-1.60.0'
             imagePullPolicy: Always
             command:
             - cat
