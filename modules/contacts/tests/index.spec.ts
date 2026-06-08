@@ -7,7 +7,7 @@ test.describe('Contacts', () => {
   let contacts: Contacts;
 
   test.beforeEach(async ({ page }) => {
-    await page.goto('/contacts?language=en');
+    await page.goto('/contacts');
     contacts = new Contacts(page);
   });
 
