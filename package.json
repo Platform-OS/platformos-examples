@@ -6,7 +6,7 @@
     "deploy": "pos-cli deploy",
     "bs": "npx browser-sync start --files modules/* --reload-delay 1000 --proxy",
     "test": "playwright test",
-    "test-ci": "playwright test --reporter=github",
+    "test-ci": "playwright test --reporter=list",
     "test-local": "playwright test --headed",
     "test-debug": "playwright test --debug"
   },
