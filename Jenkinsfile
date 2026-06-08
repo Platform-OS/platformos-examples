@@ -64,7 +64,7 @@ def podTemplate(arch) {
           - name: ocirsecret
 
           containers:
-          - name: testcafe
+          - name: playwright
             resources:
               limits:
                 cpu: 1
