@@ -10,7 +10,7 @@ pipeline {
   }
 
   parameters {
-    string(description: 'Instance URL', name: 'TARGET_URL', defaultValue: 'https://nearme-example.qa0.oregon.platformos.com')
+    string(description: 'Instance URL', name: 'TARGET_URL', defaultValue: 'https://nearme-example.staging.oregon.platform-os.com')
   }
 
   environment {
