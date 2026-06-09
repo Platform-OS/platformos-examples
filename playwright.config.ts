@@ -1,5 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const chrome = { ...devices['Desktop Chrome'] };
+
 export default defineConfig({
   use: {
     baseURL: process.env.MPKIT_URL,
@@ -9,14 +11,24 @@ export default defineConfig({
   reporter: [['list']],
   projects: [
     {
-      name: 'setup test data',
-      testMatch: 'modules/**/tests/setup.spec.ts',
+      name: 'contacts setup',
+      testMatch: 'modules/contacts/tests/setup.spec.ts',
     },
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-      dependencies: ['setup test data'],
-      testMatch: ['modules/**/tests/index.spec.ts'],
+      name: 'contacts',
+      use: chrome,
+      dependencies: ['contacts setup'],
+      testMatch: 'modules/contacts/tests/index.spec.ts',
+    },
+    {
+      name: 'feedback setup',
+      testMatch: 'modules/feedback/tests/setup.spec.ts',
+    },
+    {
+      name: 'feedback',
+      use: chrome,
+      dependencies: ['feedback setup'],
+      testMatch: 'modules/feedback/tests/index.spec.ts',
     },
   ],
 });

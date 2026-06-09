@@ -75,6 +75,25 @@ export async function deleteAllContacts(
   }
 }
 
+export async function deleteAllFeedback(
+  request: APIRequestContext
+): Promise<void> {
+  const response = await request.post(GRAPH_ENDPOINT, {
+    headers: authHeaders(),
+    data: {
+      query: `
+        mutation {
+          records_delete_all(table: "modules/feedback/feedback") { count }
+        }
+      `,
+    },
+  });
+
+  if (!response.ok()) {
+    throw new Error(`deleteAllFeedback failed — ${response.status()} ${response.statusText()}\n${await response.text()}`);
+  }
+}
+
 export async function deleteContact(
   request: APIRequestContext,
   id: string | null
