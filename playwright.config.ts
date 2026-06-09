@@ -30,5 +30,10 @@ export default defineConfig({
       dependencies: ['feedback setup'],
       testMatch: 'modules/feedback/tests/index.spec.ts',
     },
+    {
+      name: 'full_form',
+      use: chrome,
+      testMatch: 'modules/full_form/tests/index.spec.ts',
+    },
   ],
 });
