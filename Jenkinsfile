@@ -29,7 +29,7 @@ pipeline {
     stage('build deploy test') {
       agent { kubernetes { yaml podTemplate("amd64") } }
       steps {
-        container(name: 'testcafe') {
+        container(name: 'playwright') {
           sh 'npm ci'
           sh 'pos-cli deploy'
           sh 'sleep 10'
@@ -42,7 +42,7 @@ pipeline {
       post {
         failure { archiveArtifacts "screenshots/" }
         // always {
-        //   container(name: 'testcafe') {
+        //   container(name: 'playwright') {
         //     sh 'REPORT_TYPE=tc-concurrent npm run ci:test:publish'
         //     publishHTML (target: [allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '', reportFiles: 'test-report.html', reportName: "tc-concurrent"])
         //   }
