@@ -94,6 +94,44 @@ export async function deleteAllFeedback(
   }
 }
 
+export async function deleteUserByEmail(
+  request: APIRequestContext,
+  email: string
+): Promise<void> {
+  const findResponse = await request.post(GRAPH_ENDPOINT, {
+    headers: authHeaders(),
+    data: {
+      query: `
+        query FindUser($email: String!) {
+          users(filter: { email: { value: $email } }) {
+            results { id }
+          }
+        }
+      `,
+      variables: { email },
+    },
+  });
+
+  if (!findResponse.ok()) return;
+
+  const json = await findResponse.json();
+  const users = json.data?.users?.results ?? [];
+
+  for (const user of users) {
+    await request.post(GRAPH_ENDPOINT, {
+      headers: authHeaders(),
+      data: {
+        query: `
+          mutation DeleteUser($id: ID!) {
+            user_delete(id: $id) { id }
+          }
+        `,
+        variables: { id: user.id },
+      },
+    });
+  }
+}
+
 export async function deleteAllPdfUploads(
   request: APIRequestContext
 ): Promise<void> {

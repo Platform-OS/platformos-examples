@@ -70,5 +70,15 @@ export default defineConfig({
       use: chrome,
       testMatch: 'modules/simplepage/tests/index.spec.ts',
     },
+    {
+      name: 'users setup',
+      testMatch: 'modules/users/tests/setup.spec.ts',
+    },
+    {
+      name: 'users',
+      use: chrome,
+      dependencies: ['users setup'],
+      testMatch: 'modules/users/tests/index.spec.ts',
+    },
   ],
 });
