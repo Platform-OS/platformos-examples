@@ -65,5 +65,10 @@ export default defineConfig({
       dependencies: ['pdf_generation setup'],
       testMatch: 'modules/pdf_generation/tests/index.spec.ts',
     },
+    {
+      name: 'simplepage',
+      use: chrome,
+      testMatch: 'modules/simplepage/tests/index.spec.ts',
+    },
   ],
 });
