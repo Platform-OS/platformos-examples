@@ -45,5 +45,10 @@ export default defineConfig({
       use: chrome,
       testMatch: 'modules/include/tests/index.spec.ts',
     },
+    {
+      name: 'multilanguage',
+      use: chrome,
+      testMatch: 'modules/multilanguage/tests/index.spec.ts',
+    },
   ],
 });
