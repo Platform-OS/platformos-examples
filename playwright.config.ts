@@ -35,5 +35,10 @@ export default defineConfig({
       use: chrome,
       testMatch: 'modules/full_form/tests/index.spec.ts',
     },
+    {
+      name: 'homepage',
+      use: chrome,
+      testMatch: 'modules/homepage/tests/index.spec.ts',
+    },
   ],
 });
