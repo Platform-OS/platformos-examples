@@ -94,6 +94,25 @@ export async function deleteAllFeedback(
   }
 }
 
+export async function deleteAllPdfUploads(
+  request: APIRequestContext
+): Promise<void> {
+  const response = await request.post(GRAPH_ENDPOINT, {
+    headers: authHeaders(),
+    data: {
+      query: `
+        mutation {
+          records_delete_all(table: "modules/pdf_generation/pdf_upload") { count }
+        }
+      `,
+    },
+  });
+
+  if (!response.ok()) {
+    throw new Error(`deleteAllPdfUploads failed — ${response.status()} ${response.statusText()}\n${await response.text()}`);
+  }
+}
+
 export async function deleteContact(
   request: APIRequestContext,
   id: string | null

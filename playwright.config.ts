@@ -55,5 +55,15 @@ export default defineConfig({
       use: chrome,
       testMatch: 'modules/n_plus_one/tests/index.spec.ts',
     },
+    {
+      name: 'pdf_generation setup',
+      testMatch: 'modules/pdf_generation/tests/setup.spec.ts',
+    },
+    {
+      name: 'pdf_generation',
+      use: chrome,
+      dependencies: ['pdf_generation setup'],
+      testMatch: 'modules/pdf_generation/tests/index.spec.ts',
+    },
   ],
 });
