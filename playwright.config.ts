@@ -50,5 +50,10 @@ export default defineConfig({
       use: chrome,
       testMatch: 'modules/multilanguage/tests/index.spec.ts',
     },
+    {
+      name: 'n_plus_one',
+      use: chrome,
+      testMatch: 'modules/n_plus_one/tests/index.spec.ts',
+    },
   ],
 });
