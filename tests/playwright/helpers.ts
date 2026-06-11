@@ -75,6 +75,56 @@ export async function deleteAllContacts(
   }
 }
 
+export async function createExampleRecord(
+  request: APIRequestContext,
+  email: string
+): Promise<void> {
+  const response = await request.post(GRAPH_ENDPOINT, {
+    headers: authHeaders(),
+    data: {
+      query: `
+        mutation CreateExampleRecord($email: String!) {
+          record_create(
+            record: {
+              table: "modules/full_form/example_record"
+              properties: [{ name: "email", value: $email }]
+            }
+          ) { id }
+        }
+      `,
+      variables: { email },
+    },
+  });
+
+  if (!response.ok()) {
+    throw new Error(`createExampleRecord failed — ${response.status()} ${response.statusText()}\n${await response.text()}`);
+  }
+
+  const json = await response.json();
+  if (json.errors) {
+    throw new Error(`createExampleRecord GraphQL error — ${JSON.stringify(json.errors)}`);
+  }
+}
+
+export async function deleteAllExampleRecords(
+  request: APIRequestContext
+): Promise<void> {
+  const response = await request.post(GRAPH_ENDPOINT, {
+    headers: authHeaders(),
+    data: {
+      query: `
+        mutation {
+          records_delete_all(table: "modules/full_form/example_record") { count }
+        }
+      `,
+    },
+  });
+
+  if (!response.ok()) {
+    throw new Error(`deleteAllExampleRecords failed — ${response.status()} ${response.statusText()}\n${await response.text()}`);
+  }
+}
+
 export async function deleteAllFeedback(
   request: APIRequestContext
 ): Promise<void> {

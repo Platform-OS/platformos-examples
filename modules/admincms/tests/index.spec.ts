@@ -1,13 +1,13 @@
 import { test, expect } from '@playwright/test';
 import { checkLiquidErrors } from '../../../tests/playwright/helpers';
-import Module from './page-object';
+import AdminCmsPage from './page-object';
 
-test.describe('Module', () => {
-  let module: Module;
+test.describe('AdminCMS', () => {
+  let admincms: AdminCmsPage;
 
   test.beforeEach(async ({ page }) => {
     await page.goto('/admincms');
-    module = new Module(page);
+    admincms = new AdminCmsPage(page);
   });
 
   test('There are no liquid errors on the page', async ({ page }) => {
@@ -15,15 +15,12 @@ test.describe('Module', () => {
   });
 
   test('There is list of Records', async () => {
-    const rows = module.table('records').getByRole('row');
-    const count = await rows.count();
+    const count = await admincms.recordRows.count();
 
     expect(count).toBeGreaterThan(0);
 
     for (let i = 0; i < count; i++) {
-      const cells = rows.nth(i).getByRole('cell');
-      await expect(cells.nth(0)).not.toBeEmpty();
-      await expect(cells.nth(1)).toHaveText(/^\{.+\}/);
+      await expect(admincms.recordCells(i).nth(1)).toHaveText(/^\{.+\}/);
     }
   });
 
@@ -45,23 +42,19 @@ test.describe('Module', () => {
       'admincms'
     ];
 
-    const table = module.table('pages');
-
     for (const slug of slugList) {
-      await expect(table.getByRole('cell', { name: slug, exact: true })).toHaveCount(1);
+      await expect(admincms.pages.getByRole('cell', { name: slug, exact: true })).toHaveCount(1);
     }
   });
 
   test('List of instance assets is present with URLs to CDN', async () => {
-    const rows = module.table('assets').getByRole('row');
-    const count = await rows.count();
+    const count = await admincms.assetRows.count();
 
     expect(count).toBeGreaterThan(0);
 
     for (let i = 0; i < count; i++) {
-      const cells = rows.nth(i).getByRole('cell');
-      await expect(cells.nth(0)).not.toBeEmpty();
-      await expect(cells.nth(1)).toHaveText(/^https:\/\//);
+      await expect(admincms.assetCells(i).nth(0)).not.toBeEmpty();
+      await expect(admincms.assetCells(i).nth(1)).toHaveText(/^https:\/\//);
     }
   });
 });

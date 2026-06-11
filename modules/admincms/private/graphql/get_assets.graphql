@@ -1,0 +1,8 @@
+query get_assets {
+  admin_assets(per_page: 100) {
+    results {
+      physical_file_path
+      url
+    }
+  }
+}

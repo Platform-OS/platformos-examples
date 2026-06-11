@@ -11,8 +11,18 @@ export default defineConfig({
   reporter: [['list']],
   projects: [
     {
+      name: 'admincms setup',
+      testMatch: 'modules/admincms/tests/setup.spec.ts',
+    },
+    {
+      name: 'admincms teardown',
+      testMatch: 'modules/admincms/tests/teardown.spec.ts',
+    },
+    {
       name: 'admincms',
       use: chrome,
+      dependencies: ['admincms setup'],
+      teardown: 'admincms teardown',
       testMatch: 'modules/admincms/tests/index.spec.ts',
     },
     {
