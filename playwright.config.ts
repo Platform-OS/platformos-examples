@@ -11,6 +11,11 @@ export default defineConfig({
   reporter: [['list']],
   projects: [
     {
+      name: 'admincms',
+      use: chrome,
+      testMatch: 'modules/admincms/tests/index.spec.ts',
+    },
+    {
       name: 'contacts setup',
       testMatch: 'modules/contacts/tests/setup.spec.ts',
     },
