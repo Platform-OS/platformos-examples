@@ -34,9 +34,7 @@ pipeline {
           sh 'pos-cli data clean --include-schema --auto-confirm'
           sh 'pos-cli deploy'
           sh 'sleep 10'
-          retry(2) {
-            sh 'npm run test-ci'
-          }
+          sh 'npm run test-ci'
         }
       }
 
