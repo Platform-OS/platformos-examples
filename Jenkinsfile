@@ -10,7 +10,7 @@ pipeline {
   }
 
   parameters {
-    string(description: 'Instance URL', name: 'TARGET_URL', defaultValue: 'https://nearme-example.qa0.oregon.platformos.com')
+    string(description: 'Instance URL', name: 'TARGET_URL', defaultValue: 'https://nearme-example.staging.oregon.platform-os.com')
   }
 
   environment {
@@ -29,20 +29,19 @@ pipeline {
     stage('build deploy test') {
       agent { kubernetes { yaml podTemplate("amd64") } }
       steps {
-        container(name: 'testcafe') {
+        container(name: 'playwright') {
           sh 'npm ci'
+          sh 'pos-cli data clean --include-schema --auto-confirm'
           sh 'pos-cli deploy'
           sh 'sleep 10'
-          retry(2) { 
-            sh 'npm run test-ci'
-          }
+          sh 'npm run test-ci'
         }
       }
 
       post {
         failure { archiveArtifacts "screenshots/" }
         // always {
-        //   container(name: 'testcafe') {
+        //   container(name: 'playwright') {
         //     sh 'REPORT_TYPE=tc-concurrent npm run ci:test:publish'
         //     publishHTML (target: [allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '', reportFiles: 'test-report.html', reportName: "tc-concurrent"])
         //   }
@@ -58,13 +57,13 @@ def podTemplate(arch) {
         spec:
           nodeSelector:
             beta.kubernetes.io/arch: "${arch}"
-             
+
           imagePullSecrets:
           - name: dockeriosec
           - name: ocirsecret
 
           containers:
-          - name: testcafe
+          - name: playwright
             resources:
               limits:
                 cpu: 1
@@ -72,7 +71,7 @@ def podTemplate(arch) {
               requests:
                 cpu: 1
                 memory: 2Gi
-            image: 'docker.io/platformos/testcafe:4.6.2-1.17.1'
+            image: 'docker.io/platformos/playwright:6.0.7-1.60.0'
             imagePullPolicy: Always
             command:
             - cat

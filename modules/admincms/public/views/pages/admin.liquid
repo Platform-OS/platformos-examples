@@ -68,6 +68,7 @@ metadata:
   <div class="col-12">
     <h3>Instance assets, including this module</h3>
 
+    {%- graphql a = "modules/admincms/get_assets" -%}
     <table class="table table-sm table-striped" data-result="assets">
       <thead>
         <tr>
@@ -76,10 +77,10 @@ metadata:
         </tr>
       </thead>
       <tbody>
-        {% for asset in asset_url %}
+        {% for asset in a.admin_assets.results %}
           <tr>
-            <td>{{ asset[0] }}</td>
-            <td>{{ asset[1] }}</td>
+            <td>{{ asset.physical_file_path }}</td>
+            <td>{{ asset.url }}</td>
           </tr>
         {% endfor %}
       </tbody>
