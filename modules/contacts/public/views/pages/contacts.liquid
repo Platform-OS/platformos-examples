@@ -1,10 +1,10 @@
 ---
-slug: contacts
+slug: contacts(/:id)
 metadata:
   description: Building a contact form with record
   docs_slug: developer-guide/records/building-contact-form-with-record
 ---
-{%- assign id = context.params.slug2 -%}
+{%- assign id = context.params.id -%}
 {%- graphql g = "modules/contacts/get_contacts", id: id -%}
 
 {%- if id == blank -%}
