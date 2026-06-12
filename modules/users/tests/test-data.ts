@@ -7,6 +7,6 @@ export const CLIENT = {
 export const DEV = {
   name: 'Test Developer',
   email: 'pw-test-dev@example.com',
-  password: 'devpass123',
+  password: 'Testdevpass123$',
   phone: '+1234567890',
 };
