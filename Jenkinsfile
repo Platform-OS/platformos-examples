@@ -30,8 +30,9 @@ pipeline {
     stage('build deploy test') {
       agent { kubernetes { yaml podTemplate("amd64") } }
       steps {
-        container(name: 'testcafe') {
+        container(name: 'playwright') {
           sh 'npm ci'
+          sh 'pos-cli data clean --include-schema --auto-confirm'
           sh 'pos-cli deploy'
           sh 'sleep 10'
           sh 'npm run test-ci'
@@ -41,7 +42,7 @@ pipeline {
       post {
         failure { archiveArtifacts "screenshots/" }
         // always {
-        //   container(name: 'testcafe') {
+        //   container(name: 'playwright') {
         //     sh 'REPORT_TYPE=tc-concurrent npm run ci:test:publish'
         //     publishHTML (target: [allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '', reportFiles: 'test-report.html', reportName: "tc-concurrent"])
         //   }
@@ -57,20 +58,21 @@ def podTemplate(arch) {
         spec:
           nodeSelector:
             beta.kubernetes.io/arch: "${arch}"
-             
+
           imagePullSecrets:
           - name: dockeriosec
           - name: ocirsecret
 
           containers:
-          - name: testcafe
+          - name: playwright
             resources:
               limits:
-                memory: 1Gi
+                cpu: 1
+                memory: 2Gi
               requests:
                 cpu: 1
-              memory: 1Gi
-            image: 'docker.io/platformos/testcafe:5.1.4-3.5.0'
+                memory: 2Gi
+            image: 'docker.io/platformos/playwright:6.0.7-1.60.0'
             imagePullPolicy: Always
             command:
             - cat
