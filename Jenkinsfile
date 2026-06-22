@@ -25,7 +25,7 @@ pipeline {
   }
 
   stages {
-    stage('build deploy test') {
+    stage('deploy') {
       options {
         timeout(time: 5, unit: 'MINUTES')
       }
@@ -40,7 +40,7 @@ pipeline {
       }
     }
 
-    stage('run tests') {
+    stage('test') {
       options {
         timeout(time: 10, unit: 'MINUTES')
       }
