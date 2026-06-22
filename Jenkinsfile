@@ -2,10 +2,9 @@
 // def production_url = "https://examples.platform-os.com"
 
 pipeline {
-  agent any
+  agent none
 
   options {
-    timeout(time: 20, unit: 'MINUTES')
     buildDiscarder(logRotator(daysToKeepStr: '1', artifactDaysToKeepStr: '1'))
   }
 
@@ -27,6 +26,9 @@ pipeline {
 
   stages {
     stage('build deploy test') {
+      options {
+        timeout(time: 5, unit: 'MINUTES')
+      }
       agent { kubernetes { yaml podTemplate("amd64") } }
       steps {
         container(name: 'playwright') {
@@ -34,6 +36,17 @@ pipeline {
           sh 'pos-cli data clean --include-schema --auto-confirm'
           sh 'pos-cli deploy'
           sh 'sleep 10'
+        }
+      }
+    }
+
+    stage('run tests') {
+      options {
+        timeout(time: 10, unit: 'MINUTES')
+      }
+      agent { kubernetes { yaml podTemplate("amd64") } }
+      steps {
+        container(name: 'playwright') {
           sh 'npm run test-ci'
         }
       }
