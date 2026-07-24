@@ -17,6 +17,7 @@ pipeline {
     MPKIT_EMAIL = credentials('MPKIT_EMAIL')
     MPKIT_URL   = "${params.TARGET_URL}"
     CI = true
+    CONFIRMATION_TEXT = "${params.TARGET_URL}"
 
     // TC REPORTS
     UPLOAD_HOST = "https://tests.qa0.oregon.platformos.com"
