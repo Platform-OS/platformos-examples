@@ -34,6 +34,7 @@ pipeline {
       steps {
         container(name: 'playwright') {
           sh 'npm ci'
+          sh 'echo "CONFIRMATION_TEXT: $CONFIRMATION_TEXT"'
           sh 'pos-cli data clean --include-schema --auto-confirm'
           sh 'pos-cli deploy'
           sh 'sleep 10'
