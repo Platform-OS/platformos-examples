@@ -6,9 +6,11 @@ export default defineConfig({
   use: {
     baseURL: process.env.MPKIT_URL,
     headless: true,
+    screenshot: 'only-on-failure',
+    trace: 'retain-on-failure',
   },
   workers: 1,
-  reporter: [['list']],
+  reporter: [['html', { outputFolder: 'playwright-report' }]],
   projects: [
     {
       name: 'admincms setup',

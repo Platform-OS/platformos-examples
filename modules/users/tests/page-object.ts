@@ -15,6 +15,9 @@ export default class UsersPage {
   readonly passwordError: Locator;
   readonly phoneError: Locator;
 
+  readonly flashMessage: Locator;
+
+
   constructor(page: Page) {
     this.page = page;
 
@@ -29,6 +32,8 @@ export default class UsersPage {
     this.emailError = page.locator('#form_email + p');
     this.passwordError = page.locator('#form_password + p');
     this.phoneError = page.locator('#form_mobile_number + p');
+
+    this.flashMessage = page.locator('div.flash-messages');
   }
 
   async login(email: string, password: string): Promise<void> {

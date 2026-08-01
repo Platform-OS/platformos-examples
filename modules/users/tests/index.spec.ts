@@ -23,11 +23,13 @@ test.describe('Register as client', () => {
     await users.passwordInput.fill(CLIENT.password);
     await users.submitButton.click();
 
-    await expect(page.locator('.alert.alert-success')).toContainText('You have signed up successfully.');
+    await users.flashMessage.waitFor({ state: 'visible' });
+    await expect(users.flashMessage).toContainText('You have signed up successfully.');
 
     await users.login(CLIENT.email, CLIENT.password);
 
-    await expect(page.locator('.alert.alert-success')).toContainText('Session was successfully created.');
+    await users.flashMessage.waitFor({ state: 'visible' });
+    await expect(users.flashMessage).toContainText('Session was successfully created.');
   });
 
   test.skip('Display errors message on the form', async ({ page }) => {
@@ -66,12 +68,14 @@ test.describe('Register as developer', () => {
     await users.phoneInput.fill(DEV.phone);
     await users.submitButton.click();
 
-    await expect(page.locator('.alert.alert-success')).toContainText('You have signed up successfully.');
+    await users.flashMessage.waitFor({ state: 'visible' });
+    await expect(users.flashMessage).toContainText('You have signed up successfully.');
 
     await users.login(DEV.email, DEV.password);
     await users.logout();
 
-    await expect(page.locator('.alert.alert-success')).toContainText('You have been logged out');
+    await users.flashMessage.waitFor({ state: 'visible' });
+    await expect(users.flashMessage).toContainText('You have been logged out');
   });
 
   test.skip('Display errors message on the form', async ({ page }) => {
