@@ -18,11 +18,9 @@ pipeline {
     MPKIT_URL   = "${params.TARGET_URL}"
     CI = true
     CONFIRMATION_TEXT = "${params.TARGET_URL}"
-
-    // TC REPORTS
-    UPLOAD_HOST = "https://tests.qa0.oregon.platformos.com"
-    REPORT_PATH  = "${env.GIT_COMMIT}-${System.currentTimeMillis()}"
-    REPORT_TYPE = "manual"
+    // Prod (examples.platform-os.com) is never data-cleaned, so tests that create
+    // real users must skip there. Staging instances are wiped, so they run everything.
+    TEST_ENV = "${params.TARGET_URL == 'https://examples.platform-os.com' ? 'prod' : 'staging'}"
   }
 
   stages {
@@ -34,7 +32,7 @@ pipeline {
       steps {
         container(name: 'playwright') {
           sh 'npm ci'
-          sh 'echo "CONFIRMATION_TEXT: $CONFIRMATION_TEXT"'
+          // sh 'echo "CONFIRMATION_TEXT: $CONFIRMATION_TEXT"'
           // sh 'pos-cli data clean --include-schema --auto-confirm'
           sh 'pos-cli deploy'
           sh 'sleep 10'

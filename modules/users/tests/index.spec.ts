@@ -3,6 +3,11 @@ import { checkLiquidErrors } from '../../../tests/playwright/helpers';
 import UsersPage from './page-object';
 import { CLIENT, DEV } from './test-data';
 
+// Sign-up tests create real users with fixed emails. Staging instances are wiped
+// between runs, but prod is not, so a second run hits "email already taken".
+// TEST_ENV is set to 'prod' by the Jenkinsfile when TARGET_URL is the prod instance.
+const isProd = process.env.TEST_ENV === 'prod';
+
 test.describe('Register as client', () => {
   let users: UsersPage;
 
@@ -16,6 +21,7 @@ test.describe('Register as client', () => {
   });
 
   test('Create client account', async ({ page }) => {
+    test.skip(isProd, 'Creates a real user; prod is not data-cleaned');
     await page.goto('/client/sign-up');
 
     await users.firstNameInput.fill(CLIENT.name);
@@ -59,6 +65,7 @@ test.describe('Register as developer', () => {
   });
 
   test('Create developer account', async ({ page }) => {
+    test.skip(isProd, 'Creates a real user; prod is not data-cleaned');
     await page.goto('/sign-up');
     await page.getByRole('link', { name: 'Developer' }).click();
 
