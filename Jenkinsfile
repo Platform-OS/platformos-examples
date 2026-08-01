@@ -54,13 +54,16 @@ pipeline {
       }
 
       post {
-        failure { archiveArtifacts "screenshots/" }
-        // always {
-        //   container(name: 'playwright') {
-        //     sh 'REPORT_TYPE=tc-concurrent npm run ci:test:publish'
-        //     publishHTML (target: [allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '', reportFiles: 'test-report.html', reportName: "tc-concurrent"])
-        //   }
-        // }
+        failure {
+          container(name: 'playwright') {
+            archiveArtifacts "test-results/"
+          }
+        }
+        always {
+          container(name: 'playwright') {
+            publishHTML (target: [allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: "playwright-report"])
+          }
+        }
       }
     }
 
