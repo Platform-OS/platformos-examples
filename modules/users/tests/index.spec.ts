@@ -3,10 +3,11 @@ import { checkLiquidErrors } from '../../../tests/playwright/helpers';
 import UsersPage from './page-object';
 import { CLIENT, DEV } from './test-data';
 
-// Sign-up tests create real users with fixed emails. Staging instances are wiped
-// between runs, but prod is not, so a second run hits "email already taken".
-// TEST_ENV is set to 'prod' by the Jenkinsfile when TARGET_URL is the prod instance.
-const isProd = process.env.TEST_ENV === 'prod';
+// Sign-up tests create real users with fixed emails, so they must not run on an
+// instance whose data persists between runs. The Jenkinsfile sets PROTECTED_INSTANCE
+// (from an explicit list of prod URLs) for those; when it is unset — e.g. local dev —
+// the instance is treated as non-protected and the tests run.
+const protectedInstance = process.env.PROTECTED_INSTANCE === 'true';
 
 test.describe('Register as client', () => {
   let users: UsersPage;
@@ -21,7 +22,7 @@ test.describe('Register as client', () => {
   });
 
   test('Create client account', async ({ page }) => {
-    test.skip(isProd, 'Creates a real user; prod is not data-cleaned');
+    test.skip(protectedInstance, 'Mutates data; skipped on protected (non-disposable) instances');
     await page.goto('/client/sign-up');
 
     await users.firstNameInput.fill(CLIENT.name);
@@ -65,7 +66,7 @@ test.describe('Register as developer', () => {
   });
 
   test('Create developer account', async ({ page }) => {
-    test.skip(isProd, 'Creates a real user; prod is not data-cleaned');
+    test.skip(protectedInstance, 'Mutates data; skipped on protected (non-disposable) instances');
     await page.goto('/sign-up');
     await page.getByRole('link', { name: 'Developer' }).click();
 

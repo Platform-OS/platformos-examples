@@ -18,9 +18,12 @@ pipeline {
     MPKIT_URL   = "${params.TARGET_URL}"
     CI = true
     CONFIRMATION_TEXT = "${params.TARGET_URL}"
-    // Prod (examples.platform-os.com) is never data-cleaned, so tests that create
-    // real users must skip there. Staging instances are wiped, so they run everything.
-    TEST_ENV = "${params.TARGET_URL == 'https://examples.platform-os.com' ? 'prod' : 'staging'}"
+    // Production instances persist data between runs, so destructive/data-mutating
+    // tests must skip there. Listed explicitly; a trailing slash on TARGET_URL is
+    // normalized away before matching. Propagated to the test suite; when unset
+    // (e.g. local dev) tests treat the instance as non-protected and run.
+    // NOTE: a new prod region must be added here or its tests will run against it.
+    PROTECTED_INSTANCE = "${['https://examples.platform-os.com', 'https://examples.prod01.london.platform-os.com', 'https://examples-sydney.prod01.sydney.platformos.com'].contains(params.TARGET_URL.replaceAll('/+\$', '')) ? 'true' : 'false'}"
   }
 
   stages {
