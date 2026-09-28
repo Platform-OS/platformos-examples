@@ -92,9 +92,14 @@ export default defineConfig({
       testMatch: 'modules/users/tests/setup.spec.ts',
     },
     {
+      name: 'users teardown',
+      testMatch: 'modules/users/tests/teardown.spec.ts',
+    },
+    {
       name: 'users',
       use: chrome,
       dependencies: ['users setup'],
+      teardown: 'users teardown',
       testMatch: 'modules/users/tests/index.spec.ts',
     },
   ],

@@ -30,12 +30,14 @@ test.describe('Register as client', () => {
     await users.passwordInput.fill(CLIENT.password);
     await users.submitButton.click();
 
-    await users.flashMessage.waitFor({ state: 'visible' });
+    // The sign-up forms redirect to /sign-in and the flash renders there. Asserting the
+    // URL first means a rejected sign-up fails as "expected /sign-in, got /client/sign-up"
+    // rather than as a timeout on a flash element that was never going to render.
+    await expect(page).toHaveURL(/\/sign-in/);
     await expect(users.flashMessage).toContainText('You have signed up successfully.');
 
     await users.login(CLIENT.email, CLIENT.password);
 
-    await users.flashMessage.waitFor({ state: 'visible' });
     await expect(users.flashMessage).toContainText('Session was successfully created.');
   });
 
@@ -76,13 +78,12 @@ test.describe('Register as developer', () => {
     await users.phoneInput.fill(DEV.phone);
     await users.submitButton.click();
 
-    await users.flashMessage.waitFor({ state: 'visible' });
+    await expect(page).toHaveURL(/\/sign-in/);
     await expect(users.flashMessage).toContainText('You have signed up successfully.');
 
     await users.login(DEV.email, DEV.password);
     await users.logout();
 
-    await users.flashMessage.waitFor({ state: 'visible' });
     await expect(users.flashMessage).toContainText('You have been logged out');
   });
 
