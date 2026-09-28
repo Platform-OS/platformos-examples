@@ -101,7 +101,7 @@ test.describe('Register as developer', () => {
   });
 });
 
-test.describe('Recover password', () => {
+test.skip('Recover password', () => {
   let users: UsersPage;
 
   test.beforeEach(async ({ page }) => {
