@@ -10,7 +10,11 @@ export default defineConfig({
     trace: 'retain-on-failure',
   },
   workers: 1,
-  reporter: [['html', { outputFolder: 'playwright-report' }]],
+  reporter: [
+    ['list'],
+    ['html', { outputFolder: 'playwright-report' }],
+    ['junit', { outputFile: 'test-results/junit.xml' }],
+  ],
   projects: [
     {
       name: 'admincms setup',
