@@ -5,7 +5,7 @@ pipeline {
   agent none
 
   options {
-    buildDiscarder(logRotator(daysToKeepStr: '1', artifactDaysToKeepStr: '1'))
+    buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '10'))
   }
 
   parameters {
@@ -55,14 +55,14 @@ pipeline {
       }
 
       post {
-        failure {
-          container(name: 'playwright') {
-            archiveArtifacts "test-results/"
-          }
-        }
         always {
           container(name: 'playwright') {
-            publishHTML (target: [allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: "playwright-report"])
+            junit testResults: 'test-results/junit.xml', allowEmptyResults: true
+
+            sh 'tar -czf playwright-report.tar.gz playwright-report || true'
+            archiveArtifacts artifacts: 'playwright-report.tar.gz,test-results/**', allowEmptyArchive: true
+
+            publishHTML (target: [allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: "playwright-report"])
           }
         }
       }
