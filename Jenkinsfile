@@ -17,11 +17,14 @@ pipeline {
     MPKIT_EMAIL = credentials('MPKIT_EMAIL')
     MPKIT_URL   = "${params.TARGET_URL}"
     CI = true
-    CONFIRMATION_TEXT = "${params.TARGET_URL}"
+    // pos-cli data clean sends this as its confirmation, and the instance accepts it only
+    // when it equals the request host: the host of TARGET_URL, without scheme, port or path.
+    CONFIRMATION_TEXT = "${params.TARGET_URL.replaceAll('^https?://', '').replaceAll('[:/].*\$', '')}"
     // Production instances persist data between runs, so destructive/data-mutating
-    // tests must skip there. Listed explicitly; a trailing slash on TARGET_URL is
-    // normalized away before matching. Propagated to the test suite; when unset
-    // (e.g. local dev) tests treat the instance as non-protected and run.
+    // tests must skip there, and the deploy stage skips data clean. Listed explicitly;
+    // a trailing slash on TARGET_URL is normalized away before matching. Propagated to
+    // the test suite; when unset (e.g. local dev) tests treat the instance as
+    // non-protected and run.
     // NOTE: a new prod region must be added here or its tests will run against it.
     PROTECTED_INSTANCE = "${['https://examples.platform-os.com', 'https://examples.prod01.london.platform-os.com', 'https://examples-sydney.prod01.sydney.platformos.com'].contains(params.TARGET_URL.replaceAll('/+\$', '')) ? 'true' : 'false'}"
   }
@@ -35,8 +38,13 @@ pipeline {
       steps {
         container(name: 'playwright') {
           sh 'npm ci'
-          // sh 'echo "CONFIRMATION_TEXT: $CONFIRMATION_TEXT"'
-          // sh 'pos-cli data clean --include-schema --auto-confirm'
+          script {
+            if (env.PROTECTED_INSTANCE == 'true') {
+              echo "Skipping data clean: ${params.TARGET_URL} is a protected instance"
+            } else {
+              sh 'pos-cli data clean --include-schema --auto-confirm'
+            }
+          }
           sh 'pos-cli deploy'
           sh 'sleep 10'
         }
