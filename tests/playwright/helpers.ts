@@ -153,7 +153,7 @@ export async function deleteUserByEmail(
     data: {
       query: `
         query FindUser($email: String!) {
-          users(filter: { email: { value: $email } }) {
+          users(per_page: 100, filter: { email: { value: $email } }) {
             results { id }
           }
         }
@@ -162,13 +162,19 @@ export async function deleteUserByEmail(
     },
   });
 
-  if (!findResponse.ok()) return;
+  if (!findResponse.ok()) {
+    throw new Error(`deleteUserByEmail lookup failed — ${findResponse.status()} ${findResponse.statusText()}\n${await findResponse.text()}`);
+  }
 
   const json = await findResponse.json();
-  const users = json.data?.users?.results ?? [];
+  if (json.errors) {
+    throw new Error(`deleteUserByEmail lookup GraphQL error — ${JSON.stringify(json.errors)}`);
+  }
+
+  const users = json.data.users.results;
 
   for (const user of users) {
-    await request.post(GRAPH_ENDPOINT, {
+    const deleteResponse = await request.post(GRAPH_ENDPOINT, {
       headers: authHeaders(),
       data: {
         query: `
@@ -179,6 +185,15 @@ export async function deleteUserByEmail(
         variables: { id: user.id },
       },
     });
+
+    if (!deleteResponse.ok()) {
+      throw new Error(`deleteUserByEmail failed for ${email} (id ${user.id}) — ${deleteResponse.status()} ${deleteResponse.statusText()}\n${await deleteResponse.text()}`);
+    }
+
+    const deleteJson = await deleteResponse.json();
+    if (deleteJson.errors) {
+      throw new Error(`deleteUserByEmail GraphQL error for ${email} (id ${user.id}) — ${JSON.stringify(deleteJson.errors)}`);
+    }
   }
 }
 

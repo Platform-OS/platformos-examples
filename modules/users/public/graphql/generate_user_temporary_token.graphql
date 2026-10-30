@@ -1,6 +1,7 @@
 query generate_user_temporary_token($email: String) {
   user(email: $email) {
     id
+    email
     temporary_token(valid_for: 24)
   }
 }

@@ -4,6 +4,7 @@
 .Trashes
 ._*
 .env
+.envrc
 *.swp
 *.swo
 .marketplace-kit
@@ -15,3 +16,7 @@ marketplace_release.zip
 tmp/
 node_modules/
 screenshots/
+playwright-report/
+playwright-report.tar.gz
+test-results/
+trace-*.zip

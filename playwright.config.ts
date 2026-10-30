@@ -6,9 +6,15 @@ export default defineConfig({
   use: {
     baseURL: process.env.MPKIT_URL,
     headless: true,
+    screenshot: 'only-on-failure',
+    trace: 'retain-on-failure',
   },
   workers: 1,
-  reporter: [['list']],
+  reporter: [
+    ['list'],
+    ['html', { outputFolder: 'playwright-report' }],
+    ['junit', { outputFile: 'test-results/junit.xml' }],
+  ],
   projects: [
     {
       name: 'admincms setup',
@@ -90,9 +96,14 @@ export default defineConfig({
       testMatch: 'modules/users/tests/setup.spec.ts',
     },
     {
+      name: 'users teardown',
+      testMatch: 'modules/users/tests/teardown.spec.ts',
+    },
+    {
       name: 'users',
       use: chrome,
       dependencies: ['users setup'],
+      teardown: 'users teardown',
       testMatch: 'modules/users/tests/index.spec.ts',
     },
   ],

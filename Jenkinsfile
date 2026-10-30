@@ -2,11 +2,10 @@
 // def production_url = "https://examples.platform-os.com"
 
 pipeline {
-  agent any
+  agent none
 
   options {
-    timeout(time: 20, unit: 'MINUTES')
-    buildDiscarder(logRotator(daysToKeepStr: '1', artifactDaysToKeepStr: '1'))
+    buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '10'))
   }
 
   parameters {
@@ -19,15 +18,19 @@ pipeline {
     MPKIT_URL   = "${params.TARGET_URL}"
     DEBUG="true"
     CI = true
-
-    // TC REPORTS
-    UPLOAD_HOST = "https://tests.qa0.oregon.platformos.com"
-    REPORT_PATH  = "${env.GIT_COMMIT}-${System.currentTimeMillis()}"
-    REPORT_TYPE = "manual"
+    // Production instances persist data between runs, so destructive/data-mutating
+    // tests must skip there. Listed explicitly; a trailing slash on TARGET_URL is
+    // normalized away before matching. Propagated to the test suite; when unset
+    // (e.g. local dev) tests treat the instance as non-protected and run.
+    // NOTE: a new prod region must be added here or its tests will run against it.
+    PROTECTED_INSTANCE = "${['https://examples.platform-os.com', 'https://examples.prod01.london.platform-os.com', 'https://examples-sydney.prod01.sydney.platformos.com'].contains(params.TARGET_URL.replaceAll('/+\$', '')) ? 'true' : 'false'}"
   }
 
   stages {
-    stage('build deploy test') {
+    stage('deploy') {
+      options {
+        timeout(time: 5, unit: 'MINUTES')
+      }
       agent { kubernetes { yaml podTemplate("amd64") } }
       steps {
         container(name: 'playwright') {
@@ -35,18 +38,32 @@ pipeline {
           sh 'pos-cli data clean --include-schema --auto-confirm'
           sh 'pos-cli deploy'
           sh 'sleep 10'
+        }
+      }
+    }
+
+    stage('test') {
+      options {
+        timeout(time: 10, unit: 'MINUTES')
+      }
+      agent { kubernetes { yaml podTemplate("amd64") } }
+      steps {
+        container(name: 'playwright') {
           sh 'npm run test-ci'
         }
       }
 
       post {
-        failure { archiveArtifacts "screenshots/" }
-        // always {
-        //   container(name: 'playwright') {
-        //     sh 'REPORT_TYPE=tc-concurrent npm run ci:test:publish'
-        //     publishHTML (target: [allowMissing: false, alwaysLinkToLastBuild: false, keepAll: true, reportDir: '', reportFiles: 'test-report.html', reportName: "tc-concurrent"])
-        //   }
-        // }
+        always {
+          container(name: 'playwright') {
+            junit testResults: 'test-results/junit.xml', allowEmptyResults: true
+
+            sh 'tar -czf playwright-report.tar.gz playwright-report || true'
+            archiveArtifacts artifacts: 'playwright-report.tar.gz,test-results/**', allowEmptyArchive: true
+
+            publishHTML (target: [allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: "playwright-report"])
+          }
+        }
       }
     }
 
